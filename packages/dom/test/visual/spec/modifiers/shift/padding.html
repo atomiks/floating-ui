@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="../../../styles.css" />
+
+<style>
+  #popper {
+    width: 300px;
+  }
+</style>
+
+<div id="reference">Ref</div>
+<div id="popper">Pop</div>
+
+<script type="module">
+  import {computePosition, shift} from '../../../dist/index.mjs';
+  import {position} from '../../../utils.mjs';
+
+  computePosition(reference, popper, {
+    placement: 'bottom',
+    modifiers: [shift({padding: 5})],
+  }).then(position);
+</script>

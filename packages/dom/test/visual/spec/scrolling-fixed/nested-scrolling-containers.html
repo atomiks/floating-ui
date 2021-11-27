@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="../../styles.css" />
+
+<div id="scroll">
+  <div id="scroll" data-nested style="position: relative">
+    <div id="reference" style="position: absolute; top: 100px">Ref</div>
+    <div id="popper" data-fixed>Pop</div>
+  </div>
+</div>
+
+<script type="module">
+  import {computePosition} from '../../dist/index.mjs';
+  import {position, updateOnScroll} from '../../utils.mjs';
+
+  updateOnScroll(() => {
+    computePosition(reference, popper, {
+      strategy: 'fixed',
+      placement: 'right',
+    }).then(position);
+  });
+</script>

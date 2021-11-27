@@ -1,0 +1,34 @@
+{
+  "name": "@floating-ui/position",
+  "version": "0.0.1",
+  "description": "Primitives for positioning floating UI elements",
+  "main": "dist/floating-ui.position.js",
+  "module": "dist/floating-ui.position.mjs",
+  "sideEffects": false,
+  "files": [
+    "dist/",
+    "index.d.ts",
+    "src/**/*.d.ts"
+  ],
+  "browserslist": "> 1%, not dead",
+  "scripts": {
+    "test": "jest test",
+    "build": "NODE_ENV=build rollup -c",
+    "dev": "rollup -c -w"
+  },
+  "author": "",
+  "license": "MIT",
+  "devDependencies": {
+    "@babel/preset-env": "^7.16.4",
+    "@babel/preset-typescript": "^7.16.0",
+    "@rollup/plugin-babel": "^5.3.0",
+    "@rollup/plugin-node-resolve": "^13.0.6",
+    "@rollup/plugin-replace": "^3.0.0",
+    "@types/jest": "^27.0.3",
+    "jest": "^27.3.1",
+    "rollup": "^2.60.1",
+    "rollup-plugin-terser": "^7.0.2",
+    "ts-jest": "^27.0.7",
+    "typescript": "^4.5.2"
+  }
+}

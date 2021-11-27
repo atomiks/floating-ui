@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="../styles.css" />
+
+<style>
+  #clip {
+    border-width: 10px;
+  }
+
+  #popper {
+    height: 250px;
+  }
+</style>
+
+<div id="clip">
+  <div id="reference">Ref</div>
+  <div id="popper">Pop</div>
+</div>
+
+<script type="module">
+  import {computePosition, shift} from '../dist/index.mjs';
+  import {position} from '../utils.mjs';
+
+  computePosition(reference, popper, {
+    placement: 'right-end',
+    modifiers: [shift()],
+  }).then(position);
+</script>

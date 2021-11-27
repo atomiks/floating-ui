@@ -1,0 +1,13 @@
+node_modules
+.DS_Store
+.tmp
+.chrome
+*.log
+.jekyll-metadata
+dist
+.idea/
+.vscode/
+coverage.info
+coverage
+__diff_output__
+stats

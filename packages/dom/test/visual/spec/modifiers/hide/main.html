@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+
+<link rel="stylesheet" href="../../../styles.css" />
+
+<div id="scroll">
+  <div id="reference">Ref</div>
+  <div id="popper">Pop</div>
+</div>
+
+<script type="module">
+  import {computePosition, hide} from '../../../dist/index.mjs';
+  import {position, updateOnScroll} from '../../../utils.mjs';
+
+  updateOnScroll(() => {
+    computePosition(reference, popper, {
+      placement: 'right',
+      modifiers: [hide()],
+    }).then(position);
+  });
+</script>

@@ -1,0 +1,26 @@
+{
+  "name": "@floating-ui/monorepo",
+  "private": true,
+  "version": "1.0.0",
+  "description": "Floating UI monorepo",
+  "packageManager": "yarn@3.1.0",
+  "workspaces": [
+    "./packages/*"
+  ],
+  "scripts": {
+    "dev": "concurrently 'npm -w packages/position run dev' 'npm -w packages/dom run dev'",
+    "build:typescript": "tsc --project .config/tsconfig.json",
+    "clean": "rimraf packages/**/[a-zA-Z]*.ts"
+  },
+  "author": "",
+  "license": "MIT",
+  "prettier": {
+    "singleQuote": true,
+    "bracketSpacing": false
+  },
+  "devDependencies": {
+    "prettier": "^2.5.0",
+    "rimraf": "^3.0.2",
+    "typescript": "^4.5.2"
+  }
+}

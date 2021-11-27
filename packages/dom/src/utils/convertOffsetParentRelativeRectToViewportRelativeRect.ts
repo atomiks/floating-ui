@@ -1,5 +1,5 @@
-import {rectToClientRect} from '@floating-ui/position';
-import type {Rect, Strategy} from '@floating-ui/position';
+import {rectToClientRect} from '@floating-ui/core';
+import type {Rect, Strategy} from '@floating-ui/core';
 import {getBoundingClientRect} from './getBoundingClientRect';
 import {getNodeScroll} from './getNodeScroll';
 import {getNodeName} from './getNodeName';

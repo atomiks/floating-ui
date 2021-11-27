@@ -1,0 +1,179 @@
+import Layout from '../../components/Layout';
+export default Layout;
+
+# Modifiers
+
+Modifiers are plain objects that **modify** the positioning
+coordinates in some fashion, or provide useful data for the
+consumer to use. Most of Floating UI's features are implemented
+as a modifier.
+
+`computePosition()` starts with basic positioning via
+`placement`:
+
+```js
+computePosition(referenceEl, floatingEl, {
+  placement: 'right',
+  modifiers: [],
+});
+```
+
+In order to **modify** the positioning from this, we use
+modifiers.
+
+## Example
+
+```js
+const modifier = {
+  name: 'modifierName',
+  fn({x, y}) {
+    return {
+      x: x + 1,
+      y: y + 1,
+    };
+  },
+};
+```
+
+This simple (but not particularly useful) modifier just adds `1`
+pixel to the coordinates. To use this modifier, add it to your
+`modifiers` array:
+
+```js
+computePosition(referenceEl, floatingEl, {
+  modifiers: [modifier],
+});
+```
+
+### Shape
+
+A modifier is an object which has a `name` property and a `fn`
+property. The `fn` property provides the logic of the modifier,
+which returns new positioning coordinates.
+
+### Function
+
+You may notice that Floating UI's core modifiers are actually
+functions. This is so you can pass options in to configure the
+bahvior:
+
+```js
+const shiftByAmount = (amount = 0) => ({
+  name: 'shiftByAmount',
+  fn: ({x, y}) => ({
+    x: x + amount,
+    y: y + amount,
+  }),
+});
+```
+
+It returns an object and uses a closure to pass the configured
+behavior:
+
+```js
+modifiers: [shiftByAmount(10)];
+```
+
+### Always return an object
+
+Inside `fn` make sure to return an object. It doesn't need to
+contain properties, but to remind you that it should be pure, you
+must return an object. Never mutate any values that get passed in
+from `fn`.
+
+## Modifier arguments
+
+An object is passed to `fn` containing useful data about the
+modifier lifecycle being executed.
+
+In the previous examples, we destructured `x` and `y` out of the
+`fn` parameter object. These are only two properties that get
+passed into modifiers, but there are many more.
+
+The properties passed are below:
+
+### x
+
+Type: `number`
+
+This is the x-axis coordinate to position the floating element
+to.
+
+### y
+
+Type: `number`
+
+This is the y-axis coordinate to position the floating element
+to.
+
+### elements
+
+Type: `object`
+
+This is an object containing the elements.
+
+### rects
+
+Type: `object`
+
+This is an object containing the `Rect`s, an object of shape
+`{width, height, x, y}`.
+
+### modifiersData
+
+Type: `object`
+
+This is an object containing all the data of any modifiers **run
+before** the modifier.
+
+### scheduleReset
+
+Type: `function`
+
+If your modifier has logic to change the `placement`, you'll need
+to reset the modifiers lifecycle. This function allows you to do
+so:
+
+```js
+const modifier = {
+  name: 'modifier',
+  fn({scheduleReset}) {
+    if (someCondition) {
+      scheduleReset({placement: newPlacement});
+    }
+
+    return {};
+  },
+};
+```
+
+> This can cause an infinite loop, so ensure you have a break
+> condition set up! In DEV mode, the library will do its best to
+> prevent an infinite loop and throw an error.
+
+### strategy
+
+Type: `string`
+
+The positioning strategy.
+
+### initialPlacement
+
+Type: `string`
+
+The initial (or preferred) placement passed in to
+`computePosition()`.
+
+### placement
+
+Type: `string`
+
+The stateful, resultant placement. Modifiers like `flip` change
+`initialPlacement` to a new one.
+
+### platform
+
+Type: `object`
+
+An object containing methods to make Floating UI work on the
+current platform, e.g. DOM or React Native.

@@ -1,14 +1,14 @@
 import {
   computePosition as computePositionCore,
   ComputePositionConfig,
-} from '@floating-ui/position';
+} from '@floating-ui/core';
 import {platform} from './platform';
 
 export const computePosition = (
   reference: Element,
-  popper: HTMLElement,
+  floating: HTMLElement,
   options: Partial<ComputePositionConfig>
-) => computePositionCore(reference, popper, {platform, ...options});
+) => computePositionCore(reference, floating, {platform, ...options});
 
 export {
   arrow,
@@ -17,7 +17,8 @@ export {
   hide,
   offset,
   shift,
+  limitShift,
   size,
-} from '@floating-ui/position';
+} from '@floating-ui/core';
 
 export {getScrollParents} from './utils/getScrollParents';

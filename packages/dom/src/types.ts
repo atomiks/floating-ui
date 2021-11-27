@@ -3,4 +3,16 @@ export type NodeScroll = {
   scrollTop: number;
 };
 
+export {
+  arrow,
+  autoPlacement,
+  flip,
+  hide,
+  offset,
+  shift,
+  limitShift,
+  size,
+} from '@floating-ui/core';
+
+export {computePosition} from './';
 export {getScrollParents} from './utils/getScrollParents';

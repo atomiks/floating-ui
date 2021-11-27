@@ -1,4 +1,4 @@
-import type {Rect, Strategy} from '@floating-ui/position';
+import type {Rect, Strategy} from '@floating-ui/core';
 import {getBoundingClientRect} from './getBoundingClientRect';
 import {getDocumentElement} from './getDocumentElement';
 import {getNodeName} from './getNodeName';
@@ -24,7 +24,6 @@ export function getRectRelativeToOffsetParent(
   ) {
     if (
       getNodeName(offsetParent as Element) !== 'body' ||
-      // https://github.com/popperjs/popper-core/issues/1078
       isScrollParent(documentElement)
     ) {
       scroll = getNodeScroll(offsetParent);

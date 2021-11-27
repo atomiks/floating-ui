@@ -1,0 +1,118 @@
+import Layout from '../../components/Layout';
+export default Layout;
+
+# shift
+
+The `shift` modifier shifts the floating element in order to keep
+it in view (prevents overflow).
+
+## Usage
+
+```js
+import {computePosition, shift} from '@floating-ui/dom';
+
+computePosition(referenceEl, floatingEl, {
+  modifiers: [shift()],
+});
+```
+
+## Options
+
+`shift` accepts an object of options.
+
+### mainAxis
+
+Type: `boolean`
+
+This is the main axis in which shifting is applied, either `x` or
+`y` depending on the placement.
+
+```js
+shift({mainAxis: false}); // true by default
+```
+
+### crossAxis
+
+Type: `boolean`
+
+This is the cross axis in which shifting is applied, the opposite
+axis of `mainAxis`. Enabling this can lead to the floating
+element **overlapping** the reference element, which is generally
+not desired and is replaced by the `flip` modifier.
+
+```js
+shift({crossAxis: true}); // false by default
+```
+
+### limiter
+
+Type: `function`
+
+This accepts a function that **limits** the shifting done, in
+order to prevent detachment or "overly-eager" behavior. The
+behavior is to stop shifting once the opposite edges of the
+elements are aligned.
+
+```js
+import {shift, limitShift} from '@floating-ui/dom';
+
+shift({limiter: limitShift()});
+```
+
+This function itself takes options.
+
+#### limitShift.mainAxis
+
+Whether to apply limiting on the mainAxis.
+
+```js
+shift({
+  limiter: limitShift({mainAxis: false}), // true by default
+});
+```
+
+#### limitShift.crossAxis
+
+Whether to apply limiting to the crossAxis.
+
+```js
+shift({
+  limiter: limitShift({crossAxis: false}), // true by default
+});
+```
+
+#### limitShift.offset
+
+This will offset when the limiting starts. A positive number will
+start limiting earlier, while negative later.
+
+```js
+shift({
+  limiter: limitShift({
+    // Start limiting 5px earlier
+    offset: 5,
+  }),
+});
+```
+
+This can also take a function, which provides the `Rect`s of each
+element to read their dimensions:
+
+```js
+shift({
+  limiter: limitShift({
+    // Start limiting by the reference's width earlier
+    offset: ({reference, floating, placement}) =>
+      reference.width,
+  }),
+});
+```
+
+### ...detectOverflowOptions
+
+All of [detectOverflow](/docs/detectOverflow#options)'s options
+can be passed. For instance:
+
+```js
+shift({padding: 5}); // 0 by default
+```

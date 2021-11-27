@@ -1,0 +1,140 @@
+import Layout from '../../components/Layout';
+export default Layout;
+
+# detectOverflow
+
+The `detectOverflow()` function computes the overflow offsets of
+either the reference or floating element relative to any clipping
+boundaries.
+
+Almost every modifier provided by the library uses this function,
+making it integral to your own custom modifiers.
+
+The function takes two arguments and returns a promise:
+
+```js
+detectOverflow(modifierArguments, options);
+```
+
+## Usage
+
+Inside your custom modifier, make your `fn` async and await it,
+passing in the `modifierArguments`:
+
+```js
+import {detectOverflow} from '@floating-ui/dom';
+
+const modifier = {
+  name: 'modifier',
+  async fn(modifierArguments) {
+    const overflow = await detectOverflow(modifierArguments);
+    return {};
+  },
+};
+```
+
+`overflow` is a `SideObject` containing side properties with
+numbers. A positive number means the element is overflowing on
+that side, while 0 or negative means it is not.
+
+## Options
+
+`detectOverflow` takes options as a second argument.
+
+```js
+detectOverflow(modifierArguments, {
+  // options
+});
+```
+
+### boundary
+
+```ts
+type Boundary =
+  | 'clippingParents'
+  | HTMLElement
+  | Array<HTMLElement>;
+```
+
+This describes the element in which the element will be checked
+for overflow relative to. The default is `"clippingParents"`,
+which are the scrolling containers (including `overflow: hidden`
+elements) which will cause the element to be clipped.
+
+```js
+detectOverflow(modifierArguments, {
+  boundary: document.querySelector('#container'),
+});
+```
+
+### rootBoundary
+
+```ts
+type RootBoundary = 'viewport' | 'document';
+```
+
+This describes the root boundary that the element will be checked
+for overflow relative to. The default is `"viewport"`, which is
+the area of the page the user can see on the screen. The other
+option is `"document"`, which is the entire page outside the
+viewport.
+
+```js
+detectOverflow(modifierArguments, {
+  rootBoundary: 'document',
+});
+```
+
+### padding
+
+```ts
+type Padding =
+  | number
+  | Partial<{
+      top: number;
+      right: number;
+      bottom: number;
+      left: number;
+    }>;
+```
+
+This describes the virtual padding around the boundary to check
+for overflow.
+
+```js
+detectOverflow(modifierArguments, {
+  // 5px on all sides
+  padding: 5,
+  // Unspecified sides are 0
+  padding: {
+    top: 5,
+    left: 20,
+  },
+});
+```
+
+### elementContext
+
+By default, the floating element is being checked for overflow.
+But you can also change the context to `"reference"` to instead
+check the reference element's overflow relative to its clipping
+boundary.
+
+```js
+detectOverflow(modifierArguments, {
+  elementContext: 'reference', // 'popper' by default
+});
+```
+
+### altBoundary
+
+For instance, if the `elementContext` is `"popper"`, and you
+enable this option, then the function will check the reference
+element's `"clippingParents"` context as the boundary in which
+overflow is checked instead, and vice-versa.
+
+```js
+detectOverflow(modifierArguments, {
+  altBoundary: true, // false by default
+});
+```

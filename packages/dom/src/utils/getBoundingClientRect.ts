@@ -1,4 +1,4 @@
-import type {ClientRectObject} from '@floating-ui/position';
+import type {ClientRectObject} from '@floating-ui/core';
 
 export function getBoundingClientRect(element: Element): ClientRectObject {
   const clientRect = element.getBoundingClientRect();

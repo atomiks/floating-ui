@@ -1,0 +1,44 @@
+import Layout from '../../components/Layout';
+export default Layout;
+
+# React DOM
+
+```shell
+npm install @floating-ui/react-dom
+```
+
+```shell
+yarn add @floating-ui/react-dom
+```
+
+## Usage
+
+The `useFloat()` hook accepts all of
+[computePosition's options](/docs/computePosition#options).
+
+```jsx
+import {useFloat, shift} from '@floating-ui/react-dom';
+
+function App() {
+  const {x, y, reference, floating} = useFloat({
+    placement: 'right',
+    modifiers: [shift()],
+  });
+
+  return (
+    <div>
+      <button ref={reference}>Button</button>
+      <div
+        ref={floating}
+        style={{
+          position: 'absolute',
+          top: `${y}px`,
+          left: `${x}px`,
+        }}
+      >
+        Tooltip
+      </div>
+    </div>
+  );
+}
+```

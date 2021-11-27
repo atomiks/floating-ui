@@ -1,0 +1,71 @@
+import Layout from '../../components/Layout';
+export default Layout;
+
+# autoPlacement
+
+The `autoPlacement` modifier chooses the `placement`
+automatically (the one with most space available on checked
+axes).
+
+## Usage
+
+```js
+import {computePosition, autoPlacement} from '@floating-ui/dom';
+
+computePosition(referenceEl, floatingEl, {
+  modifiers: [autoPlacement()],
+});
+```
+
+## Options
+
+`autoPlacement` accepts an object of options.
+
+### variation
+
+Without options, `autoPlacement` will choose any of the
+`BasePlacement`s which fit best, i.e. `top`, `right`, `bottom`,
+or `left`. By specifying a variation, it will choose those
+variation placements.
+
+```js
+autoPlacement({
+  variation: 'start', // top-start, right-start, bottom-start, left-start
+});
+```
+
+### crossAxis
+
+Describes whether to check the `crossAxis` when choosing the
+ideal placement.
+
+```js
+autoPlacement({
+  crossAxis: true, // false by default
+});
+```
+
+### allowedPlacements
+
+Describes the placements which are allowed to be chosen.
+
+```js
+autoPlacement({
+  // 'right' and 'left' won't be chosen
+  allowedPlacements: ['top', 'bottom'],
+});
+```
+
+### autoVariations
+
+When `variation` is specified, this describes whether to
+automatically choose placements with the opposite variation if
+they fit better.
+
+```js
+autoPlacement({
+  variation: 'start',
+  // Won't also choose 'end' variations if those fit better
+  autoVariations: false, // true by default
+});
+```

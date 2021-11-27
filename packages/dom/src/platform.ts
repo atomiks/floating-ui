@@ -1,4 +1,4 @@
-import type {Platform} from '@floating-ui/position';
+import type {Platform} from '@floating-ui/core';
 import {getRectRelativeToOffsetParent} from './utils/getRectRelativeToOffsetParent';
 import {getOffsetParent} from './utils/getOffsetParent';
 import {getDimensions} from './utils/getDimensions';
@@ -8,14 +8,14 @@ import {getDocumentElement} from './utils/getDocumentElement';
 import {getClippingClientRect} from './utils/getClippingClientRect';
 
 export const platform: Platform = {
-  getElementRects: ({reference, popper, strategy}) =>
+  getElementRects: ({reference, floating, strategy}) =>
     Promise.resolve({
       reference: getRectRelativeToOffsetParent(
         reference,
-        getOffsetParent(popper),
+        getOffsetParent(floating),
         strategy
       ),
-      popper: {...getDimensions(popper), x: 0, y: 0},
+      floating: {...getDimensions(floating), x: 0, y: 0},
     }),
   convertOffsetParentRelativeRectToViewportRelativeRect: (args) =>
     Promise.resolve(

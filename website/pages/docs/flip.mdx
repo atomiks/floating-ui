@@ -1,0 +1,99 @@
+import Layout from '../../components/Layout';
+export default Layout;
+
+# flip
+
+The `flip` modifier changes the placement of the floating element
+to the opposite one in order to prevent overflow.
+
+## Usage
+
+```js
+import {computePosition, flip} from '@floating-ui/dom';
+
+computePosition(referenceEl, floatingEl, {
+  modifiers: [flip()],
+});
+```
+
+## Options
+
+`flip` accepts an object of options.
+
+### mainAxis
+
+Type: `boolean`
+
+This is the main axis in which overflow is checked, either `x` or
+`y` depending on the placement.
+
+```js
+flip({mainAxis: false}); // true by default
+```
+
+### crossAxis
+
+Type: `boolean`
+
+This is the cross axis in which overflow is checked, the opposite
+axis of `mainAxis`.
+
+```js
+flip({crossAxis: false}); // true by default
+```
+
+### fallbackPlacements
+
+Type: `Array<Placement>`
+
+This describes the array of placements to try if the preferred
+`placement` doesn't fully fit.
+
+```js
+flip({
+  fallbackPlacements: ['right', 'bottom'],
+});
+```
+
+If the `placement` in `computePosition()` is set to `'top'`, but
+that doesn't fit, then `'right'` will be used instead. If
+`'right'` also doesn't fit, then `'bottom'` will be used. If none
+of these fit, then the best-fitting placement will be used.
+
+### fallbackStrategy
+
+When no placements fit, then you'll want to decide what happens.
+Two strategies are available:
+
+```ts
+type FallbackStrategy = 'bestFit' | 'preferredPlacement';
+```
+
+`bestFit` will use the placement which fits best on the checked
+axes. `preferredPlacement` will use the initial `placement`
+specified if none fit.
+
+```js
+flip({
+  fallbackStrategy: 'preferredPlacement', // 'bestFit' by default
+});
+```
+
+### flipVariations
+
+When a variation `placement` is specified, e.g. `top-start`
+instead of just `top`, this will flip to `top-end` if `start`
+doesn't fit.
+
+```js
+flip({flipVariations: false}); // true by default
+```
+
+### ...detectOverflowOptions
+
+All of [detectOverflow](/docs/detectOverflow#options)'s options
+can be passed. For instance:
+
+```js
+flip({padding: 5}); // 0 by default
+```

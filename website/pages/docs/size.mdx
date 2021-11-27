@@ -1,0 +1,49 @@
+import Layout from '../../components/Layout';
+export default Layout;
+
+# size
+
+The `size` modifier provides data to change the size of the
+floating element so it doesn't overflow the available space.
+
+## Usage
+
+```js
+import {computePosition, size} from '@floating-ui/dom';
+
+computePosition(referenceEl, floatingEl, {
+  modifiers: [size()],
+}).then(({modifiersData}) => {
+  const {width, height} = modifiersData.size;
+
+  Object.assign(floatingEl.style, {
+    maxWidth: `${width}px`,
+    maxHeight: `${height}px`,
+  });
+});
+```
+
+## Data
+
+These dimensions represent how large the floating element can be
+before it will overflow.
+
+```ts
+type Data = {
+  width: number;
+  height: number;
+};
+```
+
+## Options
+
+`size` accepts an object of options.
+
+### ...detectOverflowOptions
+
+All of [detectOverflow](/docs/detectOverflow#options)'s options
+can be passed. For instance:
+
+```js
+size({padding: 5}); // 0 by default
+```

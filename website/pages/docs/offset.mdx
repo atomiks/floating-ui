@@ -1,0 +1,37 @@
+import Layout from '../../components/Layout';
+export default Layout;
+
+# offset
+
+The `offset` modifier displaces the floating element from its
+reference element.
+
+## Usage
+
+```js
+import {computePosition, offset} from '@floating-ui/dom';
+
+computePosition(referenceEl, floatingEl, {
+  modifiers: [offset(10)],
+});
+```
+
+This will offset the floating element 10px from its reference
+element.
+
+## Options
+
+`offset` takes either a number or an object.
+
+- `number` is the distance between the elements
+- `object` configures both axes' offset (both properties are
+  optional)
+
+```js
+offset(10); // 10px
+
+offset({
+  mainAxis: 10, // longhand for above
+  crossAxis: 10,
+});
+```

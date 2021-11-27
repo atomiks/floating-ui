@@ -3,24 +3,23 @@
   "private": true,
   "version": "1.0.0",
   "description": "Floating UI monorepo",
-  "packageManager": "yarn@3.1.0",
   "workspaces": [
     "./packages/*"
   ],
   "scripts": {
     "dev": "concurrently 'npm -w packages/position run dev' 'npm -w packages/dom run dev'",
     "build:typescript": "tsc --project .config/tsconfig.json",
-    "clean": "rimraf packages/**/[a-zA-Z]*.ts"
+    "clean": "rm -rf packages/**/src/[^_]*.d.ts packages/**/src/**/[^_]*.d.ts"
   },
   "author": "",
   "license": "MIT",
   "prettier": {
     "singleQuote": true,
-    "bracketSpacing": false
+    "bracketSpacing": false,
+    "proseWrap": "always"
   },
   "devDependencies": {
     "prettier": "^2.5.0",
-    "rimraf": "^3.0.2",
     "typescript": "^4.5.2"
   }
 }

@@ -1,4 +1,4 @@
-import type {Dimensions} from '@floating-ui/position';
+import type {Dimensions} from '@floating-ui/core';
 
 export function getDimensions(element: HTMLElement): Dimensions {
   return {

@@ -19,7 +19,7 @@
   "author": "",
   "license": "MIT",
   "dependencies": {
-    "@floating-ui/position": "file:../position"
+    "@floating-ui/core": "file:../core"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.4",

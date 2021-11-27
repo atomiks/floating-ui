@@ -1,0 +1,131 @@
+import Layout from '../../components/Layout';
+export default Layout;
+
+# React Native
+
+**Status: Experimental**
+
+Support for React Native is new; we are still trying to iterate
+on the API to find optimal usage for users!
+
+```shell
+npm install @floating-ui/react-native
+```
+
+```shell
+yarn add @floating-ui/react-native
+```
+
+## Usage
+
+The `useFloat()` hook accepts all of
+[computePosition's options](/docs/computePosition#options).
+
+```jsx
+import {View, Text} from 'react-native';
+import {useFloat} from '@floating-ui/react-native';
+
+function App() {
+  const {x, y, reference, floating} = useFloat({
+    // accepts all of `computePosition()`'s options
+    placement: 'right',
+  });
+
+  return (
+    <View>
+      <View ref={reference}>
+        <Text>Reference</Text>
+      </View>
+      <View
+        ref={floating}
+        style={{
+          position: 'absolute',
+          top: `${y}px`,
+          left: `${x}px`,
+        }}
+      >
+        <Text>Floating</Text>
+      </View>
+    </View>
+  );
+}
+```
+
+## ScrollView
+
+When your floating element is `Portal`ed to the App root, while
+the reference element is inside a `<ScrollView />`, you pass the
+`sameScrollView` option, and spread `scrollProps` to the
+component:
+
+```jsx {5,7,12}
+import {View, Text, ScrollView} from 'react-native';
+import {useFloat} from '@floating-ui/react-native';
+
+function App() {
+  const {x, y, reference, floating, scrollProps} = useFloat({
+    placement: 'right',
+    sameScrollView: false,
+  });
+
+  return (
+    <View>
+      <ScrollView {...scrollProps}>
+        <View ref={reference}>
+          <Text>Reference</Text>
+        </View>
+      </ScrollView>
+
+      <View
+        ref={floating}
+        style={{
+          position: 'absolute',
+          top: `${y}px`,
+          left: `${x}px`,
+        }}
+      >
+        <Text>Floating</Text>
+      </View>
+    </View>
+  );
+}
+```
+
+## offsetParent
+
+Pass this to the floating element's `offsetParent`, if required:
+
+```jsx {5,18}
+import {View, Text, ScrollView} from 'react-native';
+import {useFloat} from '@floating-ui/react-native';
+
+function App() {
+  const {x, y, reference, floating, offsetParent} = useFloat({
+    placement: 'right',
+    sameScrollView: false,
+  });
+
+  return (
+    <View>
+      <ScrollView>
+        <View ref={reference}>
+          <Text>Reference</Text>
+        </View>
+      </ScrollView>
+
+      <View ref={offsetParent}>
+        <View
+          ref={floating}
+          style={{
+            position: 'absolute',
+            top: `${y}px`,
+            left: `${x}px`,
+          }}
+        >
+          <Text>Floating</Text>
+        </View>
+      </View>
+    </View>
+  );
+}
+```

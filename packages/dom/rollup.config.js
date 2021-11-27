@@ -28,7 +28,7 @@ const bundles = [
       file: path.join(__dirname, 'dist/floating-ui.dom.js'),
       format: 'umd',
       globals: {
-        '@floating-ui/position': 'FloatingUIPosition',
+        '@floating-ui/core': 'FloatingUICore',
       },
     },
   },
@@ -39,7 +39,7 @@ const bundles = [
       file: path.join(__dirname, 'dist/floating-ui.dom.min.js'),
       format: 'umd',
       globals: {
-        '@floating-ui/position': 'FloatingUIPosition',
+        '@floating-ui/core': 'FloatingUICore',
       },
     },
   },
@@ -48,7 +48,7 @@ const bundles = [
 const buildExport = bundles.map(({input, output, minify}) => ({
   input,
   output,
-  external: ['@floating-ui/position'],
+  external: ['@floating-ui/core'],
   plugins: [
     nodeResolve({extensions: ['.ts']}),
     babel({babelHelpers: 'bundled', extensions: ['.ts']}),

@@ -1,4 +1,4 @@
-import type {Rect} from '@floating-ui/position';
+import type {Rect} from '@floating-ui/core';
 import {getDocumentElement} from './getDocumentElement';
 import {getComputedStyle} from './getComputedStyle';
 import getWindowScrollBarX from './getWindowScrollBarX';

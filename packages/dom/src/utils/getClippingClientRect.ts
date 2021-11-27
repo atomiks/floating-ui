@@ -3,7 +3,7 @@ import {
   ClientRectObject,
   Boundary,
   RootBoundary,
-} from '@floating-ui/position';
+} from '@floating-ui/core';
 import {getViewportRect} from './getViewportRect';
 import {getDocumentRect} from './getDocumentRect';
 import {getScrollParents} from './getScrollParents';

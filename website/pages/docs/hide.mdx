@@ -1,0 +1,53 @@
+import Layout from '../../components/Layout';
+export default Layout;
+
+# hide
+
+The `hide` modifier provides data to hide the floating element in
+applicable situations, usually when it's not within the same
+clipping context as the reference element.
+
+## Usage
+
+```js
+import {computePosition, hide} from '@floating-ui/dom';
+
+computePosition(referenceEl, floatingEl, {
+  modifiers: [hide()],
+}).then(({modifiersData}) => {
+  const {referenceHidden} = modifiersData.hide;
+
+  Object.assign(floatingEl.style, {
+    visibility: referenceHidden ? 'hidden' : 'visible',
+  });
+});
+```
+
+## Data
+
+```ts
+type Data = {
+  referenceHidden: boolean;
+  referenceHiddenOffsets: SideObject;
+  escaped: boolean;
+  escapedOffsets: SideObject;
+};
+```
+
+### referenceHidden
+
+Determines whether the reference element is currently not visible
+on screen for the user.
+
+### referenceHiddenOffsets
+
+A side object containing overflow offsets.
+
+### escaped
+
+Determines whether the floating element has "escaped" the
+reference's clipping context and appears fully detached from it.
+
+### escapedOffsets
+
+A side object containing overflow offsets.

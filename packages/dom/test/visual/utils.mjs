@@ -1,14 +1,12 @@
 import {getScrollParents} from './dist/index.mjs';
 
 export function position(data) {
-  Object.assign(popper.style, {
+  Object.assign(floating.style, {
     position: data.strategy,
     left: `${data.x}px`,
     top: `${data.y}px`,
-    opacity: data.modifiersData.hide?.hasPopperEscaped ? '0.5' : '1',
-    visibility: data.modifiersData.hide?.isReferenceHidden
-      ? 'hidden'
-      : 'visible',
+    opacity: data.modifiersData.hide?.escaped ? '0.5' : '1',
+    visibility: data.modifiersData.hide?.referenceHidden ? 'hidden' : 'visible',
   });
 
   if (window.arrowElement) {
@@ -31,7 +29,7 @@ export function position(data) {
 }
 
 export function updateOnScroll(callback) {
-  [...getScrollParents(reference), ...getScrollParents(popper)].forEach(
+  [...getScrollParents(reference), ...getScrollParents(floating)].forEach(
     (element) => {
       element.addEventListener('scroll', callback);
     }

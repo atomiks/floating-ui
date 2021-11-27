@@ -1,0 +1,503 @@
+import Layout from '../../components/Layout';
+export default Layout;
+
+import * as T from '../../components/Tutorial';
+
+# Tutorial
+
+This page teaches you the fundamentals of Floating UI's
+positioning (**why it even exists instead of just using CSS**) by
+building a tooltip from the ground up.
+
+<x-ad />
+
+## Setting up
+
+Create a new HTML document with two elements, a `<button>` and a
+tooltip `<div>` along with the `unpkg` CDN scripts to load
+Floating UI:
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Floating UI tutorial</title>
+  </head>
+  <body>
+    <button id="reference" aria-describedby="tooltip">My button</div>
+    <div id="tooltip" role="tooltip">My tooltip</div>
+
+    <script src="https://unpkg.com/@floating-ui/core"></script>
+    <script src="https://unpkg.com/@floating-ui/dom"></script>
+    <script>
+      // Your code will go here.
+    </script>
+  </body>
+</html>
+```
+
+Right now you should see the following (except with the browser's
+default styling):
+
+<T.Result1 />
+
+## Styling
+
+Let's give our tooltip some styling:
+
+```html
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Floating UI Tutorial</title>
+    <style>
+      #tooltip {
+        background: #222;
+        color: white;
+        font-weight: bold;
+        padding: 5px;
+        border-radius: 4px;
+        font-size: 90%;
+      }
+    </style>
+  </head>
+  <body>
+    <!-- ... -->
+  </body>
+</html>
+```
+
+Here's the result so far:
+
+<T.Result2 />
+
+## Making the tooltip "float"
+
+Your tooltip `<div />` is a regular block on the document, like
+any other element, which is why it spans the whole width of the
+page.
+
+We want it to **float** on top of the UI though, so it doesn't
+disrupt the flow of the document, and should only take up as much
+size as its contents.
+
+We can do this in CSS by setting `position: absolute` on the
+tooltip element.
+
+```css {2}
+#tooltip {
+  position: absolute;
+  background: #222;
+  color: white;
+  font-weight: bold;
+  padding: 5px;
+  border-radius: 4px;
+  font-size: 90%;
+}
+```
+
+<T.Result3 />
+
+Your tooltip is now a "floating" element — it only takes up as
+much size as it needs to and is overlaid on top of the UI.
+
+## Positioning
+
+Inside your `<script>` tag, add the following code:
+
+```js
+// First, select the elements on the document
+const button = document.querySelector('#button');
+const tooltip = document.querySelector('#tooltip');
+
+const {computePosition} = FloatingUIDOM;
+
+// Then position the tooltip
+computePosition(button, tooltip).then(({x, y}) => {
+  Object.assign(tooltip.style, {
+    left: `${x}px`,
+    top: `${y}px`,
+  });
+});
+```
+
+Above, we call `computePosition()` (after destructuring it from
+`window.FloatingUIDOM`) with the button and tooltip elements as
+arguments.
+
+It returns a `Promise`, so we use the `.then()` method which
+passes in the calculated `x` and `y` coordinates for us, which we
+use to assign `left` and `top` styles to the tooltip.
+
+Our tooltip is now centered underneath the button:
+
+<T.Result4 />
+
+## Placements
+
+The default placement is `bottom`, but you probably want to place
+the tooltip anywhere relative to the button. For this, Floating
+UI has the `placement` option, passed into the options object as
+a third argument:
+
+```js {7}
+const button = document.querySelector('#button');
+const tooltip = document.querySelector('#tooltip');
+
+const {computePosition} = FloatingUIDOM;
+
+computePosition(button, tooltip, {
+  placement: 'right',
+}).then(({x, y}) => {
+  Object.assign(tooltip.style, {
+    left: `${x}px`,
+    top: `${y}px`,
+  });
+});
+```
+
+<T.Result5 />
+
+The available base placements are `top`, `right`, `bottom`,
+`left`.
+
+Each of these base placements has a variation in the form
+`-start` and `-end`. For example, `right-start`, or `bottom-end`.
+These allow you to align the tooltip to the button, rather than
+centering it.
+
+## Our first problem
+
+These placements are a useful feature themselves, but they don't
+offer anything over raw CSS. Which brings us to our first
+problem: what happens if we use a `top` placement?
+
+<T.Result6 />
+
+We can't read the tooltip text because the button happens to be
+close to the document boundary. In this case, you could use the
+`bottom` placement, instead of `top`. Again, you _could_ just use
+CSS for this.
+
+However, needing to **manually** handle this for every single
+tooltip you add in an application can be cumbersome. This is
+especially true when you want to apply a tooltip or popover to an
+element anywhere on the page at a whim, and have its position
+"just work" for any screen size or location, without needing to
+adjust anything.
+
+This is why you can let Floating UI handle it for you
+automatically with the adoption of "modifiers".
+
+## Modifiers
+
+Modifiers are how every single feature beyond the basic placement
+positioning is implemented.
+
+A "modifier" is a piece of code (middleware or plugin) which
+modifies the `x` and `y` coordinates in some way.
+
+`flip()` modifies the coordinates for us such that it uses the
+`bottom` placement automatically without us needing to explicitly
+specify it.
+
+```js {1,5}
+const {computePosition, flip} = FloatingUIDOM;
+
+computePosition(button, tooltip, {
+  placement: 'top',
+  modifiers: [flip()],
+}).then(({x, y}) => {
+  Object.assign(tooltip.style, {
+    left: `${x}px`,
+    top: `${y}px`,
+  });
+});
+```
+
+Now, even though we've set `placement` to `top`, the tooltip
+flips to the bottom automatically for us if it can't fit on the
+top. No need to adjust anything manually.
+
+<T.Result7 />
+
+Importantly, it will continue to use the `top` placement at all
+times if it can, and only fallback to `bottom` if it has to.
+
+### Shift modifier
+
+Now, what if we wanted to have more content inside the tooltip?
+
+<T.Result8 />
+
+Oh no, we now have the same problem as before, but on the
+opposite axis (`x` instead of `y`). Because it's **centered**
+beneath the button, and the tooltip happens to be wider than the
+button, it ends up overflowing the edge.
+
+To solve this problem, we have the `shift` modifier:
+
+```js {1,5}
+const {computePosition, flip, shift} = FloatingUIDOM;
+
+computePosition(button, tooltip, {
+  placement: 'top',
+  modifiers: [flip(), shift()],
+}).then(({x, y}) => {
+  Object.assign(tooltip.style, {
+    left: `${x}px`,
+    top: `${y}px`,
+  });
+});
+```
+
+<T.Result9 />
+
+Now, we can read all the text because the `shift` modifier
+"shifted" the tooltip from its bottom centered placement until it
+was fully in view.
+
+As you can see, the tooltip lies fully flush with the edge of the
+document boundary. To add some whitespace, or padding, the
+`shift` modifier accepts an options object:
+
+```js {5}
+const {computePosition, flip, shift} = FloatingUIDOM;
+
+computePosition(button, tooltip, {
+  placement: 'top',
+  modifiers: [flip(), shift({padding: 5})],
+}).then(({x, y}) => {
+  Object.assign(tooltip.style, {
+    left: `${x}px`,
+    top: `${y}px`,
+  });
+});
+```
+
+<T.Result10 />
+
+Now there's some 5px of breathing room between the tooltip and
+the edge of the boundary.
+
+### Offset modifier
+
+We probably also don't want the tooltip to lie flush with the
+button element. For this, we have the `offset` modifier:
+
+```js {1,5}
+const {computePosition, flip, shift, offset} = FloatingUIDOM;
+
+computePosition(button, tooltip, {
+  placement: 'top',
+  modifiers: [offset(6), flip(), shift({padding: 5})],
+}).then(({x, y}) => {
+  Object.assign(tooltip.style, {
+    left: `${x}px`,
+    top: `${y}px`,
+  });
+});
+```
+
+This will displace the tooltip 6px from the reference element:
+
+<T.Result11 />
+
+> Notice that we put `offset` at the start of the array, rather
+> than at the end? Modifiers' behavior is dependent on **order**.
+> Each modifier returns new coordinates which modifiers later in
+> the array will use. The `offset` modifier is one that should be
+> before most other ones, because those modifiers should modify
+> their coordinates based on the offsetted ones.
+
+### Arrow modifier
+
+Most tooltips have an arrow (or triangle / caret) which points
+toward the button. For this, we have the `arrow` modifier, but we
+first need to add a new element inside of our tooltip:
+
+```html
+<div id="tooltip" role="tooltip">
+  My tooltip
+  <div id="arrow"></div>
+</div>
+```
+
+Then style it:
+
+```css
+#arrow {
+  position: absolute;
+  background: #333;
+  width: 8px;
+  height: 8px;
+  transform: rotate(45deg);
+}
+```
+
+Then pass the arrow element into the `arrow` modifier:
+
+```js {1,3,12}
+const arrowElement = document.querySelector('#arrow');
+
+const {computePosition, flip, shift, offset, arrow} =
+  FloatingUIDOM;
+
+computePosition(button, tooltip, {
+  placement: 'top',
+  modifiers: [
+    offset(5),
+    flip(),
+    shift({padding: 5}),
+    arrow({element: arrowElement}),
+  ],
+}).then(({x, y}) => {
+  Object.assign(tooltip.style, {
+    left: `${x}px`,
+    top: `${y}px`,
+  });
+});
+```
+
+Now we need to add dynamic styles to the arrow element. Unlike
+other modifiers, the `arrow` modifier doesn't modify the main `x`
+and `y` coordinates. Instead, it provides **data** for us to use.
+We can access this piece of information provided via
+`modifiersData`.
+
+This contains an `arrow` object, referring to the name of the
+`arrow()` modifier we used:
+
+```js {9,15-16}
+computePosition(button, tooltip, {
+  placement: 'top',
+  modifiers: [
+    offset(5),
+    flip(),
+    shift({padding: 5}),
+    arrow({element: arrowElement}),
+  ],
+}).then(({x, y, placement, modifiersData}) => {
+  Object.assign(tooltip.style, {
+    left: `${x}px`,
+    top: `${y}px`,
+  });
+
+  // Accessing the data
+  const {x: arrowX, y: arrowY} = modifiersData.arrow;
+});
+```
+
+We now want to use this data to apply the styles.
+
+```js {18-31}
+computePosition(button, tooltip, {
+  placement: 'top',
+  modifiers: [
+    offset(5),
+    flip(),
+    shift({padding: 5}),
+    arrow({element: arrowElement}),
+  ],
+}).then(({x, y, placement, modifiersData}) => {
+  Object.assign(tooltip.style, {
+    left: `${x}px`,
+    top: `${y}px`,
+  });
+
+  // Accessing the data
+  const {x: arrowX, y: arrowY} = modifiersData.arrow;
+
+  const staticSide = {
+    top: 'bottom',
+    right: 'left',
+    bottom: 'top',
+    left: 'right',
+  }[placement.split('-')[0]];
+
+  Object.assign(arrowElement.style, {
+    left: arrowX ? `${arrowX}px` : '',
+    top: arrowY ? `${arrowY}px` : '',
+    right: '',
+    bottom: '',
+    [staticSide]: '-4px',
+  });
+});
+```
+
+The styles above will handle the arrow's position for all
+placements.
+
+- `x` is the x-axis offset, only existing if the placement is
+  vertical (`top` or `bottom`).
+- `y` is the y-axis offset, only existing if the placement is
+  horizontal (`right` or `left`).
+
+`staticSide` depends on the `placement` that gets chosen. For
+instance, if the placement is `bottom`, then we want the arrow to
+be positioned 4px outside of the **top** of the tooltip (so we
+use a negative number).
+
+The reason we use `.split('-')[0]` is to also handle variation
+placements, like `top-start` rather than only `top`.
+
+<T.Result12 />
+
+## Functionality
+
+Now that the tooltip has everything positioned, we can add
+**behavior**. The following code will show the tooltip on the
+`showEvents`, then hide it on the `hideEvents`:
+
+```css {2}
+#tooltip {
+  display: none;
+  /* ... rest of the CSS ... */
+}
+```
+
+```js
+function update() {
+  computePosition(button, tooltip, {
+    // ... options ...
+  }).then(({x, y, placement, modifiersData}) => {
+    // ... positioning logic ...
+  });
+}
+
+function showTooltip() {
+  button.style.display = 'block';
+  update();
+}
+
+function hideTooltip() {
+  button.style.display = '';
+}
+
+const showEvents = ['mouseenter', 'focus'];
+const hideEvents = ['mouseleave', 'blur'];
+
+showEvents.forEach((e) =>
+  button.addEventListener(e, showTooltip)
+);
+hideEvents.forEach((e) =>
+  button.addEventListener(e, hideTooltip)
+);
+```
+
+Try hovering or focusing the button:
+
+<T.Result13 />
+
+## Misc
+
+What about updating the position on scroll and resize? Or
+animating the tooltip? For the former, check out
+[this page about event listeners](/docs/computePosition#updating).
+
+As for animations, this is up to you to explore when crafting
+your floating elements!
+
+## Complete
+
+You've now created a basic accessible tooltip using Floating UI.

@@ -14,7 +14,8 @@
   "scripts": {
     "dev": "concurrently 'rollup -c -w' 'serve -l 1234 test/visual'",
     "build": "NODE_ENV=build rollup -c",
-    "test": "jest test"
+    "test": "jest test",
+    "test:functional": "concurrently 'npm run dev' 'npx playwright test --update-snapshots'"
   },
   "author": "",
   "license": "MIT",
@@ -24,6 +25,7 @@
   "devDependencies": {
     "@babel/preset-env": "^7.16.4",
     "@babel/preset-typescript": "^7.16.0",
+    "@playwright/test": "^1.16.3",
     "@rollup/plugin-replace": "^3.0.0",
     "@types/jest": "^27.0.3",
     "concurrently": "^6.4.0",

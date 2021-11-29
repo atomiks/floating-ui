@@ -1,5 +1,7 @@
 import {getScrollParents} from './dist/index.mjs';
 
+window.__DEV__ = true;
+
 export function position(data) {
   Object.assign(floating.style, {
     position: data.strategy,

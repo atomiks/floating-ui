@@ -1,0 +1,15 @@
+name: CI
+on: [push, pull_request]
+env:
+  CI: true
+
+jobs:
+  checks:
+    name: Linting and Type checking
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v1
+      - run: npm install
+      - run: npm run lint
+      - run: npm run test:types

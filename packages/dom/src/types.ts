@@ -12,6 +12,7 @@ export {
   shift,
   limitShift,
   size,
+  detectOverflow,
 } from '@floating-ui/core';
 
 export {computePosition} from './';

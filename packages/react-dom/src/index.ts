@@ -74,19 +74,29 @@ export function useFloating(
 
   useIsomorphicLayoutEffect(update, dependencies);
 
+  const setReference = useCallback(
+    (node) => {
+      reference.current = node;
+      update();
+    },
+    [update]
+  );
+
+  const setFloating = useCallback(
+    (node) => {
+      floating.current = node;
+      update();
+    },
+    [update]
+  );
+
   return useMemo(
     () => ({
       ...data,
       update,
-      reference(node: Element) {
-        reference.current = node;
-        update();
-      },
-      floating(node: HTMLElement) {
-        floating.current = node;
-        update();
-      },
+      reference: setReference,
+      floating: setFloating,
     }),
-    [data, update]
+    [data, update, setReference, setFloating]
   );
 }

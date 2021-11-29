@@ -15,7 +15,8 @@
     "dev": "concurrently 'rollup -c -w' 'serve -l 1234 test/visual'",
     "build": "NODE_ENV=build rollup -c",
     "test": "jest test",
-    "test:functional": "rollup -c && npx playwright test -u"
+    "test:functional": "rollup -c && npx playwright test",
+    "test:functional:update": "rollup -c && npx playwright test -u"
   },
   "author": "",
   "license": "MIT",

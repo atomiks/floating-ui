@@ -15,3 +15,17 @@ jobs:
       - run: npm install
       - run: npm run lint
       - run: npm run test:types
+
+  functional-tests:
+    name: Functional-tests
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      - uses: actions/setup-node@v2
+        with:
+          node-version: '17'
+      - run: npx playwright install-deps
+      - run: npm install
+      - run: npx playwright install
+      - run: npm run build
+      - run: npm -w packages/dom run test:functional

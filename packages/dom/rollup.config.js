@@ -72,6 +72,7 @@ const devExport = {
     nodeResolve({extensions: ['.ts']}),
     babel({babelHelpers: 'bundled', extensions: ['.ts']}),
     replace({
+      'process.env.NODE_ENV': '"development"',
       __DEV__: 'true',
       preventAssignment: true,
     }),

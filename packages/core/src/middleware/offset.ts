@@ -1,9 +1,9 @@
 import type {
   Placement,
-  Modifier,
-  ModifierArguments,
   Rect,
   Coords,
+  Middleware,
+  MiddlewareArguments,
 } from '../types';
 import {getBasePlacement} from '../utils/getBasePlacement';
 import {getMainAxisFromPlacement} from '../utils/getMainAxisFromPlacement';
@@ -31,23 +31,20 @@ export function convertValueToCoords({
 
   const rawValue =
     typeof value === 'function' ? value({...rects, placement}) : value;
-  let {mainAxis, crossAxis} =
+  const {mainAxis, crossAxis} =
     typeof rawValue === 'number'
       ? {mainAxis: rawValue, crossAxis: 0}
       : {mainAxis: 0, crossAxis: 0, ...rawValue};
 
-  mainAxis = mainAxis * multiplier;
-  crossAxis = crossAxis;
-
   return getMainAxisFromPlacement(basePlacement) === 'x'
-    ? {x: crossAxis, y: mainAxis}
-    : {x: mainAxis, y: crossAxis};
+    ? {x: crossAxis, y: mainAxis * multiplier}
+    : {x: mainAxis * multiplier, y: crossAxis};
 }
 
-export const offset = (value: Offset): Modifier => ({
+export const offset = (value: Offset): Middleware => ({
   name: 'offset',
-  fn(modifierArguments: ModifierArguments) {
-    const {x, y, placement, rects} = modifierArguments;
+  fn(middlewareArguments: MiddlewareArguments) {
+    const {x, y, placement, rects} = middlewareArguments;
     const diffCoords = convertValueToCoords({placement, rects, value});
     return {
       x: x + diffCoords.x,

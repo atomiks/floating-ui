@@ -18,17 +18,21 @@ yarn add @floating-ui/react-native
 
 ## Usage
 
-The `useFloat()` hook accepts all of
+The `useFloating()` hook accepts all of
 [computePosition's options](/docs/computePosition#options).
 
+**Important**: middleware must be either memo'd or declared
+outside of the function body to prevent an infinite render loop.
+
 ```jsx
+import {useMemo} from 'react';
 import {View, Text} from 'react-native';
-import {useFloat} from '@floating-ui/react-native';
+import {useFloating, shift} from '@floating-ui/react-native';
 
 function App() {
-  const {x, y, reference, floating} = useFloat({
-    // accepts all of `computePosition()`'s options
+  const {x, y, reference, floating} = useFloating({
     placement: 'right',
+    middleware: useMemo(() => [shift()], []),
   });
 
   return (
@@ -60,10 +64,10 @@ component:
 
 ```jsx {5,7,12}
 import {View, Text, ScrollView} from 'react-native';
-import {useFloat} from '@floating-ui/react-native';
+import {useFloating} from '@floating-ui/react-native';
 
 function App() {
-  const {x, y, reference, floating, scrollProps} = useFloat({
+  const {x, y, reference, floating, scrollProps} = useFloating({
     placement: 'right',
     sameScrollView: false,
   });
@@ -97,10 +101,10 @@ Pass this to the floating element's `offsetParent`, if required:
 
 ```jsx {5,18}
 import {View, Text, ScrollView} from 'react-native';
-import {useFloat} from '@floating-ui/react-native';
+import {useFloating} from '@floating-ui/react-native';
 
 function App() {
-  const {x, y, reference, floating, offsetParent} = useFloat({
+  const {x, y, reference, floating, offsetParent} = useFloating({
     placement: 'right',
     sameScrollView: false,
   });

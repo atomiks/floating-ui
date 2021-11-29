@@ -1,5 +1,5 @@
 export type BasePlacement = 'top' | 'right' | 'bottom' | 'left';
-export type VariationPlacement =
+export type AlignedPlacement =
   | 'top-start'
   | 'top-end'
   | 'right-start'
@@ -9,9 +9,9 @@ export type VariationPlacement =
   | 'left-start'
   | 'left-end';
 export type AutoPlacement = 'auto' | 'auto-start' | 'auto-end';
-export type Placement = BasePlacement | VariationPlacement;
+export type Placement = BasePlacement | AlignedPlacement;
 export type Strategy = 'absolute' | 'fixed';
-export type Variation = 'start' | 'end';
+export type Alignment = 'start' | 'end';
 export type Axis = 'x' | 'y';
 export type Length = 'width' | 'height';
 
@@ -49,7 +49,7 @@ export type SideObject = {
   left: number;
 };
 
-export type ModifiersData = {
+export type MiddlewareData = {
   arrow?: {
     x?: number;
     y?: number;
@@ -85,7 +85,7 @@ export type ComputePositionConfig = {
   platform: Platform;
   placement?: Placement;
   strategy?: Strategy;
-  modifiers?: Array<Modifier>;
+  middleware?: Array<Middleware>;
 };
 
 export type ComputePositionReturn = {
@@ -93,7 +93,7 @@ export type ComputePositionReturn = {
   y: number;
   placement: Placement;
   strategy: Strategy;
-  modifiersData: ModifiersData;
+  middlewareData: MiddlewareData;
 };
 
 export type ComputePosition = (
@@ -102,17 +102,17 @@ export type ComputePosition = (
   config: ComputePositionConfig
 ) => Promise<ComputePositionReturn>;
 
-export type ModifierReturn = Coords & {
+export type MiddlewareReturn = Coords & {
   data: {
     [key: string]: any;
   };
 };
 
-export type Modifier = {
+export type Middleware = {
   name: string;
   fn: (
-    modifierArguments: ModifierArguments
-  ) => Partial<ModifierReturn> | Promise<Partial<ModifierReturn>>;
+    modifierArguments: MiddlewareArguments
+  ) => Partial<MiddlewareReturn> | Promise<Partial<MiddlewareReturn>>;
 };
 
 export type Dimensions = {
@@ -135,11 +135,11 @@ export type Elements = {
   floating: FloatingElement;
 };
 
-export type ModifierArguments = Coords & {
+export type MiddlewareArguments = Coords & {
   initialPlacement: Placement;
   placement: Placement;
   strategy: Strategy;
-  modifiersData: ModifiersData;
+  middlewareData: MiddlewareData;
   scheduleReset: (args: {placement: Placement}) => void;
   elements: Elements;
   rects: ElementRects;
@@ -154,11 +154,12 @@ export type Context = 'reference' | 'floating';
 
 export {computePosition} from './computePosition';
 export {rectToClientRect} from './utils/rectToClientRect';
+export {detectOverflow} from './detectOverflow';
 
-export {arrow} from './modifiers/arrow';
-export {autoPlacement} from './modifiers/autoPlacement';
-export {flip} from './modifiers/flip';
-export {hide} from './modifiers/hide';
-export {offset} from './modifiers/offset';
-export {shift, limitShift} from './modifiers/shift';
-export {size} from './modifiers/size';
+export {arrow} from './middleware/arrow';
+export {autoPlacement} from './middleware/autoPlacement';
+export {flip} from './middleware/flip';
+export {hide} from './middleware/hide';
+export {offset} from './middleware/offset';
+export {shift, limitShift} from './middleware/shift';
+export {size} from './middleware/size';

@@ -3,20 +3,18 @@ export default Layout;
 
 # arrow
 
-The `arrow` modifier provides data to position an inner element
+The `arrow` middleware provides data to position an inner element
 of the floating element, usually the triangle or caret which
 points toward the reference element, so that it is centered to
 it.
 
+If you're using an aligned placement, like `top-start` or
+`right-end`, you may not need to use this middleware if you want
+the arrow's position to remain "static".
+
 ## Usage
 
-```js
-import {computePosition, arrow} from '@floating-ui/dom';
-
-computePosition(referenceEl, floatingEl, {
-  modifiers: [arrow({element: arrowElement})],
-});
-```
+Add a new element **inside** your floating element:
 
 ```html
 <div id="tooltip">
@@ -25,13 +23,35 @@ computePosition(referenceEl, floatingEl, {
 </div>
 ```
 
+And ensure it has `position: absolute` applied in its CSS.
+
+```js
+import {computePosition, arrow} from '@floating-ui/dom';
+
+computePosition(referenceEl, floatingEl, {
+  middleware: [arrow({element: arrowElement})],
+}).then(({middlewareData}) => {
+  const {x, y} = middlewareData.arrow;
+
+  Object.assign(arrowElement.style, {
+    left: x ? `${x}px` : '',
+    top: y ? `${y}px` : '',
+  });
+});
+```
+
 ## Options
 
 `arrow` accepts an object of options.
 
-### element
+```ts
+type Options = {
+  element: any; // `HTMLElement` for the DOM
+  padding: Padding;
+};
+```
 
-Type: `HTMLElement`
+### element
 
 This is the arrow element to be positioned.
 
@@ -58,7 +78,7 @@ arrow({
 
 ## Data
 
-The following data is available in `modifiersData.arrow`:
+The following data is available in `middlewareData.arrow`:
 
 ```ts
 type Data = {

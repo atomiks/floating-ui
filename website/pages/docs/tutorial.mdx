@@ -161,7 +161,7 @@ computePosition(button, tooltip, {
 The available base placements are `top`, `right`, `bottom`,
 `left`.
 
-Each of these base placements has a variation in the form
+Each of these base placements has an alignment in the form
 `-start` and `-end`. For example, `right-start`, or `bottom-end`.
 These allow you to align the tooltip to the button, rather than
 centering it.
@@ -187,15 +187,16 @@ element anywhere on the page at a whim, and have its position
 adjust anything.
 
 This is why you can let Floating UI handle it for you
-automatically with the adoption of "modifiers".
+automatically with the adoption of "middleware".
 
-## Modifiers
+## Middleware
 
-Modifiers are how every single feature beyond the basic placement
-positioning is implemented.
+Middleware are how every single feature beyond the basic
+placement positioning is implemented.
 
-A "modifier" is a piece of code (middleware or plugin) which
-modifies the `x` and `y` coordinates in some way.
+A middleware is a piece of code which runs between the call of
+`computePosition()` and its eventual return, to modify or provide
+data to the consumer.
 
 `flip()` modifies the coordinates for us such that it uses the
 `bottom` placement automatically without us needing to explicitly
@@ -206,7 +207,7 @@ const {computePosition, flip} = FloatingUIDOM;
 
 computePosition(button, tooltip, {
   placement: 'top',
-  modifiers: [flip()],
+  middleware: [flip()],
 }).then(({x, y}) => {
   Object.assign(tooltip.style, {
     left: `${x}px`,
@@ -224,7 +225,7 @@ top. No need to adjust anything manually.
 Importantly, it will continue to use the `top` placement at all
 times if it can, and only fallback to `bottom` if it has to.
 
-### Shift modifier
+### Shift middleware
 
 Now, what if we wanted to have more content inside the tooltip?
 
@@ -235,14 +236,14 @@ opposite axis (`x` instead of `y`). Because it's **centered**
 beneath the button, and the tooltip happens to be wider than the
 button, it ends up overflowing the edge.
 
-To solve this problem, we have the `shift` modifier:
+To solve this problem, we have the `shift` middleware:
 
 ```js {1,5}
 const {computePosition, flip, shift} = FloatingUIDOM;
 
 computePosition(button, tooltip, {
   placement: 'top',
-  modifiers: [flip(), shift()],
+  middleware: [flip(), shift()],
 }).then(({x, y}) => {
   Object.assign(tooltip.style, {
     left: `${x}px`,
@@ -253,20 +254,20 @@ computePosition(button, tooltip, {
 
 <T.Result9 />
 
-Now, we can read all the text because the `shift` modifier
+Now, we can read all the text because the `shift` middleware
 "shifted" the tooltip from its bottom centered placement until it
 was fully in view.
 
 As you can see, the tooltip lies fully flush with the edge of the
 document boundary. To add some whitespace, or padding, the
-`shift` modifier accepts an options object:
+`shift` middleware accepts an options object:
 
 ```js {5}
 const {computePosition, flip, shift} = FloatingUIDOM;
 
 computePosition(button, tooltip, {
   placement: 'top',
-  modifiers: [flip(), shift({padding: 5})],
+  middleware: [flip(), shift({padding: 5})],
 }).then(({x, y}) => {
   Object.assign(tooltip.style, {
     left: `${x}px`,
@@ -280,17 +281,17 @@ computePosition(button, tooltip, {
 Now there's some 5px of breathing room between the tooltip and
 the edge of the boundary.
 
-### Offset modifier
+### Offset middleware
 
 We probably also don't want the tooltip to lie flush with the
-button element. For this, we have the `offset` modifier:
+button element. For this, we have the `offset` middleware:
 
 ```js {1,5}
 const {computePosition, flip, shift, offset} = FloatingUIDOM;
 
 computePosition(button, tooltip, {
   placement: 'top',
-  modifiers: [offset(6), flip(), shift({padding: 5})],
+  middleware: [offset(6), flip(), shift({padding: 5})],
 }).then(({x, y}) => {
   Object.assign(tooltip.style, {
     left: `${x}px`,
@@ -304,17 +305,17 @@ This will displace the tooltip 6px from the reference element:
 <T.Result11 />
 
 > Notice that we put `offset` at the start of the array, rather
-> than at the end? Modifiers' behavior is dependent on **order**.
-> Each modifier returns new coordinates which modifiers later in
-> the array will use. The `offset` modifier is one that should be
-> before most other ones, because those modifiers should modify
+> than at the end? Middleware behavior is dependent on **order**.
+> Each middleware returns new coordinates which middleware later
+> in the array will use. The `offset` middleware is one that
+> should be before most other ones, because they should modify
 > their coordinates based on the offsetted ones.
 
-### Arrow modifier
+### Arrow middleware
 
 Most tooltips have an arrow (or triangle / caret) which points
-toward the button. For this, we have the `arrow` modifier, but we
-first need to add a new element inside of our tooltip:
+toward the button. For this, we have the `arrow` middleware, but
+we first need to add a new element inside of our tooltip:
 
 ```html
 <div id="tooltip" role="tooltip">
@@ -335,7 +336,7 @@ Then style it:
 }
 ```
 
-Then pass the arrow element into the `arrow` modifier:
+Then pass the arrow element into the `arrow` middleware:
 
 ```js {1,3,12}
 const arrowElement = document.querySelector('#arrow');
@@ -345,7 +346,7 @@ const {computePosition, flip, shift, offset, arrow} =
 
 computePosition(button, tooltip, {
   placement: 'top',
-  modifiers: [
+  middleware: [
     offset(5),
     flip(),
     shift({padding: 5}),
@@ -360,31 +361,31 @@ computePosition(button, tooltip, {
 ```
 
 Now we need to add dynamic styles to the arrow element. Unlike
-other modifiers, the `arrow` modifier doesn't modify the main `x`
-and `y` coordinates. Instead, it provides **data** for us to use.
-We can access this piece of information provided via
-`modifiersData`.
+other middleware, the `arrow` middleware doesn't modify the main
+`x` and `y` coordinates. Instead, it provides **data** for us to
+use. We can access this piece of information provided via
+`middlewareData`.
 
 This contains an `arrow` object, referring to the name of the
-`arrow()` modifier we used:
+`arrow()` middleware we used:
 
 ```js {9,15-16}
 computePosition(button, tooltip, {
   placement: 'top',
-  modifiers: [
+  middleware: [
     offset(5),
     flip(),
     shift({padding: 5}),
     arrow({element: arrowElement}),
   ],
-}).then(({x, y, placement, modifiersData}) => {
+}).then(({x, y, placement, middlewareData}) => {
   Object.assign(tooltip.style, {
     left: `${x}px`,
     top: `${y}px`,
   });
 
   // Accessing the data
-  const {x: arrowX, y: arrowY} = modifiersData.arrow;
+  const {x: arrowX, y: arrowY} = middlewareData.arrow;
 });
 ```
 
@@ -393,20 +394,20 @@ We now want to use this data to apply the styles.
 ```js {18-31}
 computePosition(button, tooltip, {
   placement: 'top',
-  modifiers: [
+  middleware: [
     offset(5),
     flip(),
     shift({padding: 5}),
     arrow({element: arrowElement}),
   ],
-}).then(({x, y, placement, modifiersData}) => {
+}).then(({x, y, placement, middlewareData}) => {
   Object.assign(tooltip.style, {
     left: `${x}px`,
     top: `${y}px`,
   });
 
   // Accessing the data
-  const {x: arrowX, y: arrowY} = modifiersData.arrow;
+  const {x: arrowX, y: arrowY} = middlewareData.arrow;
 
   const staticSide = {
     top: 'bottom',
@@ -438,7 +439,7 @@ instance, if the placement is `bottom`, then we want the arrow to
 be positioned 4px outside of the **top** of the tooltip (so we
 use a negative number).
 
-The reason we use `.split('-')[0]` is to also handle variation
+The reason we use `.split('-')[0]` is to also handle aligned
 placements, like `top-start` rather than only `top`.
 
 <T.Result12 />
@@ -460,7 +461,7 @@ Now that the tooltip has everything positioned, we can add
 function update() {
   computePosition(button, tooltip, {
     // ... options ...
-  }).then(({x, y, placement, modifiersData}) => {
+  }).then(({x, y, placement, middlewareData}) => {
     // ... positioning logic ...
   });
 }

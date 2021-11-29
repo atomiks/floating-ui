@@ -19,6 +19,7 @@ export {
   shift,
   limitShift,
   size,
+  detectOverflow,
 } from '@floating-ui/core';
 
 export {getScrollParents} from './utils/getScrollParents';

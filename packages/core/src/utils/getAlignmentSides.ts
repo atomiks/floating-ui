@@ -2,34 +2,34 @@ import type {ElementRects, Placement, BasePlacement} from '../types';
 import {getLengthFromAxis} from './getLengthFromAxis';
 import {getMainAxisFromPlacement} from './getMainAxisFromPlacement';
 import {getOppositePlacement} from './getOppositePlacement';
-import {getVariation} from './getVariation';
+import {getAlignment} from './getAlignment';
 
-export function getVariationSides(
+export function getAlignmentSides(
   placement: Placement,
   rects: ElementRects
 ): {
   main: BasePlacement;
   cross: BasePlacement;
 } {
-  const isStartVariation = getVariation(placement) === 'start';
+  const isStart = getAlignment(placement) === 'start';
   const mainAxis = getMainAxisFromPlacement(placement);
   const length = getLengthFromAxis(mainAxis);
 
-  let mainVariationSide: BasePlacement =
+  let mainAlignmentSide: BasePlacement =
     mainAxis === 'x'
-      ? isStartVariation
+      ? isStart
         ? 'right'
         : 'left'
-      : isStartVariation
+      : isStart
       ? 'bottom'
       : 'top';
 
   if (rects.reference[length] > rects.floating[length]) {
-    mainVariationSide = getOppositePlacement(mainVariationSide);
+    mainAlignmentSide = getOppositePlacement(mainAlignmentSide);
   }
 
   return {
-    main: mainVariationSide,
-    cross: getOppositePlacement(mainVariationSide),
+    main: mainAlignmentSide,
+    cross: getOppositePlacement(mainAlignmentSide),
   };
 }

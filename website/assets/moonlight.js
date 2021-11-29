@@ -1,9 +1,13 @@
-import {red} from 'tailwindcss/colors';
-
 export const theme = {
   styles: [
     {
-      types: ['comment', 'block-comment', 'prolog', 'doctype', 'cdata'],
+      types: [
+        'comment',
+        'block-comment',
+        'prolog',
+        'doctype',
+        'cdata',
+      ],
       style: {
         color: '#818abf',
         fontStyle: 'italic',
@@ -16,7 +20,14 @@ export const theme = {
       },
     },
     {
-      types: ['tag', 'namespace', 'number', 'unit', 'hexcode', 'deleted'],
+      types: [
+        'tag',
+        'namespace',
+        'number',
+        'unit',
+        'hexcode',
+        'deleted',
+      ],
       style: {
         color: '#ff6569',
       },
@@ -37,7 +48,8 @@ export const theme = {
       types: ['selector'],
       style: {
         color: '#72f1b8',
-        textShadow: '0 0 2px #100c0f, 0 0 10px #257c5575, 0 0 35px #21272475',
+        textShadow:
+          '0 0 2px #100c0f, 0 0 10px #257c5575, 0 0 35px #21272475',
       },
     },
     {
@@ -71,7 +83,12 @@ export const theme = {
       },
     },
     {
-      types: ['class-name', 'maybe-class-name', 'builtin', 'object'],
+      types: [
+        'class-name',
+        'maybe-class-name',
+        'builtin',
+        'object',
+      ],
       style: {
         // color: '#ffedb8',
         // textShadow:
@@ -84,7 +101,8 @@ export const theme = {
       types: ['constant', 'symbol'],
       style: {
         color: '#ff9fb1',
-        textShadow: '0 0 2px #9f0000, 0 0 5px #dc078e33, 0 0 10px #fff3',
+        textShadow:
+          '0 0 2px #9f0000, 0 0 5px #dc078e33, 0 0 10px #fff3',
       },
     },
     {

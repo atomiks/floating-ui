@@ -9,26 +9,26 @@ export const computePosition: ComputePosition = async (
   const {
     placement = 'bottom',
     strategy = 'absolute',
-    modifiers = [],
+    middleware = [],
     platform,
   } = config;
 
   if (__DEV__) {
     if (platform == null) {
       throw new Error(
-        ['@floating-ui/core: `platform` property was not passed.'].join(' ')
+        ['Floating UI Core: `platform` property was not passed.'].join(' ')
       );
     }
 
     if (
-      modifiers.filter(({name}) => name === 'autoPlacement' || name === 'flip')
+      middleware.filter(({name}) => name === 'autoPlacement' || name === 'flip')
         .length > 1
     ) {
       throw new Error(
         [
-          '@floating-ui/core: duplicate `flip` and/or `autoPlacement`',
-          'modifiers detected. This will lead to an infinite loop. Ensure only',
-          'one of either has been passed to the `modifiers` array.',
+          'Floating UI: duplicate `flip` and/or `autoPlacement`',
+          'middleware detected. This will lead to an infinite loop. Ensure only',
+          'one of either has been passed to the `middleware` array.',
         ].join(' ')
       );
     }
@@ -38,24 +38,24 @@ export const computePosition: ComputePosition = async (
 
   let {x, y} = computeCoordsFromPlacement({...rects, placement});
 
-  let isModifiersLifecycleReset = false;
+  let isMiddlewareLifecycleReset = false;
 
   let statefulPlacement = placement;
-  let modifiersData = {};
+  let middlewareData = {};
 
   const scheduleReset = ({placement}: {placement: Placement}) => {
     statefulPlacement = placement;
-    isModifiersLifecycleReset = true;
+    isMiddlewareLifecycleReset = true;
   };
 
   let _debug_loop_count_ = 0;
-  for (let i = 0; i < modifiers.length; i++) {
+  for (let i = 0; i < middleware.length; i++) {
     if (__DEV__) {
       _debug_loop_count_++;
       if (_debug_loop_count_ > 100) {
         throw new Error(
           [
-            '@floating-ui/core: The modifiers lifecycle appears to be',
+            'Floating UI: The middleware lifecycle appears to be',
             'running in an infinite loop. This is caused by a',
             '`scheduleReset()` continually being called without a break',
             'condition.',
@@ -71,18 +71,18 @@ export const computePosition: ComputePosition = async (
       }));
     }
 
-    const {name, fn} = modifiers[i];
+    const {name, fn} = middleware[i];
     const {
       x: nextX,
       y: nextY,
-      data: modifierData,
+      data,
     } = await fn({
       x,
       y,
       initialPlacement: placement,
       placement: statefulPlacement,
       strategy,
-      modifiersData,
+      middlewareData,
       scheduleReset,
       rects,
       platform,
@@ -92,11 +92,11 @@ export const computePosition: ComputePosition = async (
     x = nextX ?? x;
     y = nextY ?? y;
 
-    modifiersData = {...modifiersData, [name]: modifierData ?? {}};
+    middlewareData = {...middlewareData, [name]: data ?? {}};
 
-    if (isModifiersLifecycleReset) {
+    if (isMiddlewareLifecycleReset) {
       i = -1;
-      isModifiersLifecycleReset = false;
+      isMiddlewareLifecycleReset = false;
       continue;
     }
   }
@@ -106,6 +106,6 @@ export const computePosition: ComputePosition = async (
     y,
     placement: statefulPlacement,
     strategy,
-    modifiersData,
+    middlewareData,
   };
 };

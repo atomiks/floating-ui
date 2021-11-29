@@ -1,8 +1,8 @@
 import type {
-  Modifier,
+  Middleware,
   Rect,
   Placement,
-  ModifierArguments,
+  MiddlewareArguments,
   Coords,
 } from '../types';
 import {getBasePlacement} from '../utils/getBasePlacement';
@@ -12,18 +12,18 @@ import {within} from '../utils/within';
 import {
   detectOverflow,
   Options as DetectOverflowOptions,
-} from '../utils/detectOverflow';
+} from '../detectOverflow';
 
 type Options = DetectOverflowOptions & {
   mainAxis: boolean;
   crossAxis: boolean;
-  limiter: (modifierArguments: ModifierArguments) => Coords;
+  limiter: (middlewareArguments: MiddlewareArguments) => Coords;
 };
 
-export const shift = (options: Partial<Options> = {}): Modifier => ({
+export const shift = (options: Partial<Options> = {}): Middleware => ({
   name: 'shift',
-  async fn(modifierArguments: ModifierArguments) {
-    const {x, y, placement} = modifierArguments;
+  async fn(middlewareArguments: MiddlewareArguments) {
+    const {x, y, placement} = middlewareArguments;
     const {
       mainAxis: checkMainAxis = true,
       crossAxis: checkCrossAxis = false,
@@ -33,7 +33,7 @@ export const shift = (options: Partial<Options> = {}): Modifier => ({
 
     const coords = {x, y};
     const overflow = await detectOverflow(
-      modifierArguments,
+      middlewareArguments,
       detectOverflowOptions
     );
     const mainAxis = getMainAxisFromPlacement(getBasePlacement(placement));
@@ -61,7 +61,7 @@ export const shift = (options: Partial<Options> = {}): Modifier => ({
     }
 
     return limiter({
-      ...modifierArguments,
+      ...middlewareArguments,
       [mainAxis]: mainAxisCoord,
       [crossAxis]: crossAxisCoord,
     });
@@ -81,9 +81,9 @@ export type LimitShiftOptions = {
 export const limitShift =
   (
     options: Partial<LimitShiftOptions> = {}
-  ): ((modifierArguments: ModifierArguments) => void) =>
-  async (modifierArguments: ModifierArguments) => {
-    const {x, y, placement, rects, modifiersData} = modifierArguments;
+  ): ((middlewareArguments: MiddlewareArguments) => void) =>
+  async (middlewareArguments: MiddlewareArguments) => {
+    const {x, y, placement, rects, middlewareData} = middlewareArguments;
     const {
       offset = 0,
       mainAxis: checkMainAxis = true,
@@ -130,12 +130,12 @@ export const limitShift =
       const limitMin =
         rects.reference[crossAxis] -
         rects.floating[len] -
-        (modifiersData.offset?.[mainAxis] ?? 0) +
+        (middlewareData.offset?.[mainAxis] ?? 0) +
         computedOffset.crossAxis;
       const limitMax =
         rects.reference[crossAxis] +
         rects.reference[len] +
-        (modifiersData.offset?.[mainAxis] ?? 0) +
+        (middlewareData.offset?.[mainAxis] ?? 0) +
         computedOffset.crossAxis;
 
       if (crossAxisCoord < limitMin) {

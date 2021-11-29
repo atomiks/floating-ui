@@ -18,7 +18,7 @@
   import {position, updateOnScroll} from '../../utils.mjs';
 
   updateOnScroll(() => {
-    computePosition(reference, popper, {
+    computePosition(reference, floating, {
       strategy: 'fixed',
       placement: 'right',
     }).then(position);

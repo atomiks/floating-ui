@@ -3,27 +3,20 @@
 <link rel="stylesheet" href="../../../styles.css" />
 
 <style>
-  #reference {
-    position: relative;
-    left: 10px;
-  }
-
   #floating {
     width: 300px;
   }
 </style>
 
-<div id="clip">
-  <div id="reference">Ref</div>
-  <div id="floating">Float</div>
-</div>
+<div id="reference">Ref</div>
+<div id="floating">Float</div>
 
 <script type="module">
   import {computePosition, flip} from '../../../dist/index.mjs';
   import {position} from '../../../utils.mjs';
 
-  computePosition(reference, popper, {
-    placement: 'left',
-    modifiers: [flip({fallbackStrategy: 'preferredPlacement'})],
+  computePosition(reference, floating, {
+    placement: 'top-end',
+    middleware: [flip({flipAlignment: true})],
   }).then(position);
 </script>

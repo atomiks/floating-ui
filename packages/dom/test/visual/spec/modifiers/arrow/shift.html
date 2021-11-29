@@ -18,8 +18,8 @@
   import {computePosition, shift, arrow} from '../../../dist/index.mjs';
   import {position} from '../../../utils.mjs';
 
-  computePosition(reference, popper, {
+  computePosition(reference, floating, {
     placement: 'right',
-    modifiers: [shift(), arrow({element: arrowElement})],
+    middleware: [shift(), arrow({element: arrowElement})],
   }).then(position);
 </script>

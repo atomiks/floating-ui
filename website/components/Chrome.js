@@ -1,14 +1,28 @@
-export const Chrome = ({children, dark, center, scrollable}) => {
+import {useLayoutEffect, useRef} from 'react';
+import cn from 'classnames';
+
+export const Chrome = ({
+  children,
+  // dark,
+  center,
+  scrollable,
+  className,
+}) => {
   const scrollableRef = useRef();
 
   useLayoutEffect(() => {
     if (scrollable) {
-      scrollableRef.current.scrollTop = 350;
+      scrollableRef.current.scrollTop = 250;
     }
   }, [scrollable]);
 
   return (
-    <div className="relative bg-gray-50 rounded-lg overflow-hidden h-64 text-gray-900">
+    <div
+      className={
+        `relative bg-gray-50 rounded-lg overflow-hidden text-gray-900` +
+        (className ? ` ${className}` : ' h-64')
+      }
+    >
       <div className="absolute w-full flex gap-2 bg-gray-100 p-4 z-10 top-0">
         <div
           className="rounded-full w-4 h-4"
@@ -25,15 +39,15 @@ export const Chrome = ({children, dark, center, scrollable}) => {
       </div>
       <div
         ref={scrollableRef}
-        className={cn(
-          'overflow-hidden relative p-2 h-full mt-12',
-          {
-            'grid items-center': center,
-            'overflow-scroll': scrollable,
-          }
-        )}
+        className={cn('overflow-hidden relative p-2 mt-12', {
+          'grid place-items-center': center,
+          'overflow-scroll': scrollable,
+        })}
+        style={{height: 'calc(100% - 3rem)'}}
       >
+        {scrollable && <div style={{height: 350, width: 1}} />}
         {children}
+        {scrollable && <div style={{height: 350, width: 1}} />}
       </div>
     </div>
   );

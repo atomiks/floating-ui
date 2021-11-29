@@ -12,9 +12,9 @@
   import {position, updateOnScroll} from '../../../utils.mjs';
 
   updateOnScroll(() => {
-    computePosition(reference, popper, {
+    computePosition(reference, floating, {
       placement: 'right',
-      modifiers: [hide()],
+      middleware: [hide()],
     }).then(position);
   });
 </script>

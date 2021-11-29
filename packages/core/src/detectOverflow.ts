@@ -1,13 +1,13 @@
 import type {
   SideObject,
   Padding,
-  ModifierArguments,
   Boundary,
   RootBoundary,
   Context,
-} from '../types';
-import {getSideObjectFromPadding} from './getPaddingObject';
-import {rectToClientRect} from './rectToClientRect';
+  MiddlewareArguments,
+} from './types';
+import {getSideObjectFromPadding} from './utils/getPaddingObject';
+import {rectToClientRect} from './utils/rectToClientRect';
 
 export type Options = {
   boundary: Boundary;
@@ -18,10 +18,10 @@ export type Options = {
 };
 
 export async function detectOverflow(
-  modifierArguments: ModifierArguments,
+  middlewareArguments: MiddlewareArguments,
   options: Partial<Options> = {}
 ): Promise<SideObject> {
-  const {x, y, platform, rects, elements, strategy} = modifierArguments;
+  const {x, y, platform, rects, elements, strategy} = middlewareArguments;
 
   const {
     boundary = 'clippingParents',
@@ -57,6 +57,10 @@ export async function detectOverflow(
     })
   );
 
+  // Debug the client rects:
+  // draw(clippingClientRect, 'cyan', 1);
+  // draw(elementClientRect, 'yellow', 2);
+
   // positive = overflowing the clipping rect
   // 0 or negative = within the clipping rect
   return {
@@ -70,3 +74,26 @@ export async function detectOverflow(
       elementClientRect.right - clippingClientRect.right + paddingObject.right,
   };
 }
+
+// function draw(rect, color, id) {
+//   const lastDraw = document.querySelector(`#draw-${id}`);
+
+//   if (document.body.contains(lastDraw)) {
+//     document.body.removeChild(lastDraw);
+//   }
+
+//   const div = document.createElement('div');
+//   div.id = `draw-${id}`;
+
+//   Object.assign(div.style, {
+//     position: 'absolute',
+//     left: `${rect.x}px`,
+//     top: `${rect.y}px`,
+//     width: `${rect.width}px`,
+//     height: `${rect.height}px`,
+//     backgroundColor: color,
+//     opacity: '0.5',
+//   });
+
+//   document.body.append(div);
+// }

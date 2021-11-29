@@ -1,10 +1,4 @@
-import React, {
-  useState,
-  forwardRef,
-  useRef,
-  useLayoutEffect,
-} from 'react';
-import cn from 'classnames';
+import React, {forwardRef} from 'react';
 import Tippy from '@tippyjs/react/headless';
 import {Chrome} from './Chrome';
 
@@ -251,7 +245,7 @@ export const Result12 = () => {
         placement="bottom"
         offset={[0, 6]}
         appendTo="parent"
-        render={(attrs) => (
+        render={() => (
           <div className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1">
             My tooltip with more content
             <div style={{}} data-popper-arrow className="-z-1">
@@ -287,7 +281,7 @@ export const Result13 = () => {
         offset={[0, 6]}
         hideOnClick={false}
         appendTo="parent"
-        render={(attrs) => (
+        render={() => (
           <div className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1">
             My tooltip with more content
             <div style={{}} data-popper-arrow className="-z-1">

@@ -1,7 +1,11 @@
+// eslint-disable-next-line
 const colors = require('tailwindcss/colors');
 
 module.exports = {
-  purge: ['./pages/**/*.{js,ts,jsx,tsx}', './components/**/*.{js,ts,jsx,tsx}'],
+  purge: [
+    './pages/**/*.{js,ts,jsx,tsx}',
+    './components/**/*.{js,ts,jsx,tsx}',
+  ],
   darkMode: false, // or 'media' or 'class'
   theme: {
     extend: {
@@ -38,9 +42,7 @@ module.exports = {
               color: 'inherit',
             },
             code: {
-              backgroundColor: colors.gray[300],
-              fontSize: '0.95rem !important',
-              color: colors.gray[900],
+              color: colors.pink[300],
               borderRadius: '4px',
               padding: '2px 4px',
               '&::before': {

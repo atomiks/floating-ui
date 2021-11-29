@@ -3,46 +3,51 @@ export default Layout;
 
 # detectOverflow
 
-The `detectOverflow()` function computes the overflow offsets of
-either the reference or floating element relative to any clipping
+This function computes the overflow offsets of either the
+reference or floating element relative to any clipping
 boundaries.
 
-Almost every modifier provided by the library uses this function,
-making it integral to your own custom modifiers.
+Almost every middleware provided by the library uses this
+function, making it useful for your own custom middleware.
 
 The function takes two arguments and returns a promise:
 
 ```js
-detectOverflow(modifierArguments, options);
+await detectOverflow(middlewareArguments, options);
 ```
 
 ## Usage
 
-Inside your custom modifier, make your `fn` async and await it,
-passing in the `modifierArguments`:
+Inside your custom middleware, make your `fn` async and await it,
+passing in the `middlewareArguments`:
 
 ```js
 import {detectOverflow} from '@floating-ui/dom';
 
-const modifier = {
-  name: 'modifier',
-  async fn(modifierArguments) {
-    const overflow = await detectOverflow(modifierArguments);
+const middleware = {
+  name: 'middleware',
+  async fn(middlewareArguments) {
+    const overflow = await detectOverflow(middlewareArguments);
     return {};
   },
 };
 ```
 
-`overflow` is a `SideObject` containing side properties with
-numbers. A positive number means the element is overflowing on
-that side, while 0 or negative means it is not.
+The returned value, `overflow`, is a `SideObject` containing side
+properties with numbers representing offsets.
+
+- A positive number means the element is overflowing the clipping
+  boundary by that number of pixels.
+- A negative number means the element has that number of pixels
+  left before it will overflow the clipping boundary.
+- `0` means the side lies flush with the clipping boundary.
 
 ## Options
 
 `detectOverflow` takes options as a second argument.
 
 ```js
-detectOverflow(modifierArguments, {
+await detectOverflow(middlewareArguments, {
   // options
 });
 ```
@@ -50,19 +55,17 @@ detectOverflow(modifierArguments, {
 ### boundary
 
 ```ts
-type Boundary =
-  | 'clippingParents'
-  | HTMLElement
-  | Array<HTMLElement>;
+type Boundary = 'clippingParents' | Element | Array<Element>;
 ```
 
-This describes the element in which the element will be checked
-for overflow relative to. The default is `"clippingParents"`,
-which are the scrolling containers (including `overflow: hidden`
-elements) which will cause the element to be clipped.
+This describes the clipping element(s) that overflow will be
+checked relative to. The default is `"clippingParents"`, which
+are the scrolling containers (including `overflow: hidden`
+elements) which will cause the reference or floating element to
+be clipped.
 
 ```js
-detectOverflow(modifierArguments, {
+await detectOverflow(middlewareArguments, {
   boundary: document.querySelector('#container'),
 });
 ```
@@ -80,7 +83,7 @@ option is `"document"`, which is the entire page outside the
 viewport.
 
 ```js
-detectOverflow(modifierArguments, {
+await detectOverflow(middlewareArguments, {
   rootBoundary: 'document',
 });
 ```
@@ -102,7 +105,7 @@ This describes the virtual padding around the boundary to check
 for overflow.
 
 ```js
-detectOverflow(modifierArguments, {
+await detectOverflow(middlewareArguments, {
   // 5px on all sides
   padding: 5,
   // Unspecified sides are 0
@@ -115,26 +118,35 @@ detectOverflow(modifierArguments, {
 
 ### elementContext
 
-By default, the floating element is being checked for overflow.
+```ts
+type ElementContext = 'reference' | 'floating';
+```
+
+By default, the floating element is the one being checked for
+overflow.
+
 But you can also change the context to `"reference"` to instead
-check the reference element's overflow relative to its clipping
-boundary.
+check its overflow relative to its clipping boundary.
 
 ```js
-detectOverflow(modifierArguments, {
-  elementContext: 'reference', // 'popper' by default
+await detectOverflow(middlewareArguments, {
+  elementContext: 'reference', // 'floating' by default
 });
 ```
 
 ### altBoundary
 
-For instance, if the `elementContext` is `"popper"`, and you
-enable this option, then the function will check the reference
-element's `"clippingParents"` context as the boundary in which
-overflow is checked instead, and vice-versa.
+This is a boolean value which determines whether to check the
+alternate `elementContext`'s boundary.
+
+For instance, if the `elementContext` is `"floating"`, and you
+enable this option, then the boundary in which overflow is
+checked for is the `"reference"`'s boundary. This only applies if
+you are using the default `"clippingParents"` enum as the
+`boundary`.
 
 ```js
-detectOverflow(modifierArguments, {
+await detectOverflow(middlewareArguments, {
   altBoundary: true, // false by default
 });
 ```

@@ -1,28 +1,28 @@
-import type {Placement, Modifier, ModifierArguments} from '../types';
+import type {Placement, Middleware, MiddlewareArguments} from '../types';
 import {getOppositePlacement} from '../utils/getOppositePlacement';
 import {getBasePlacement} from '../utils/getBasePlacement';
 import {
   detectOverflow,
   Options as DetectOverflowOptions,
-} from '../utils/detectOverflow';
-import {getVariationSides} from '../utils/getVariationSides';
+} from '../detectOverflow';
+import {getAlignmentSides} from '../utils/getAlignmentSides';
 import {getExpandedPlacements} from '../utils/getExpandedPlacements';
 
 export type Options = DetectOverflowOptions & {
   mainAxis: boolean;
   crossAxis: boolean;
   fallbackPlacements: Array<Placement>;
-  fallbackStrategy: 'bestFit' | 'preferredPlacement';
-  flipVariations: boolean;
+  fallbackStrategy: 'bestFit' | 'initialPlacement';
+  flipAlignment: boolean;
 };
 
-export const flip = (options: Partial<Options> = {}): Modifier => ({
+export const flip = (options: Partial<Options> = {}): Middleware => ({
   name: 'flip',
-  async fn(modifierArguments: ModifierArguments) {
-    const {placement, modifiersData, rects, scheduleReset, initialPlacement} =
-      modifierArguments;
+  async fn(middlewareArguments: MiddlewareArguments) {
+    const {placement, middlewareData, rects, scheduleReset, initialPlacement} =
+      middlewareArguments;
 
-    if (modifiersData.flip?.skip) {
+    if (middlewareData.flip?.skip) {
       return {};
     }
 
@@ -31,7 +31,7 @@ export const flip = (options: Partial<Options> = {}): Modifier => ({
       crossAxis: checkCrossAxis = true,
       fallbackPlacements: specifiedFallbackPlacements,
       fallbackStrategy = 'bestFit',
-      flipVariations = true,
+      flipAlignment = true,
       ...detectOverflowOptions
     } = options;
 
@@ -40,26 +40,26 @@ export const flip = (options: Partial<Options> = {}): Modifier => ({
 
     const fallbackPlacements =
       specifiedFallbackPlacements ||
-      (isBasePlacement || !flipVariations
+      (isBasePlacement || !flipAlignment
         ? [getOppositePlacement(initialPlacement)]
         : getExpandedPlacements(initialPlacement));
 
     const placements = [initialPlacement, ...fallbackPlacements];
 
     const overflow = await detectOverflow(
-      modifierArguments,
+      middlewareArguments,
       detectOverflowOptions
     );
 
     const overflows = [];
-    let overflowsData = modifiersData.flip?.overflows || [];
+    let overflowsData = middlewareData.flip?.overflows || [];
 
     if (checkMainAxis) {
       overflows.push(overflow[basePlacement]);
     }
 
     if (checkCrossAxis) {
-      const {main, cross} = getVariationSides(placement, rects);
+      const {main, cross} = getAlignmentSides(placement, rects);
       overflows.push(overflow[main], overflow[cross]);
     }
 
@@ -67,7 +67,7 @@ export const flip = (options: Partial<Options> = {}): Modifier => ({
 
     // One or more sides is overflowing
     if (!overflows.every((side) => side <= 0)) {
-      const nextIndex = (modifiersData.flip?.index ?? 0) + 1;
+      const nextIndex = (middlewareData.flip?.index ?? 0) + 1;
       const nextPlacement = placements[nextIndex];
 
       if (nextPlacement) {
@@ -99,7 +99,7 @@ export const flip = (options: Partial<Options> = {}): Modifier => ({
           });
           break;
         }
-        case 'preferredPlacement':
+        case 'initialPlacement':
           scheduleReset({placement: initialPlacement});
           break;
         default:

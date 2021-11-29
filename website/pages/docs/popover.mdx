@@ -136,7 +136,7 @@ tippy('#myButton', {
   content: document.querySelector('#myPopover'),
   theme: 'light-border',
   animation: 'fade',
-  plugins: [animation],
+  middleware: [animation],
 });
 ```
 
@@ -177,7 +177,7 @@ tippy('#myButton', {
   theme: 'light-border',
   animation: 'fade',
   trigger: 'click',
-  plugins: [animation, aria, dismiss],
+  middleware: [animation, aria, dismiss],
 });
 ```
 
@@ -196,13 +196,13 @@ tippy('#myButton', {
   theme: 'light-border',
   animation: 'fade',
   trigger: 'click',
-  plugins: [animation, aria, dismiss],
+  middleware: [animation, aria, dismiss],
   interactive: true,
 });
 ```
 
 To enable screen reader support, and the ability to dismiss the
-popover via `esc`, import the `aria` and `dismiss` plugins:
+popover via `esc`, import the `aria` and `dismiss` middleware:
 
 ```js {1,11}
 import tippy, {render, animation, aria, dismiss} from 'tippy.js';
@@ -215,7 +215,7 @@ tippy('#myButton', {
   theme: 'light-border',
   animation: 'fade',
   trigger: 'click',
-  plugins: [animation, aria, dismiss],
+  middleware: [animation, aria, dismiss],
 });
 ```
 
@@ -229,8 +229,8 @@ buttons or form inputs, read the
 
 It's recommended that you create your own high-level wrappers
 around `tippy()` for each floating UI element you make. This way
-you don't need to pass all the plugins and props every time you
-want to add a popover to your website.
+you don't need to pass all the middleware and props every time
+you want to add a popover to your website.
 
 ```js
 // components/ui/popover.js
@@ -246,7 +246,7 @@ export function popover(targets, options = {}) {
     animation: options.animation ?? 'fade',
     trigger: options.trigger ?? 'click',
     interactive: true,
-    plugins: [animation, aria, dismiss],
+    middleware: [animation, aria, dismiss],
   });
 }
 ```
@@ -272,7 +272,7 @@ popover('#delete-button', {
 
 As seen above, you need to make a new `popover()` call for every
 new element if they have different content. You can leverage the
-`dataAttributes` plugin to reduce this to a single call:
+`dataAttributes` middleware to reduce this to a single call:
 
 ```js {7,15-17,22}
 // components/ui/popover.js
@@ -298,7 +298,7 @@ export function popover(targets, options = {}) {
     animation: options.animation ?? 'fade',
     trigger: options.trigger ?? 'click',
     interactive: true,
-    plugins: [animation, aria, dismiss, dataAttributes],
+    middleware: [animation, aria, dismiss, dataAttributes],
   });
 }
 ```

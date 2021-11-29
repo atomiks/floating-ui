@@ -3,62 +3,16 @@ import 'tippy.js/themes/light-border.css';
 import 'tippy.js/animations/scale-subtle.css';
 import 'tippy.js/animations/perspective-subtle.css';
 
-import Image from 'next/image';
-import Highlight, {defaultProps} from 'prism-react-renderer';
 import Tippy from '@tippyjs/react';
-import {sticky, followCursor, inlinePositioning} from 'tippy.js';
-import {
-  useEffect,
-  useLayoutEffect,
-  useRef,
-  useState,
-} from 'react';
-import {
-  Check,
-  ArrowRight,
-  ChevronRight,
-  GitHub,
-  Heart,
-} from 'react-feather';
+import {useLayoutEffect, useState} from 'react';
+import {Check, ArrowRight, GitHub, Heart} from 'react-feather';
 import Link from 'next/link';
-import {theme} from '../assets/moonlight.js';
 import DropdownExample from '../components/DropdownExample.js';
 import cn from 'classnames';
 import Code from '../components/Code';
 
 import Logo from '../assets/logo.svg';
 import Orbs from '../assets/orbs.svg';
-
-function useOnScreen(ref, rootMargin = '0px') {
-  const [isIntersecting, setIntersecting] = useState(false);
-
-  useEffect(() => {
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        // Update our state when observer callback fires
-        setIntersecting(entry.isIntersecting);
-      },
-      {
-        rootMargin,
-      }
-    );
-    if (ref.current) {
-      observer.observe(ref.current);
-    }
-    return () => {
-      if (ref.current) {
-        observer.unobserve(ref.current);
-      }
-    };
-  }, []);
-
-  return isIntersecting;
-}
-
-const tooltipHtmlCode = `
-<button id="button">🙂</button>
-<div id="tooltip">Add emoji</button>
-`.trim();
 
 function Placement() {
   const [placement, setPlacement] = useState('top');
@@ -247,7 +201,7 @@ const tooltip = document.querySelector('#tooltip');
 
 const {x, y} = await computePosition(button, tooltip, {
   placement: 'right',
-  modifiers: [shift()]
+  middleware: [shift()]
 });
 
 Object.assign(tooltip.style, {
@@ -280,7 +234,7 @@ Object.assign(tooltip.style, {
         className="grid lg:col-span-5 relative overflow-hidden p-2 bg-gray-300 rounded-lg"
       >
         <div
-          className="grid relative items-center bg-gray-300 rounded-lg overflow-scroll w-full border-4 border-solid border-red-600"
+          className="grid relative items-center bg-gray-300 rounded-lg overflow-auto w-full border-4 border-solid border-red-600"
           style={{height: 450}}
         >
           <div
@@ -344,7 +298,7 @@ const tooltip = document.querySelector('#tooltip');
 
 const {x, y} = await computePosition(button, tooltip, {
   placement: 'top',
-  modifiers: [flip()]
+  middleware: [flip()]
 });
 
 Object.assign(tooltip.style, {
@@ -378,7 +332,7 @@ Object.assign(tooltip.style, {
         ref={setBoundary}
       >
         <div
-          className="grid relative items-center bg-gray-300 rounded-lg overflow-scroll w-full border-4 border-styled border-red-600"
+          className="grid relative items-center bg-gray-300 rounded-lg overflow-auto w-full border-4 border-styled border-red-600"
           style={{height: 485}}
         >
           <div
@@ -528,13 +482,6 @@ function Tooltips() {
 }
 
 function HomePage() {
-  const [boundary, setBoundary] = useState();
-  const scrollAreaRef = useRef();
-  const stickyRef = useRef();
-  const stickyVisible = useOnScreen(stickyRef);
-  const floatingBoxRef = useRef();
-  const floatingBoxVisible = useOnScreen(floatingBoxRef);
-
   return (
     <>
       <header
@@ -713,7 +660,7 @@ function HomePage() {
             Endlessly extensible.
           </h2>
           <p className="text-2xl lg:text-3xl text-left mb-8">
-            The core package exports modifiers that cover 99% of
+            The core package exports middleware that cover 99% of
             positioning use cases, but for the remaining 1%, it's
             straightforward to add your own positioning logic.
           </p>
@@ -721,7 +668,7 @@ function HomePage() {
           <div className="grid lg:grid-cols-2 gap-4">
             <div className="bg-gradient-to-br from-red-600 to-pink-700 rounded-lg py-8 px-12">
               <h3 className="text-3xl text-gray-50 font-bold mb-4 text-yellow-100">
-                Core modifiers
+                Core middleware
               </h3>
               <ul className="text-xl text-pink-100 pl-6 flex flex-col gap-2">
                 <li className="relative">
@@ -749,7 +696,7 @@ function HomePage() {
             </div>
             <div className="bg-gradient-to-br from-red-600 to-pink-700 rounded-lg py-8 px-12">
               <h3 className="text-3xl text-gray-50 font-bold mb-4 text-yellow-100">
-                Custom modifiers
+                Custom middleware
               </h3>
               <ul className="text-xl text-pink-100 pl-6 flex flex-col gap-2">
                 <li className="relative">

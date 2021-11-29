@@ -22,8 +22,8 @@
   import {computePosition, flip} from '../../../dist/index.mjs';
   import {position} from '../../../utils.mjs';
 
-  computePosition(reference, popper, {
+  computePosition(reference, floating, {
     placement: 'left',
-    modifiers: [flip({fallbackStrategy: 'bestFit'})],
+    middleware: [flip({fallbackStrategy: 'bestFit'})],
   }).then(position);
 </script>

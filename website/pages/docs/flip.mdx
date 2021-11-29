@@ -3,8 +3,22 @@ export default Layout;
 
 # flip
 
-The `flip` modifier changes the placement of the floating element
-to the opposite one in order to prevent overflow.
+The `flip` middleware changes the placement of the floating
+element to the opposite one by default in order to prevent
+overflow.
+
+<div className="flex flex-col gap-4">
+  <Chrome center scrollable className="h-96">
+    <Floating middleware={[{name: 'flip'}]}>
+      <div className="grid place-items-center text-gray-50 w-32 h-32 bg-blue-600">
+        Scroll
+      </div>
+    </Floating>
+  </Chrome>
+</div>
+
+It also has the ability to flip to _any_ placement, not just the
+opposite one.
 
 ## Usage
 
@@ -12,7 +26,7 @@ to the opposite one in order to prevent overflow.
 import {computePosition, flip} from '@floating-ui/dom';
 
 computePosition(referenceEl, floatingEl, {
-  modifiers: [flip()],
+  middleware: [flip()],
 });
 ```
 
@@ -20,9 +34,17 @@ computePosition(referenceEl, floatingEl, {
 
 `flip` accepts an object of options.
 
-### mainAxis
+```ts
+type Options = DetectOverflowOptions & {
+  mainAxis: boolean;
+  crossAxis: boolean;
+  fallbackPlacements: Array<Placement>;
+  fallbackStrategy: 'bestFit' | 'initialPlacement';
+  flipAlignment: boolean;
+};
+```
 
-Type: `boolean`
+### mainAxis
 
 This is the main axis in which overflow is checked, either `x` or
 `y` depending on the placement.
@@ -33,8 +55,6 @@ flip({mainAxis: false}); // true by default
 
 ### crossAxis
 
-Type: `boolean`
-
 This is the cross axis in which overflow is checked, the opposite
 axis of `mainAxis`.
 
@@ -43,8 +63,6 @@ flip({crossAxis: false}); // true by default
 ```
 
 ### fallbackPlacements
-
-Type: `Array<Placement>`
 
 This describes the array of placements to try if the preferred
 `placement` doesn't fully fit.
@@ -63,30 +81,23 @@ of these fit, then the best-fitting placement will be used.
 ### fallbackStrategy
 
 When no placements fit, then you'll want to decide what happens.
-Two strategies are available:
-
-```ts
-type FallbackStrategy = 'bestFit' | 'preferredPlacement';
-```
-
 `bestFit` will use the placement which fits best on the checked
-axes. `preferredPlacement` will use the initial `placement`
-specified if none fit.
+axes. `initialPlacement` will use the initial `placement`
+specified.
 
 ```js
 flip({
-  fallbackStrategy: 'preferredPlacement', // 'bestFit' by default
+  fallbackStrategy: 'initialPlacement', // 'bestFit' by default
 });
 ```
 
-### flipVariations
+### flipAlignment
 
-When a variation `placement` is specified, e.g. `top-start`
-instead of just `top`, this will flip to `top-end` if `start`
-doesn't fit.
+When an alignment specified, e.g. `top-start` instead of just
+`top`, this will flip to `top-end` if `start` doesn't fit.
 
 ```js
-flip({flipVariations: false}); // true by default
+flip({flipAlignment: false}); // true by default
 ```
 
 ### ...detectOverflowOptions

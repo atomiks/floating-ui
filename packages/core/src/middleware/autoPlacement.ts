@@ -1,88 +1,88 @@
 import type {
   AutoPlacement,
-  Modifier,
-  ModifierArguments,
+  Middleware,
+  MiddlewareArguments,
   Placement,
-  Variation,
+  Alignment,
 } from '../types';
 import {
   detectOverflow,
   Options as DetectOverflowOptions,
-} from '../utils/detectOverflow';
+} from '../detectOverflow';
 import {getBasePlacement} from '../utils/getBasePlacement';
-import {getVariation} from '../utils/getVariation';
-import {getVariationSides} from '../utils/getVariationSides';
-import {getOppositeVariationPlacement} from '../utils/getOppositeVariationPlacement';
+import {getAlignment} from '../utils/getAlignment';
+import {getAlignmentSides} from '../utils/getAlignmentSides';
+import {getOppositeAlignmentPlacement} from '../utils/getOppositeAlignmentPlacement';
 import {allPlacements, basePlacements} from '../enums';
 
 function convertAutoPlacementToComputedPlacements(
   placement: AutoPlacement,
   allowedPlacements: Array<Placement>
 ) {
-  const variation = getVariation(placement);
+  const alignment = getAlignment(placement);
 
-  if (!variation) {
+  if (!alignment) {
     return basePlacements.filter((placement) =>
       allowedPlacements.includes(placement)
     );
   }
 
   return allowedPlacements.filter(
-    (placement) => getVariation(placement) === variation
+    (placement) => getAlignment(placement) === alignment
   );
 }
 
 export type Options = DetectOverflowOptions & {
-  variation: Variation | null;
+  alignment: Alignment | null;
   crossAxis: boolean;
   allowedPlacements: Array<Placement>;
-  autoVariations: boolean;
+  autoAlignment: boolean;
 };
 
-export const autoPlacement = (options: Partial<Options> = {}): Modifier => ({
+export const autoPlacement = (options: Partial<Options> = {}): Middleware => ({
   name: 'autoPlacement',
-  async fn(modifierArguments: ModifierArguments) {
-    const {x, y, rects, scheduleReset, modifiersData, placement} =
-      modifierArguments;
+  async fn(middlewareArguments: MiddlewareArguments) {
+    const {x, y, rects, scheduleReset, middlewareData, placement} =
+      middlewareArguments;
 
     const {
-      variation = null,
+      alignment = null,
       crossAxis = false,
       allowedPlacements = allPlacements,
-      autoVariations = true,
+      autoAlignment = true,
       ...detectOverflowOptions
     } = options;
 
-    if (modifiersData.autoPlacement?.skip) {
+    if (middlewareData.autoPlacement?.skip) {
       return {};
     }
 
     const autoPlacement = ('auto' +
-      (variation != null ? `-${variation}` : '')) as AutoPlacement;
+      (alignment != null ? `-${alignment}` : '')) as AutoPlacement;
 
     let placements = convertAutoPlacementToComputedPlacements(
       autoPlacement,
       allowedPlacements
     );
 
-    if (autoVariations) {
+    if (autoAlignment) {
       placements = placements.reduce((acc, placement) => {
         return acc.concat(
-          getVariation(placement)
-            ? [placement, getOppositeVariationPlacement(placement)]
+          getAlignment(placement)
+            ? [placement, getOppositeAlignmentPlacement(placement)]
             : placement
         );
       }, [] as any);
     }
 
     const overflow = await detectOverflow(
-      modifierArguments,
+      middlewareArguments,
       detectOverflowOptions
     );
 
-    const currentIndex = modifiersData.autoPlacement?.index ?? 0;
+    const currentIndex = middlewareData.autoPlacement?.index ?? 0;
     const currentPlacement = placements[currentIndex];
-    const {main, cross} = getVariationSides(currentPlacement, rects);
+    const {main, cross} = getAlignmentSides(currentPlacement, rects);
 
     // Make `computeCoords` start from the right place
     if (placement !== currentPlacement) {
@@ -97,7 +97,7 @@ export const autoPlacement = (options: Partial<Options> = {}): Modifier => ({
     ];
 
     const allOverflows = [
-      ...(modifiersData.autoPlacement?.overflows ?? []),
+      ...(middlewareData.autoPlacement?.overflows ?? []),
       {placement: currentPlacement, overflows: currentOverflows},
     ];
 
@@ -118,7 +118,7 @@ export const autoPlacement = (options: Partial<Options> = {}): Modifier => ({
     const placementsSortedByLeastOverflow = allOverflows
       .slice()
       .sort(
-        crossAxis || (autoVariations && getVariation(placement))
+        crossAxis || (autoAlignment && getAlignment(placement))
           ? (a, b) =>
               a.overflows.reduce((acc, overflow) => acc + overflow, 0) -
               b.overflows.reduce((acc, overflow) => acc + overflow, 0)

@@ -13,32 +13,107 @@ yarn add @floating-ui/react-dom
 
 ## Usage
 
-The `useFloat()` hook accepts all of
+The `useFloating()` hook accepts all of
 [computePosition's options](/docs/computePosition#options).
 
+Middleware must be either memo'd or declared outside of the
+function body to prevent an infinite render loop.
+
 ```jsx
-import {useFloat, shift} from '@floating-ui/react-dom';
+import {useMemo} from 'react';
+import {useFloating, shift} from '@floating-ui/react-dom';
 
 function App() {
-  const {x, y, reference, floating} = useFloat({
+  const {x, y, reference, floating, strategy} = useFloating({
     placement: 'right',
-    modifiers: [shift()],
+    middleware: useMemo(() => [shift()], []),
   });
 
   return (
-    <div>
+    <>
       <button ref={reference}>Button</button>
       <div
         ref={floating}
         style={{
-          position: 'absolute',
+          position: strategy,
+          top: y != null ? `${y}px` : '',
+          left: x != null ? `${x}px` : '',
+        }}
+      >
+        Tooltip
+      </div>
+    </>
+  );
+}
+```
+
+`x` and `y` will be `null` initially, before the layout effect
+has fired.
+
+> You may be tempted to simplify the ternary to `y ? ... : ...`
+> without a `!= null` check, but `y` and `x` can be `0` so there
+> will be bugs if you do!
+
+## Updating
+
+The hook returns an `update()` function to update the position,
+e.g. in event listeners.
+
+```js
+const {update} = useFloating();
+```
+
+For instance:
+
+```jsx
+import {useMemo, useEffect} from 'react';
+import {
+  useFloating,
+  shift,
+  getScrollParents,
+} from '@floating-ui/react-dom';
+
+function App() {
+  const {x, y, reference, floating, strategy, update} =
+    useFloating({
+      placement: 'right',
+      middleware: useMemo(() => [shift()], []),
+    });
+
+  // Update on scroll and resize
+  useEffect(() => {
+    const parents = [
+      ...getScrollParents(reference.current),
+      ...getScrollParents(floating.current),
+    ];
+
+    parents.forEach((parent) => {
+      parent.addEventListener('scroll', update);
+      parent.addEventListener('resize', update);
+    });
+
+    return () => {
+      parents.forEach((parent) => {
+        parent.removeEventListener('scroll', update);
+        parent.removeEventListener('resize', update);
+      });
+    };
+  }, []);
+
+  return (
+    <>
+      <button ref={reference}>Button</button>
+      <div
+        ref={floating}
+        style={{
+          position: strategy,
           top: `${y}px`,
           left: `${x}px`,
         }}
       >
         Tooltip
       </div>
-    </div>
+    </>
   );
 }
 ```

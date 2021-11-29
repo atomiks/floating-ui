@@ -1,4 +1,4 @@
-import type {Modifier, ModifierArguments, Padding} from '../types';
+import type {Middleware, MiddlewareArguments, Padding} from '../types';
 import {getBasePlacement} from '../utils/getBasePlacement';
 import {getLengthFromAxis} from '../utils/getLengthFromAxis';
 import {getMainAxisFromPlacement} from '../utils/getMainAxisFromPlacement';
@@ -7,14 +7,24 @@ import {within} from '../utils/within';
 
 export type Options = {
   element: any;
-  padding: Padding;
+  padding?: Padding;
 };
 
-export const arrow = (options: Partial<Options> = {}): Modifier => ({
+export const arrow = (options: Options): Middleware => ({
   name: 'arrow',
-  async fn(modifierArguments: ModifierArguments) {
-    const {element, padding = 0} = options;
-    const {x, y, placement, rects, platform} = modifierArguments;
+  async fn(middlewareArguments: MiddlewareArguments) {
+    // Since `element` is required, we don't Partial<> the type
+    const {element, padding = 0} = options ?? {};
+    const {x, y, placement, rects, platform} = middlewareArguments;
+
+    if (element == null) {
+      if (__DEV__) {
+        console.warn(
+          'Floating UI: No `element` was passed to the `arrow` middleware.'
+        );
+      }
+      return {};
+    }
 
     const paddingObject = getSideObjectFromPadding(padding);
     const coords = {x, y};

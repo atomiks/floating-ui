@@ -3,8 +3,48 @@ export default Layout;
 
 # shift
 
-The `shift` modifier shifts the floating element in order to keep
-it in view (prevents overflow).
+The `shift` middleware shifts the floating element in order to
+keep it in view (prevents overflow).
+
+<div className="flex flex-col gap-4">
+  <Chrome>
+  <Tippy
+    visible
+    render={() => (
+      <div className="bg-gray-900 px-2 py-1 rounded text-gray-50">
+        Tooltip wider than its reference
+      </div>
+    )}
+    placement="bottom"
+    offset={[0, 0]}
+    appendTo="parent"
+    popperOptions={{
+      modifiers: [{name: 'preventOverflow', enabled: false}],
+    }}
+  >
+    <div className="grid place-items-center text-gray-50 w-32 h-32 bg-blue-600">Default</div>
+  </Tippy>
+</Chrome>
+
+  <Chrome>
+    <Tippy
+      visible
+      render={() => (
+        <div className="bg-gray-900 px-2 py-1 rounded text-gray-50">
+          Tooltip wider than its reference
+        </div>
+      )}
+      placement="bottom"
+      offset={[0, 0]}
+      appendTo="parent"
+      popperOptions={{
+        modifiers: [{name: 'preventOverflow', options: {padding: 0}}],
+      }}
+    >
+      <div className="grid place-items-center text-gray-50 w-32 h-32 bg-blue-600">shift()</div>
+  </Tippy>
+  </Chrome>
+</div>
 
 ## Usage
 
@@ -12,7 +52,7 @@ it in view (prevents overflow).
 import {computePosition, shift} from '@floating-ui/dom';
 
 computePosition(referenceEl, floatingEl, {
-  modifiers: [shift()],
+  middleware: [shift()],
 });
 ```
 
@@ -20,9 +60,15 @@ computePosition(referenceEl, floatingEl, {
 
 `shift` accepts an object of options.
 
-### mainAxis
+```ts
+type Options = DetectOverflowOptions & {
+  mainAxis: boolean;
+  crossAxis: boolean;
+  limiter: (middlewareArguments: MiddlewareArguments) => Coords;
+};
+```
 
-Type: `boolean`
+### mainAxis
 
 This is the main axis in which shifting is applied, either `x` or
 `y` depending on the placement.
@@ -33,20 +79,16 @@ shift({mainAxis: false}); // true by default
 
 ### crossAxis
 
-Type: `boolean`
-
 This is the cross axis in which shifting is applied, the opposite
 axis of `mainAxis`. Enabling this can lead to the floating
 element **overlapping** the reference element, which is generally
-not desired and is replaced by the `flip` modifier.
+not desired and is replaced by the `flip` middleware.
 
 ```js
 shift({crossAxis: true}); // false by default
 ```
 
 ### limiter
-
-Type: `function`
 
 This accepts a function that **limits** the shifting done, in
 order to prevent detachment or "overly-eager" behavior. The

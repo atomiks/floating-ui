@@ -21,8 +21,8 @@
   import {computePosition, shift} from '../dist/index.mjs';
   import {position} from '../utils.mjs';
 
-  computePosition(reference, popper, {
+  computePosition(reference, floating, {
     placement: 'right-end',
-    modifiers: [shift()],
+    middleware: [shift()],
   }).then(position);
 </script>

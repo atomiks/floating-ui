@@ -13,13 +13,15 @@ import {
   Children,
   useLayoutEffect,
 } from 'react';
-import Tippy from '@tippyjs/react';
+import Tippy from '@tippyjs/react/headless';
 import {Menu} from 'react-feather';
+import {Chrome} from './Chrome';
+import {Floating} from './Floating';
 
 const nav = [
   {url: '/docs/getting-started', title: 'Getting Started'},
   {url: '/docs/computePosition', title: 'computePosition'},
-  {url: '/docs/modifiers', title: 'Modifiers'},
+  {url: '/docs/middleware', title: 'Middleware'},
   {url: '/docs/offset', title: 'offset'},
   {url: '/docs/shift', title: 'shift'},
   {url: '/docs/flip', title: 'flip'},
@@ -60,6 +62,8 @@ const components = {
   Warning,
   Collapsible,
   Tippy,
+  Floating,
+  Chrome,
   h2: linkify('h2'),
   h3: linkify('h3'),
   h4: linkify('h4'),
@@ -71,10 +75,8 @@ const useIsomorphicLayoutEffect =
   typeof window !== 'undefined' ? useLayoutEffect : useEffect;
 
 export default function Layout({children}) {
-  const {pathname, events} = useRouter();
-  const [index, setIndex] = useState(
-    nav.findIndex(({url}) => url === pathname) ?? 0
-  );
+  const {pathname} = useRouter();
+  const index = nav.findIndex(({url}) => url === pathname) ?? 0;
   const [navOpen, setNavOpen] = useState(false);
 
   // https://github.com/FormidableLabs/prism-react-renderer/issues/40
@@ -87,6 +89,10 @@ export default function Layout({children}) {
 
       .token.method.function {
         color: #33c2e3 !important;
+      }
+
+      .token.spread.operator {
+        color: #ff9fb1 !important;
       }
     `;
 
@@ -133,7 +139,7 @@ export default function Layout({children}) {
         </div>
         <nav
           className={cn(
-            'fixed bg-gray-1000 h-full w-64 top-0 left-0 overflow-y-auto md:block bg-opacity-90 backdrop-filter backdrop-blur-lg z-10',
+            'fixed bg-gray-1000 h-full w-64 top-0 left-0 overflow-y-auto md:block bg-opacity-90 backdrop-filter backdrop-blur-lg z-50',
             {
               hidden: !navOpen,
             }

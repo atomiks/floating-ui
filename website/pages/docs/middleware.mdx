@@ -1,0 +1,192 @@
+import Layout from '../../components/Layout';
+export default Layout;
+
+# Middleware
+
+Middleware are plain objects that modify the positioning
+coordinates in some fashion, or provide useful data for the
+consumer to use. Most of Floating UI's features are implemented
+as a middleware.
+
+`computePosition()` starts with basic positioning via
+`placement`:
+
+```js
+computePosition(referenceEl, floatingEl, {
+  placement: 'right',
+  middleware: [],
+});
+```
+
+Middleware, as the name suggests, are executed as an in-between
+"middle" step of the basic placement computation, and returning
+data to the caller.
+
+## Example
+
+```js
+const shiftByOnePixel = {
+  name: 'shiftByOnePixel',
+  fn({x, y}) {
+    return {
+      x: x + 1,
+      y: y + 1,
+      data: {
+        amount: 1,
+      },
+    };
+  },
+};
+```
+
+This simple (but not particularly useful) middleware just adds
+`1` pixel to the coordinates. To use this middleware, add it to
+your `middleware` array:
+
+```js
+computePosition(referenceEl, floatingEl, {
+  middleware: [shiftByOnePixel],
+});
+```
+
+### Shape
+
+A middleware is an object which has a `name` property and a `fn`
+property. The `fn` property provides the logic of the middleware,
+which returns new positioning coordinates or useful data.
+
+### Data
+
+Any data can be passed via the `data` property of the object that
+is returned from `fn`. This will be accessible to the consumer
+via the `middlewareData` property:
+
+```js
+computePosition(referenceEl, floatingEl, {
+  middleware: [shiftByOnePixel],
+}).then(({middlewareData}) => {
+  console.log(middlewareData.shiftByOnePixel);
+});
+```
+
+### Function
+
+You may notice that Floating UI's core middleware are actually
+functions. This is so you can pass options in to configure the
+bahvior:
+
+```js
+const shiftByAmount = (amount = 0) => ({
+  name: 'shiftByAmount',
+  fn: ({x, y}) => ({
+    x: x + amount,
+    y: y + amount,
+  }),
+});
+```
+
+It returns an object and uses a closure to pass the configured
+behavior:
+
+```js
+middleware: [shiftByAmount(10)];
+```
+
+### Always return an object
+
+Inside `fn` make sure to return an object. It doesn't need to
+contain properties, but to remind you that it should be pure, you
+must return an object. Never mutate any values that get passed in
+from `fn`.
+
+## MiddlewareArguments
+
+An object is passed to `fn` containing useful data about the
+middleware lifecycle being executed.
+
+In the previous examples, we destructured `x` and `y` out of the
+`fn` parameter object. These are only two properties that get
+passed into middleware, but there are many more.
+
+The properties passed are below:
+
+```ts
+type MiddlewareArguments = Coords & {
+  initialPlacement: Placement;
+  placement: Placement;
+  strategy: Strategy;
+  middlewareData: MiddlewareData;
+  scheduleReset: (args: {placement: Placement}) => void;
+  elements: Elements;
+  rects: ElementRects;
+  platform: Platform;
+};
+```
+
+### x
+
+This is the x-axis coordinate to position the floating element
+to.
+
+### y
+
+This is the y-axis coordinate to position the floating element
+to.
+
+### elements
+
+This is an object containing the reference and floating elements.
+
+### rects
+
+This is an object containing the `Rect`s of the reference and
+floating elements, an object of shape `{width, height, x, y}`.
+
+### middlewareData
+
+This is an object containing all the data of any middleware at
+the current step in the lifecycle. The lifecycle loops over the
+`middleware` array, so later middleware have access to data from
+any middleware run prior.
+
+### scheduleReset
+
+If your middleware has logic to change the `placement`, you'll
+need to reset the middleware lifecycle. This function allows you
+to do so:
+
+```js
+const middleware = {
+  name: 'middleware',
+  fn({scheduleReset}) {
+    if (someCondition) {
+      scheduleReset({placement: newPlacement});
+    }
+
+    return {};
+  },
+};
+```
+
+> This can cause an infinite loop, so ensure you have a break
+> condition set up! In DEV mode, the library will do its best to
+> prevent an infinite loop and throw an error.
+
+### strategy
+
+The positioning strategy.
+
+### initialPlacement
+
+The initial (or preferred) placement passed in to
+`computePosition()`.
+
+### placement
+
+The stateful resultant placement. Middleware like `flip` change
+`initialPlacement` to a new one.
+
+### platform
+
+An object containing methods to make Floating UI work on the
+current platform, e.g. DOM or React Native.

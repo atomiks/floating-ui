@@ -45,7 +45,7 @@ const bundles = [
   },
 ];
 
-const buildExport = bundles.map(({input, output, minify}) => ({
+const buildExport = bundles.map(({input, output}) => ({
   input,
   output,
   external: ['@floating-ui/core'],

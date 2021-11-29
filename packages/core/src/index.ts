@@ -1,11 +1,12 @@
 export {computePosition} from './computePosition';
+export {detectOverflow} from './detectOverflow';
+
+export {arrow} from './middleware/arrow';
+export {autoPlacement} from './middleware/autoPlacement';
+export {flip} from './middleware/flip';
+export {hide} from './middleware/hide';
+export {offset} from './middleware/offset';
+export {shift, limitShift} from './middleware/shift';
+export {size} from './middleware/size';
 
 export {rectToClientRect} from './utils/rectToClientRect';
-
-export {arrow} from './modifiers/arrow';
-export {autoPlacement} from './modifiers/autoPlacement';
-export {flip} from './modifiers/flip';
-export {hide} from './modifiers/hide';
-export {offset} from './modifiers/offset';
-export {shift, limitShift} from './modifiers/shift';
-export {size} from './modifiers/size';

@@ -1,6 +1,6 @@
 import type {Placement, ElementRects, Coords} from './types';
 import {getBasePlacement} from './utils/getBasePlacement';
-import {getVariation} from './utils/getVariation';
+import {getAlignment} from './utils/getAlignment';
 import {getMainAxisFromPlacement} from './utils/getMainAxisFromPlacement';
 import {getLengthFromAxis} from './utils/getLengthFromAxis';
 
@@ -33,7 +33,7 @@ export function computeCoordsFromPlacement({
   const mainAxis = getMainAxisFromPlacement(placement);
   const length = getLengthFromAxis(mainAxis);
 
-  switch (getVariation(placement)) {
+  switch (getAlignment(placement)) {
     case 'start':
       coords[mainAxis] =
         coords[mainAxis] - (reference[length] / 2 - floating[length] / 2);

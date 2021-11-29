@@ -1,4 +1,3 @@
-import {rectToClientRect} from '@floating-ui/core';
 import type {Rect, Strategy} from '@floating-ui/core';
 import {getBoundingClientRect} from './getBoundingClientRect';
 import {getNodeScroll} from './getNodeScroll';
@@ -15,6 +14,7 @@ export function convertOffsetParentRelativeRectToViewportRelativeRect({
   offsetParent: Element | Window;
   strategy: Strategy;
 }): Rect {
+  const isOffsetParentAnElement = isHTMLElement(offsetParent);
   const documentElement = getDocumentElement(offsetParent);
 
   if (offsetParent === documentElement) {
@@ -22,15 +22,11 @@ export function convertOffsetParentRelativeRectToViewportRelativeRect({
   }
 
   let scroll = {scrollLeft: 0, scrollTop: 0};
-  let offsetClientRect = rectToClientRect({x: 0, y: 0, width: 0, height: 0});
-
-  if (isHTMLElement(offsetParent)) {
-    offsetClientRect = getBoundingClientRect(offsetParent);
-  }
+  let offsets = {x: 0, y: 0};
 
   if (
-    isHTMLElement(offsetParent) ||
-    (!isHTMLElement(offsetParent) && strategy !== 'fixed')
+    isOffsetParentAnElement ||
+    (!isOffsetParentAnElement && strategy !== 'fixed')
   ) {
     if (
       getNodeName(offsetParent) !== 'body' ||
@@ -40,16 +36,19 @@ export function convertOffsetParentRelativeRectToViewportRelativeRect({
     }
 
     if (isHTMLElement(offsetParent)) {
-      offsetClientRect = getBoundingClientRect(offsetParent);
-      offsetClientRect.x -= offsetParent.clientLeft;
-      offsetClientRect.y -= offsetParent.clientTop;
+      offsets = getBoundingClientRect(offsetParent);
+      offsets.x += offsetParent.clientLeft;
+      offsets.y += offsetParent.clientTop;
     }
+    // This doesn't appear to be need to be negated.
+    // else if (documentElement) {
+    //   offsets.x = getWindowScrollBarX(documentElement);
+    // }
   }
 
   return {
-    x: rect.x - scroll.scrollLeft + offsetClientRect.left,
-    y: rect.y - scroll.scrollTop + offsetClientRect.top,
-    width: rect.width,
-    height: rect.height,
+    ...rect,
+    x: rect.x - scroll.scrollLeft + offsets.x,
+    y: rect.y - scroll.scrollTop + offsets.y,
   };
 }

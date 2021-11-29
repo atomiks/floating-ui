@@ -16,15 +16,35 @@ import {getParentNode} from './getParentNode';
 import {contains} from './contains';
 import {getNodeName} from './getNodeName';
 
-function getClientRectFromMixedType(
+function getInnerBoundingClientRect(element: Element): ClientRectObject {
+  const clientRect = getBoundingClientRect(element);
+  const top = clientRect.top + element.clientTop;
+  const left = clientRect.left + element.clientLeft;
+  return {
+    top,
+    left,
+    x: left,
+    y: top,
+    right: left + element.clientWidth,
+    bottom: top + element.clientHeight,
+    width: element.clientWidth,
+    height: element.clientHeight,
+  };
+}
+
+function getClientRectFromClippingParent(
   element: Element,
   clippingParent: Element | RootBoundary
 ): ClientRectObject {
-  return clippingParent === 'viewport'
-    ? rectToClientRect(getViewportRect(element))
-    : isHTMLElement(clippingParent)
-    ? getBoundingClientRect(clippingParent)
-    : rectToClientRect(getDocumentRect(getDocumentElement(element)));
+  if (clippingParent === 'viewport') {
+    return rectToClientRect(getViewportRect(element));
+  }
+
+  if (isElement(clippingParent)) {
+    return getInnerBoundingClientRect(clippingParent);
+  }
+
+  return rectToClientRect(getDocumentRect(getDocumentElement(element)));
 }
 
 // A "clipping parent" is an overflowable container with the characteristic of
@@ -75,7 +95,7 @@ export function getClippingClientRect({
   const firstClippingParent = clippingParents[0];
 
   const clippingRect = clippingParents.reduce((accRect, clippingParent) => {
-    const rect = getClientRectFromMixedType(element, clippingParent);
+    const rect = getClientRectFromClippingParent(element, clippingParent);
 
     accRect.top = Math.max(rect.top, accRect.top);
     accRect.right = Math.min(rect.right, accRect.right);
@@ -83,7 +103,7 @@ export function getClippingClientRect({
     accRect.left = Math.max(rect.left, accRect.left);
 
     return accRect;
-  }, getClientRectFromMixedType(element, firstClippingParent));
+  }, getClientRectFromClippingParent(element, firstClippingParent));
 
   clippingRect.width = clippingRect.right - clippingRect.left;
   clippingRect.height = clippingRect.bottom - clippingRect.top;

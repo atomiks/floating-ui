@@ -98,7 +98,7 @@ tippy('#myButton', {
     theme: 'dark',
   }),
   animation: 'fade',
-  plugins: [animation],
+  middleware: [animation],
 });
 ```
 
@@ -113,7 +113,7 @@ tippy('#myButton', {
 ## Accessibility
 
 To enable screen reader support, and the ability to dismiss the
-tooltip via `esc`, import the `aria` and `dismiss` plugins:
+tooltip via `esc`, import the `aria` and `dismiss` middleware:
 
 ```js {1,11}
 import tippy, {
@@ -131,7 +131,7 @@ tippy('#myButton', {
     theme: 'dark',
   }),
   animation: 'fade',
-  plugins: [animation, aria, dismiss],
+  middleware: [animation, aria, dismiss],
 });
 ```
 
@@ -161,7 +161,7 @@ tippy('#myButton', {
     theme: 'dark',
   }),
   animation: 'fade',
-  plugins: [animation, aria, dismiss],
+  middleware: [animation, aria, dismiss],
   interactive: true,
 });
 ```
@@ -184,8 +184,8 @@ tippy('#myButton', {
 
 It's recommended that you create your own high-level wrappers
 around `tippy()` for each floating UI element you make. This way
-you don't need to pass all the plugins and props every time you
-want to add a tooltip to your website.
+you don't need to pass all the middleware and props every time
+you want to add a tooltip to your website.
 
 ```js
 // components/ui/tooltip.js
@@ -205,7 +205,7 @@ export function tooltip(targets, options = {}) {
       theme: options.theme ?? '',
     }),
     animation: options.animation ?? 'fade',
-    plugins: [animation, aria, dismiss],
+    middleware: [animation, aria, dismiss],
   });
 }
 ```
@@ -223,7 +223,7 @@ tooltip('#delete-button', {content: 'Delete'});
 
 As seen above, you need to make a new `tooltip()` call for every
 new element if they have different content. You can leverage the
-`dataAttributes` plugin to reduce this to a single call:
+`dataAttributes` middleware to reduce this to a single call:
 
 ```js {7,19}
 // components/ui/tooltip.js
@@ -244,7 +244,7 @@ export function tooltip(targets, options = {}) {
       theme: options.theme ?? 'dark',
     }),
     animation: options.animation ?? 'fade',
-    plugins: [animation, aria, dismiss, dataAttributes],
+    middleware: [animation, aria, dismiss, dataAttributes],
   });
 }
 ```

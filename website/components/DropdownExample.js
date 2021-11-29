@@ -27,7 +27,13 @@ export default function DropdownExample() {
   const depthRef = useRef(0);
   const focusIndicesRef = useRef([0, 0]);
 
-  const refs = [normalRef, screenRef, lightenRef, multiplyRef, otherRef];
+  const refs = [
+    normalRef,
+    screenRef,
+    lightenRef,
+    multiplyRef,
+    otherRef,
+  ];
   const subRefs = [darkenRef, excludeRef];
 
   const [isSubMenuOpen, setIsSubMenuOpen] = useState(false);
@@ -59,15 +65,19 @@ export default function DropdownExample() {
           return;
         }
 
-        const depth = depthRef.current;
+        let depth = depthRef.current;
         const focusIndices = focusIndicesRef.current;
         const context = depth === 0 ? refs : subRefs;
 
         // Navigating while open
         if (
-          ['ArrowUp', 'ArrowDown', 'ArrowRight', 'ArrowLeft', 'Tab'].includes(
-            event.key
-          )
+          [
+            'ArrowUp',
+            'ArrowDown',
+            'ArrowRight',
+            'ArrowLeft',
+            'Tab',
+          ].includes(event.key)
         ) {
           event.preventDefault();
         }
@@ -80,7 +90,9 @@ export default function DropdownExample() {
 
         if (event.key === 'ArrowUp') {
           const currentIndex =
-            focusIndices[depth] - 1 < 0 ? 0 : focusIndices[depth] - 1;
+            focusIndices[depth] - 1 < 0
+              ? 0
+              : focusIndices[depth] - 1;
           focusIndices[depth] = currentIndex;
           context[currentIndex].current.focus();
         }
@@ -129,7 +141,9 @@ export default function DropdownExample() {
           focusIndicesRef.current = [0, 0];
         },
         onMount() {
-          if (['ArrowDown', ' ', 'Enter'].includes(lastKeyDownKey)) {
+          if (
+            ['ArrowDown', ' ', 'Enter'].includes(lastKeyDownKey)
+          ) {
             refs[0].current.focus();
           }
         },
@@ -149,18 +163,20 @@ export default function DropdownExample() {
       className="p-0"
       content={
         <ul className="text-left text-lg p-1">
-          {['Normal', 'Screen', 'Lighten', 'Multiply'].map((option) => (
-            <li key={option}>
-              <button
-                role="menuitem"
-                ref={refsMap[option]}
-                className="hover:text-gray-50 hover:bg-gray-800 rounded px-2 py-1 w-full text-left"
-                onClick={() => selectOption(option)}
-              >
-                {option}
-              </button>
-            </li>
-          ))}
+          {['Normal', 'Screen', 'Lighten', 'Multiply'].map(
+            (option) => (
+              <li key={option}>
+                <button
+                  role="menuitem"
+                  ref={refsMap[option]}
+                  className="hover:text-gray-50 hover:bg-gray-800 rounded px-2 py-1 w-full text-left"
+                  onClick={() => selectOption(option)}
+                >
+                  {option}
+                </button>
+              </li>
+            )
+          )}
           <li>
             <Tippy
               content={
@@ -186,7 +202,10 @@ export default function DropdownExample() {
               duration={[250, 150]}
               interactive
               maxWidth={250}
-              offset={({placement}) => [placement.endsWith('end') ? 4 : -4, 4]}
+              offset={({placement}) => [
+                placement.endsWith('end') ? 4 : -4,
+                4,
+              ]}
               arrow={false}
               appendTo={() => document.body}
               role="menu"
@@ -194,7 +213,11 @@ export default function DropdownExample() {
               onMount={() => setIsSubMenuOpen(true)}
               onHide={() => setIsSubMenuOpen(false)}
               onClickOutside={({unmount}, event) => {
-                if (!instanceRef.current.popper.contains(event.target)) {
+                if (
+                  !instanceRef.current.popper.contains(
+                    event.target
+                  )
+                ) {
                   instanceRef.current.unmount();
                   unmount();
                 }
@@ -205,33 +228,38 @@ export default function DropdownExample() {
                   '.tippy-content'
                 ).style.padding = 0;
               }}
-              plugins={[
+              middleware={[
                 {
                   fn(instance) {
-                    function onKeyDown(e) {
-                      if (event.key === 'Escape' || event.key === 'Tab') {
+                    function onKeyDown(event) {
+                      if (
+                        event.key === 'Escape' ||
+                        event.key === 'Tab'
+                      ) {
                         instance.unmount();
                       }
                     }
-
-                    let updateFn;
 
                     return {
                       onMount() {
                         if (focusIndicesRef.current[0] === 4) {
                           subRefs[0].current.focus();
                         }
-
-                        updateFn = instance.popperInstance.update;
                       },
                       onHide() {
                         depthRef.current = 0;
                       },
                       onCreate() {
-                        document.addEventListener('keydown', onKeyDown);
+                        document.addEventListener(
+                          'keydown',
+                          onKeyDown
+                        );
                       },
                       onDestroy() {
-                        document.removeEventListener('keydown', onKeyDown);
+                        document.removeEventListener(
+                          'keydown',
+                          onKeyDown
+                        );
                       },
                     };
                   },
@@ -262,7 +290,9 @@ export default function DropdownExample() {
       hideOnClick={!isSubMenuOpen}
       onCreate={(instance) => {
         instanceRef.current = instance;
-        instance.popper.querySelector('.tippy-content').style.padding = 0;
+        instance.popper.querySelector(
+          '.tippy-content'
+        ).style.padding = 0;
       }}
       role="menu"
       popperOptions={{
@@ -281,7 +311,7 @@ export default function DropdownExample() {
           },
         ],
       }}
-      plugins={[navigation]}
+      middleware={[navigation]}
     >
       <button className="flex items-center text-lg bg-blue-600 text-gray-50 hover:bg-blue-700 p-3 transition-colors rounded">
         {selectedOption ?? 'Blend Mode'} <ChevronDown />

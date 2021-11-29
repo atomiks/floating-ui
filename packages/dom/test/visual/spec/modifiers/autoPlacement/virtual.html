@@ -39,8 +39,8 @@
   };
 
   const update = () => {
-    computePosition(ref, popper, {
-      modifiers: [autoPlacement({allowedPlacements: ['top', 'bottom']})],
+    computePosition(ref, floating, {
+      middleware: [autoPlacement({allowedPlacements: ['top', 'bottom']})],
     }).then(position);
   };
 

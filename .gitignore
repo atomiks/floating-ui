@@ -11,3 +11,5 @@ coverage.info
 coverage
 __diff_output__
 stats
+.next
+.parcel-cache

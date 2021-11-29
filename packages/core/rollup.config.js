@@ -3,6 +3,7 @@ import {babel} from '@rollup/plugin-babel';
 import {nodeResolve} from '@rollup/plugin-node-resolve';
 import replace from '@rollup/plugin-replace';
 import {terser} from 'rollup-plugin-terser';
+import bundleSize from '@atomico/rollup-plugin-sizes';
 
 const input = path.join(__dirname, 'src/index.ts');
 
@@ -39,7 +40,7 @@ const bundles = [
   },
 ];
 
-const buildExport = bundles.map(({input, output, minify}) => ({
+const buildExport = bundles.map(({input, output}) => ({
   input,
   output,
   plugins: [
@@ -52,6 +53,7 @@ const buildExport = bundles.map(({input, output, minify}) => ({
       preventAssignment: true,
     }),
     output.file.includes('.min.') && terser(),
+    bundleSize(),
   ],
 }));
 
@@ -64,6 +66,10 @@ const devExport = {
   plugins: [
     nodeResolve({extensions: ['.ts']}),
     babel({babelHelpers: 'bundled', extensions: ['.ts']}),
+    replace({
+      __DEV__: 'true',
+      preventAssignment: true,
+    }),
   ],
 };
 

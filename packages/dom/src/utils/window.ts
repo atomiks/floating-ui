@@ -1,5 +1,5 @@
 export function isWindow(value: any): value is Window {
-  return value ? value.toString() === '[object Window]' : false;
+  return value?.toString() === '[object Window]';
 }
 
 export function getWindow(node: Node | Window): Window {

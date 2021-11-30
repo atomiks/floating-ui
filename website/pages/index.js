@@ -13,7 +13,6 @@ import cn from 'classnames';
 import Code from '../components/Code';
 
 import Logo from '../assets/logo.svg';
-import Orbs from '../assets/orbs.svg';
 
 function Placement() {
   const [placement, setPlacement] = useState('top');
@@ -507,12 +506,15 @@ function HomePage() {
           <div
             className="absolute -z-1 w-full"
             style={{
-              left: 'calc(-60rem + 50vw)',
-              top: '-15rem',
+              top: '-20rem',
+              left: 'calc(-35rem + 50vw)',
               width: 1000,
             }}
           >
-            <Orbs aria-hidden="true" />
+            <img
+              style={{width: 2000, height: 1000}}
+              src="/orbs.svg"
+            />
           </div>
           <h1 className="text-gray-50 mb-8 text-5xl sm:text-6xl font-bold">
             Floating UI

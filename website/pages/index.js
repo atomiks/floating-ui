@@ -512,9 +512,8 @@ function HomePage() {
               width: 1200,
             }}
           >
-            <Image
+            <img
               className="select-none"
-              unoptimized
               src="/orbs.jpg"
               width={1167}
               height={648}

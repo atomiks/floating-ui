@@ -4,7 +4,7 @@ const colors = require('tailwindcss/colors');
 module.exports = {
   plugins: [require('@tailwindcss/typography')],
   purge: [
-    './pages/**/*.{js,ts,jsx,tsx}',
+    './pages/**/*.{js,ts,jsx,tsx,md,mdx}',
     './components/**/*.{js,ts,jsx,tsx}',
   ],
   darkMode: false,

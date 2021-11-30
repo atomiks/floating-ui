@@ -99,42 +99,42 @@ Object.assign(tooltip.style, {
               placement: 'right',
               styles: {
                 top: 'calc(50% - 10px - 1rem)',
-                right: 50,
+                right: 'min(50px, 5%)',
               },
             },
             {
               placement: 'right-start',
               styles: {
                 top: 'calc(50% - 70px - 1rem)',
-                right: 50,
+                right: 'min(50px, 5%)',
               },
             },
             {
               placement: 'right-end',
               styles: {
                 top: 'calc(50% + 50px - 1rem)',
-                right: 50,
+                right: 'min(50px, 5%)',
               },
             },
             {
               placement: 'left',
               styles: {
                 top: 'calc(50% - 10px - 1rem)',
-                left: 50,
+                left: 'min(50px, 5%)',
               },
             },
             {
               placement: 'left-start',
               styles: {
                 top: 'calc(50% - 70px - 1rem)',
-                left: 50,
+                left: 'min(50px, 5%)',
               },
             },
             {
               placement: 'left-end',
               styles: {
                 top: 'calc(50% + 50px - 1rem)',
-                left: 50,
+                left: 'min(50px, 5%)',
               },
             },
           ].map(({placement: p, styles}) => (
@@ -498,10 +498,7 @@ function Tooltips() {
 function HomePage() {
   return (
     <>
-      <header
-        className="from-gray-700 to-gray-800 mb-24 overflow-hidden relative"
-        style={{height: 500}}
-      >
+      <header className="from-gray-700 to-gray-800 mb-24 overflow-hidden relative pb-48">
         <div className="container py-8 mx-auto px-4 text-center max-w-screen-xl">
           <Logo
             className="mx-auto"
@@ -517,26 +514,26 @@ function HomePage() {
           >
             <Orbs aria-hidden="true" />
           </div>
-          <h1 className="text-gray-50 mb-8 text-6xl font-bold">
+          <h1 className="text-gray-50 mb-8 text-5xl sm:text-6xl font-bold">
             Floating UI
           </h1>
           <div className="flex flex-row justify-center gap-x-4">
             <Link href="/docs/getting-started">
               <a
-                className="flex items-center gap-2 filter transition hover:saturate-200 hover:brightness-110 bg-gradient-to-b from-blue-500 to-blue-600 shadow-lg hover:shadow-xl rounded text-gray-50 px-4 py-3 text-xl font-bold"
+                className="flex items-center gap-2 filter transition hover:saturate-200 hover:brightness-110 bg-gradient-to-b from-blue-500 to-blue-600 shadow-lg hover:shadow-xl rounded text-gray-50 px-4 py-3 sm:text-xl font-bold whitespace-nowrap"
                 href="/docs/getting-started"
               >
                 Get Started <ArrowRight />
               </a>
             </Link>
-            <button className="flex transition hover:shadow-xl items-center gap-2 bg-gray-50 rounded text-gray-900 px-4 py-3 text-xl shadow-lg font-bold">
+            <button className="flex transition hover:shadow-xl items-center gap-2 bg-gray-50 rounded text-gray-900 px-4 py-3 sm:text-xl shadow-lg font-bold">
               <GitHub /> GitHub
             </button>
           </div>
         </div>
       </header>
-      <main className="relative">
-        <div className="container mx-auto px-4 max-w-screen-xl -mt-48">
+      <main className="relative -mt-48">
+        <div className="container mx-auto px-4 max-w-screen-xl">
           <h2 className="inline-block text-4xl leading-gradient-heading lg:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">
             Powerful positioning primitives.
           </h2>
@@ -552,6 +549,7 @@ function HomePage() {
               }
               theme="light-border"
               aria={{content: 'labelledby'}}
+              inlinePositioning={true}
               plugins={[inlinePositioning]}
             >
               <span

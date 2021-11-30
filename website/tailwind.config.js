@@ -50,9 +50,11 @@ module.exports = {
             },
             h2: {
               color: '#fff',
+              wordBreak: 'break-word',
             },
             h3: {
               color: '#BFC3D9',
+              wordBreak: 'break-word',
             },
             'h2 a': {
               color: 'inherit',

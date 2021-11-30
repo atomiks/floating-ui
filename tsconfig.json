@@ -1,6 +1,7 @@
 {
   "compilerOptions": {
     "lib": ["dom", "es2019"],
+    "skipLibCheck": true,
     "moduleResolution": "node",
     "noEmit": true,
     "resolveJsonModule": true,
@@ -10,5 +11,6 @@
     "allowJs": true,
     "esModuleInterop": true
   },
-  "include": ["packages/**/*"]
+  "include": ["packages/**/*"],
+  "exclude": ["node_modules"]
 }

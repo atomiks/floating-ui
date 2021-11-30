@@ -8,6 +8,7 @@ import {inlinePositioning} from 'tippy.js';
 import {useLayoutEffect, useState} from 'react';
 import {Check, ArrowRight, GitHub, Heart} from 'react-feather';
 import Link from 'next/link';
+import Image from 'next/image';
 import DropdownExample from '../components/DropdownExample.js';
 import cn from 'classnames';
 import Code from '../components/Code';
@@ -506,14 +507,17 @@ function HomePage() {
           <div
             className="absolute -z-1 w-full"
             style={{
-              top: '-20rem',
-              left: 'calc(-35rem + 50vw)',
-              width: 1000,
+              top: '-5rem',
+              left: 'calc(-40rem + 50vw)',
+              width: 1200,
             }}
           >
-            <img
-              style={{width: 2000, height: 1000}}
-              src="/orbs.svg"
+            <Image
+              className="select-none"
+              unoptimized
+              src="/orbs.jpg"
+              width={1167}
+              height={648}
             />
           </div>
           <h1 className="text-gray-50 mb-8 text-5xl sm:text-6xl font-bold">

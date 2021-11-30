@@ -112,6 +112,7 @@ export default function DropdownExample() {
           depth === 0
         ) {
           depthRef.current = depth = 1;
+          focusIndices[depth] = 1;
           refs[4].current._tippy?.show();
         }
 
@@ -228,7 +229,7 @@ export default function DropdownExample() {
                   '.tippy-content'
                 ).style.padding = 0;
               }}
-              middleware={[
+              plugins={[
                 {
                   fn(instance) {
                     function onKeyDown(event) {
@@ -311,7 +312,7 @@ export default function DropdownExample() {
           },
         ],
       }}
-      middleware={[navigation]}
+      plugins={[navigation]}
     >
       <button className="flex items-center mx-auto text-lg bg-blue-600 text-gray-50 hover:bg-blue-700 p-3 transition-colors rounded">
         {selectedOption ?? 'Blend Mode'} <ChevronDown />

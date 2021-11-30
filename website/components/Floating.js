@@ -31,25 +31,20 @@ export function Floating({
   });
 
   useEffect(() => {
-    function wrappedUpdate() {
-      update();
-      requestAnimationFrame(update);
-    }
-
     const nodes = [
       ...getScrollParents(refs.reference.current),
       ...getScrollParents(refs.floating.current),
     ];
 
     nodes.forEach((node) => {
-      node.addEventListener('scroll', wrappedUpdate);
-      node.addEventListener('resize', wrappedUpdate);
+      node.addEventListener('scroll', update);
+      node.addEventListener('resize', update);
     });
 
     return () => {
       nodes.forEach((node) => {
-        node.removeEventListener('scroll', wrappedUpdate);
-        node.removeEventListener('resize', wrappedUpdate);
+        node.removeEventListener('scroll', update);
+        node.removeEventListener('resize', update);
       });
     };
   }, [reference, floating, update, refs]);
@@ -72,9 +67,10 @@ export function Floating({
         backgroundColor: middlewareData.hide?.escaped
           ? 'red'
           : '',
-        visibility: middlewareData.hide?.referenceHidden
-          ? 'hidden'
-          : '',
+        visibility:
+          middlewareData.hide?.referenceHidden || x == null
+            ? 'hidden'
+            : '',
       }}
     >
       <div className="p-4">{content ?? 'Floating'}</div>

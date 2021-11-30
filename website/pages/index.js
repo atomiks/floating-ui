@@ -531,7 +531,7 @@ function HomePage() {
           <div className="flex flex-row justify-center gap-x-4">
             <Link href="/docs/getting-started">
               <a
-                className="flex items-center gap-2 filter transition hover:saturate-200 hover:brightness-110 bg-gradient-to-b from-blue-500 to-blue-600 shadow-lg hover:shadow-xl rounded text-gray-50 px-4 py-3 sm:text-xl font-bold whitespace-nowrap"
+                className="flex items-center gap-2 filter transition hover:saturate-110 hover:brightness-125 bg-gradient-to-b from-blue-500 to-blue-600 shadow-lg hover:shadow-xl rounded text-gray-50 px-4 py-3 sm:text-xl font-bold whitespace-nowrap"
                 href="/docs/getting-started"
               >
                 Get Started <ArrowRight />

@@ -1,7 +1,3 @@
-// const withMDX = require('@next/mdx')({
-//   extension: /\.mdx$/,
-// });
-
 module.exports = {
   experimental: {esmExternals: true},
   pageExtensions: ['md', 'mdx', 'tsx', 'ts', 'jsx', 'js'],

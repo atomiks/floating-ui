@@ -138,8 +138,9 @@ export default function Layout({children}) {
     <MDXProvider components={components}>
       <Head>
         <title>
-          {nav.find(({url}) => url === pathname).title} |
-          Floating UI
+          {nav.find(({url}) => url === pathname)?.title ??
+            'Docs'}{' '}
+          | Floating UI
         </title>
       </Head>
       <SkipNavLink />

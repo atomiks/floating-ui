@@ -9,17 +9,28 @@
   }
 </style>
 
-<div id="reference">Ref</div>
-<div id="floating">Pop</div>
+<div id="scroll">
+  <div id="reference">Ref</div>
+  <div id="floating">Pop</div>
+</div>
 
 <script type="module">
-  import {computePosition, size} from '../../../dist/index.mjs';
+  import {computePosition, size, flip} from '../../../dist/index.mjs';
   import {position, addEventListeners} from '../../../utils.mjs';
 
   addEventListeners(() => {
     computePosition(reference, floating, {
-      placement: 'bottom',
-      middleware: [size()],
+      placement: 'top',
+      middleware: [
+        size({
+          apply({height}) {
+            Object.assign(floating.style, {
+              maxHeight: `${Math.max(100, height)}px`,
+            });
+          },
+        }),
+        flip({fallbackStrategy: 'bestFit'}),
+      ],
     }).then(position);
   });
 </script>

@@ -1,20 +1,25 @@
-import {Middleware, MiddlewareArguments} from '../types';
+import {Dimensions, Middleware, MiddlewareArguments} from '../types';
 import {
   detectOverflow,
   Options as DetectOverflowOptions,
 } from '../detectOverflow';
 import {getBasePlacement} from '../utils/getBasePlacement';
 import {getAlignment} from '../utils/getAlignment';
-import {within} from '../utils/within';
 
-export type Options = DetectOverflowOptions;
+export type Options = DetectOverflowOptions & {
+  apply(dimensions: Dimensions): void;
+};
 
 export const size = (options: Partial<Options> = {}): Middleware => ({
   name: 'size',
   async fn(middlewareArguments: MiddlewareArguments) {
     const {placement, rects, middlewareData} = middlewareArguments;
+    const {apply, ...detectOverflowOptions} = options;
 
-    const overflow = await detectOverflow(middlewareArguments, options);
+    const overflow = await detectOverflow(
+      middlewareArguments,
+      detectOverflowOptions
+    );
     const basePlacement = getBasePlacement(placement);
     const isEnd = getAlignment(placement) === 'end';
 
@@ -35,24 +40,17 @@ export const size = (options: Partial<Options> = {}): Middleware => ({
     };
 
     if (middlewareData.size?.skip) {
-      return {
-        data: dimensions,
-      };
+      return {};
     }
+
+    apply?.(dimensions);
 
     return {
       data: {
         skip: true,
       },
       reset: {
-        rects: {
-          floating: {
-            width: within(0, dimensions.width, rects.floating.width),
-            height: within(0, dimensions.height, rects.floating.height),
-            x: 0,
-            y: 0,
-          },
-        },
+        placement,
       },
     };
   },

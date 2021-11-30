@@ -13,14 +13,6 @@ export function position(data) {
     visibility: data.middlewareData.hide?.referenceHidden
       ? 'hidden'
       : 'visible',
-    maxWidth:
-      data.middlewareData.size?.width != null
-        ? `${data.middlewareData.size?.width}px`
-        : '',
-    maxHeight:
-      data.middlewareData.size?.height != null
-        ? `${data.middlewareData.size?.height}px`
-        : '',
   });
 
   if (window.arrowElement) {

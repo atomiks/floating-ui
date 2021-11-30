@@ -1,4 +1,4 @@
-import {cloneElement, useEffect, useMemo} from 'react';
+import {cloneElement, useEffect, useMemo, useState} from 'react';
 import {createPortal} from 'react-dom';
 import * as FloatingUI from '../../packages/react-dom';
 import {getScrollParents} from '../../packages/dom';
@@ -9,8 +9,13 @@ export function Floating({
   tooltipStyle = {},
   middleware,
   portaled,
+  minHeight,
   ...options
 }) {
+  const [{height}, setDimensions] = useState({
+    width: null,
+    height: null,
+  });
   const {
     x,
     y,
@@ -23,9 +28,23 @@ export function Floating({
     middleware: useMemo(
       () =>
         middleware
-          ?.map(({name, options}) => FloatingUI[name]?.(options))
+          ?.map(({name, options}) =>
+            name !== 'size'
+              ? FloatingUI[name]?.(options)
+              : FloatingUI.size?.({
+                  ...options,
+                  apply: ({width, height}) => {
+                    setDimensions({
+                      width,
+                      height: minHeight
+                        ? Math.max(height, minHeight)
+                        : height,
+                    });
+                  },
+                })
+          )
           .filter((v) => v) ?? [],
-      [middleware]
+      [middleware, minHeight]
     ),
     ...options,
   });
@@ -58,12 +77,7 @@ export function Floating({
         position: 'absolute',
         left: `${x}px`,
         top: `${y}px`,
-        maxHeight: middlewareData.size
-          ? `${Math.max(
-              tooltipStyle.maxHeight ?? 60,
-              middlewareData.size.height
-            )}px`
-          : '',
+        maxHeight: height ? `${height}px` : '',
         backgroundColor: middlewareData.hide?.escaped
           ? 'red'
           : '',

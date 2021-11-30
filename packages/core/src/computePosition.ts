@@ -92,9 +92,7 @@ export const computePosition: ComputePosition = async (
         statefulPlacement = reset.placement;
       }
 
-      if (reset.rects) {
-        rects = {...rects, ...reset.rects};
-      }
+      rects = await platform.getElementRects({reference, floating, strategy});
 
       i = -1;
       continue;

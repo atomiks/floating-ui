@@ -77,7 +77,7 @@ export type MiddlewareData = {
     referenceHiddenOffsets: SideObject;
     escapedOffsets: SideObject;
   };
-  size?: Dimensions & {
+  size?: {
     skip?: boolean;
   };
   [key: string]: any;

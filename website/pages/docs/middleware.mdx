@@ -18,13 +18,54 @@ computePosition(referenceEl, floatingEl, {
 });
 ```
 
-Middleware, as the name suggests, are executed as an in-between
-"middle" step of the basic placement computation, and returning
-data to the caller.
+Middleware are executed as an in-between "middle" step of the
+basic placement computation and eventual return of data to the
+caller.
 
 ## Example
 
 ```js
+const shiftByOnePixel = {
+  name: 'shiftByOnePixel',
+  fn({x, y}) {
+    return {
+      x: x + 1,
+      y: y + 1,
+    };
+  },
+};
+```
+
+This simple (but not particularly useful) middleware just adds
+`1` pixel to the coordinates. To use this middleware, add it to
+your `middleware` array:
+
+```js
+computePosition(referenceEl, floatingEl, {
+  placement: 'right',
+  middleware: [shiftByOnePixel],
+});
+```
+
+Here, `computePosition` will compute coordinates that will place
+the floating element to the right of the reference element, lying
+flush with it. Middleware are then executed, resulting in these
+coordinates getting shifted by one pixel. Then that data is
+returned to the caller.
+
+### Shape
+
+A middleware is an object which has a `name` property and a `fn`
+property. The `fn` property provides the logic of the middleware,
+which returns new positioning coordinates or useful data.
+
+### Data
+
+Any data can be passed via an optional `data` property of the
+object that is returned from `fn`. This will be accessible to the
+consumer via the `middlewareData` property:
+
+```js {7-9}
 const shiftByOnePixel = {
   name: 'shiftByOnePixel',
   fn({x, y}) {
@@ -38,28 +79,6 @@ const shiftByOnePixel = {
   },
 };
 ```
-
-This simple (but not particularly useful) middleware just adds
-`1` pixel to the coordinates. To use this middleware, add it to
-your `middleware` array:
-
-```js
-computePosition(referenceEl, floatingEl, {
-  middleware: [shiftByOnePixel],
-});
-```
-
-### Shape
-
-A middleware is an object which has a `name` property and a `fn`
-property. The `fn` property provides the logic of the middleware,
-which returns new positioning coordinates or useful data.
-
-### Data
-
-Any data can be passed via the `data` property of the object that
-is returned from `fn`. This will be accessible to the consumer
-via the `middlewareData` property:
 
 ```js
 computePosition(referenceEl, floatingEl, {
@@ -116,7 +135,6 @@ type MiddlewareArguments = Coords & {
   placement: Placement;
   strategy: Strategy;
   middlewareData: MiddlewareData;
-  scheduleReset: (args: {placement: Placement}) => void;
   elements: Elements;
   rects: ElementRects;
   platform: Platform;
@@ -149,29 +167,6 @@ the current step in the lifecycle. The lifecycle loops over the
 `middleware` array, so later middleware have access to data from
 any middleware run prior.
 
-### scheduleReset
-
-If your middleware has logic to change the `placement`, you'll
-need to reset the middleware lifecycle. This function allows you
-to do so:
-
-```js
-const middleware = {
-  name: 'middleware',
-  fn({scheduleReset}) {
-    if (someCondition) {
-      scheduleReset({placement: newPlacement});
-    }
-
-    return {};
-  },
-};
-```
-
-> This can cause an infinite loop, so ensure you have a break
-> condition set up! In DEV mode, the library will do its best to
-> prevent an infinite loop and throw an error.
-
 ### strategy
 
 The positioning strategy.
@@ -190,3 +185,63 @@ The stateful resultant placement. Middleware like `flip` change
 
 An object containing methods to make Floating UI work on the
 current platform, e.g. DOM or React Native.
+
+## Ordering
+
+The order in which middleware are placed in the array matters,
+because the middleware lifecycle works by looping over the array,
+meaning later middleware **start from** the coordinates that were
+returned from the previous middleware.
+
+Understanding this can help in knowing which order to place
+middleware in, as placing a middleware before or after another
+can produce a different result.
+
+In general, `offset` should always go before other middleware,
+while `arrow` after other middleware.
+
+```js
+const middleware = [
+  offset(),
+  // ...
+  arrow({element: arrowElement}),
+];
+```
+
+## Resetting the lifecycle
+
+There are use cases for needing to reset the lifecycle and start
+the process over again when you want to change the placement.
+Both `flip` and `autoPlacement` use this, so that other
+middleware which modify the coordinates based on the current
+`placement` do not perform stale logic.
+
+In order to do this, add a `reset` property to the returned
+object from `fn`:
+
+```js
+const middleware = {
+  name: 'middleware',
+  fn() {
+    if (someCondition) {
+      return {
+        reset: {
+          placement: nextPlacement,
+        },
+      };
+    }
+
+    return {};
+  },
+};
+```
+
+> Ensure `someCondition` will evaluate to `false` at some point,
+> otherwise, this will cause an **infinite loop!** Only specify
+> the `reset` property if you intend to change the `placement`.
+> When running the library in DEV mode, an error will be thrown
+> to prevent an infinite loop from locking up your application.
+
+Data supplied to `middlewareData` is **preserved** by doing this,
+so you can read it at any point after you've reset the lifecycle,
+e.g. if you want to add a `skip` property to break the condition.

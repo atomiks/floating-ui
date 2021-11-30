@@ -15,9 +15,9 @@
 
 <script type="module">
   import {computePosition} from '../../dist/index.mjs';
-  import {position, updateOnScroll} from '../../utils.mjs';
+  import {position, addEventListeners} from '../../utils.mjs';
 
-  updateOnScroll(() => {
+  addEventListeners(() => {
     computePosition(reference, floating, {
       placement: 'right',
     }).then(position);

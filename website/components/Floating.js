@@ -1,4 +1,4 @@
-import {cloneElement, useEffect} from 'react';
+import {cloneElement, useEffect, useMemo} from 'react';
 import {createPortal} from 'react-dom';
 import * as FloatingUI from '../../packages/react-dom';
 import {getScrollParents} from '../../packages/dom';
@@ -11,28 +11,34 @@ export function Floating({
   portaled,
   ...options
 }) {
-  const {x, y, reference, floating, update, middlewareData} =
-    FloatingUI.useFloating({
-      middleware:
+  const {
+    x,
+    y,
+    reference,
+    floating,
+    update,
+    middlewareData,
+    refs,
+  } = FloatingUI.useFloating({
+    middleware: useMemo(
+      () =>
         middleware
           ?.map(({name, options}) => FloatingUI[name]?.(options))
           .filter((v) => v) ?? [],
-      ...options,
-    });
+      [middleware]
+    ),
+    ...options,
+  });
 
   useEffect(() => {
-    if (!reference.current || !floating.current) {
-      return;
-    }
-
     function wrappedUpdate() {
       update();
       requestAnimationFrame(update);
     }
 
     const nodes = [
-      ...getScrollParents(reference.current),
-      ...getScrollParents(floating.current),
+      ...getScrollParents(refs.reference.current),
+      ...getScrollParents(refs.floating.current),
     ];
 
     nodes.forEach((node) => {
@@ -46,11 +52,11 @@ export function Floating({
         node.removeEventListener('resize', wrappedUpdate);
       });
     };
-  }, [reference, floating, update]);
+  }, [reference, floating, update, refs]);
 
   const tooltipJsx = (
     <div
-      className="grid place-items-center bg-gray-900 text-gray-50 p-4 z-10"
+      className="grid place-items-center bg-gray-1000 text-gray-50 z-10"
       ref={floating}
       style={{
         ...tooltipStyle,
@@ -58,7 +64,10 @@ export function Floating({
         left: `${x}px`,
         top: `${y}px`,
         maxHeight: middlewareData.size
-          ? `${Math.max(80, middlewareData.size.height)}px`
+          ? `${Math.max(
+              tooltipStyle.maxHeight ?? 60,
+              middlewareData.size.height
+            )}px`
           : '',
         backgroundColor: middlewareData.hide?.escaped
           ? 'red'
@@ -68,7 +77,7 @@ export function Floating({
           : '',
       }}
     >
-      {content ?? 'Floating'}
+      <div className="p-4">{content ?? 'Floating'}</div>
     </div>
   );
 

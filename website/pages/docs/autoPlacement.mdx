@@ -19,7 +19,14 @@ computePosition(referenceEl, floatingEl, {
 
 ## Options
 
-`autoPlacement` accepts an object of options.
+```ts
+type Options = DetectOverflowOptions & {
+  alignment: Alignment | null;
+  crossAxis: boolean;
+  allowedPlacements: Array<Placement>;
+  autoAlignment: boolean;
+};
+```
 
 ### alignment
 

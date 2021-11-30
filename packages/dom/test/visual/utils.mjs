@@ -1,5 +1,9 @@
 import {getScrollParents} from './dist/index.mjs';
 
+const reference = document.querySelector('#reference');
+const floating = document.querySelector('#floating');
+const arrowElement = document.querySelector('#arrow');
+
 export function position(data) {
   Object.assign(floating.style, {
     position: data.strategy,
@@ -9,6 +13,14 @@ export function position(data) {
     visibility: data.middlewareData.hide?.referenceHidden
       ? 'hidden'
       : 'visible',
+    maxWidth:
+      data.middlewareData.size?.width != null
+        ? `${data.middlewareData.size?.width}px`
+        : '',
+    maxHeight:
+      data.middlewareData.size?.height != null
+        ? `${data.middlewareData.size?.height}px`
+        : '',
   });
 
   if (window.arrowElement) {
@@ -30,10 +42,11 @@ export function position(data) {
   }
 }
 
-export function updateOnScroll(callback) {
+export function addEventListeners(callback) {
   [...getScrollParents(reference), ...getScrollParents(floating)].forEach(
     (element) => {
       element.addEventListener('scroll', callback);
+      element.addEventListener('resize', callback);
     }
   );
 

@@ -42,8 +42,7 @@ export type Options = DetectOverflowOptions & {
 export const autoPlacement = (options: Partial<Options> = {}): Middleware => ({
   name: 'autoPlacement',
   async fn(middlewareArguments: MiddlewareArguments) {
-    const {x, y, rects, scheduleReset, middlewareData, placement} =
-      middlewareArguments;
+    const {x, y, rects, middlewareData, placement} = middlewareArguments;
 
     const {
       alignment = null,
@@ -86,8 +85,13 @@ export const autoPlacement = (options: Partial<Options> = {}): Middleware => ({
 
     // Make `computeCoords` start from the right place
     if (placement !== currentPlacement) {
-      scheduleReset({placement: placements[0]});
-      return {x, y};
+      return {
+        x,
+        y,
+        reset: {
+          placement: placements[0],
+        },
+      };
     }
 
     const currentOverflows = [
@@ -105,12 +109,13 @@ export const autoPlacement = (options: Partial<Options> = {}): Middleware => ({
 
     // There are more placements to check
     if (nextPlacement) {
-      scheduleReset({placement: nextPlacement});
-
       return {
         data: {
           index: currentIndex + 1,
           overflows: allOverflows,
+        },
+        reset: {
+          placement: nextPlacement,
         },
       };
     }
@@ -128,14 +133,15 @@ export const autoPlacement = (options: Partial<Options> = {}): Middleware => ({
       ({overflows}) => overflows.every((overflow) => overflow <= 0)
     )?.placement;
 
-    scheduleReset({
-      placement:
-        placementThatFitsOnAllSides ??
-        placementsSortedByLeastOverflow[0].placement,
-    });
-
     return {
-      data: {skip: true},
+      data: {
+        skip: true,
+      },
+      reset: {
+        placement:
+          placementThatFitsOnAllSides ??
+          placementsSortedByLeastOverflow[0].placement,
+      },
     };
   },
 });

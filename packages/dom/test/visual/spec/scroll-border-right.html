@@ -26,9 +26,9 @@
 <script src="https://unpkg.com/@popperjs/core"></script>
 <script type="module">
   import {computePosition, shift} from '../dist/index.mjs';
-  import {position, updateOnScroll} from '../utils.mjs';
+  import {position, addEventListeners} from '../utils.mjs';
 
-  updateOnScroll(() => {
+  addEventListeners(() => {
     computePosition(reference, floating, {
       placement: 'right',
       middleware: [shift({crossAxis: true})],

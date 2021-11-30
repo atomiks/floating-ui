@@ -17,9 +17,12 @@ import Tippy from '@tippyjs/react/headless';
 import {Menu} from 'react-feather';
 import {Chrome} from './Chrome';
 import {Floating} from './Floating';
+import {SkipNavLink, SkipNavContent} from '@reach/skip-nav';
+import '@reach/skip-nav/styles.css';
 
 const nav = [
   {url: '/docs/getting-started', title: 'Getting Started'},
+  {url: '/docs/tutorial', title: 'Tutorial'},
   {url: '/docs/computePosition', title: 'computePosition'},
   {url: '/docs/middleware', title: 'Middleware'},
   {url: '/docs/offset', title: 'offset'},
@@ -31,7 +34,8 @@ const nav = [
   {url: '/docs/hide', title: 'hide'},
   {url: '/docs/detectOverflow', title: 'detectOverflow'},
   {url: '/docs/virtual-elements', title: 'Virtual Elements'},
-  {url: '/docs/tutorial', title: 'Tutorial'},
+  {url: '/docs/misc', title: 'Misc'},
+  {url: '/docs/platform', title: 'Platform'},
   {url: '/docs/react-dom', title: 'React DOM'},
   {url: '/docs/react-native', title: 'React Native'},
 ];
@@ -94,6 +98,11 @@ export default function Layout({children}) {
       .token.spread.operator {
         color: #ff9fb1 !important;
       }
+
+      [data-reach-skip-nav-link] {
+        color: black;
+        margin-left: 17rem;
+      }
     `;
 
     document.head?.append(stylesheet);
@@ -126,7 +135,8 @@ export default function Layout({children}) {
 
   return (
     <MDXProvider components={components}>
-      <div className="md:pl-80">
+      <SkipNavLink />
+      <div className="md:pl-64">
         <div className="container pl-4">
           <button
             aria-label="Open menu"
@@ -145,7 +155,7 @@ export default function Layout({children}) {
             }
           )}
         >
-          <div className="container mx-auto">
+          <div className="container mx-auto mb-8">
             <Link href="/">
               <a href="/">
                 <Logo className="h-28 mx-auto mt-4" />
@@ -159,7 +169,7 @@ export default function Layout({children}) {
                 Close
               </button>
             )}
-            <ul className="text-lg pl-6">
+            <ul className="text-lg px-6">
               {nav.map(({url, title}) => (
                 <li key={url}>
                   <Link href={url}>
@@ -204,6 +214,7 @@ export default function Layout({children}) {
           className="container px-4 my-16 mx-auto"
           style={{maxWidth: '70ch'}}
         >
+          <SkipNavContent />
           <article className="prose prose-lg">
             {children}
           </article>

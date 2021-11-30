@@ -23,18 +23,18 @@ export type Platform = {
   }) => Promise<ElementRects>;
   convertOffsetParentRelativeRectToViewportRelativeRect: (args: {
     rect: Rect;
-    offsetParent: Element | Window;
+    offsetParent: any;
     strategy: Strategy;
   }) => Promise<Rect>;
-  getOffsetParent: (args: {element: Element}) => Promise<Element | Window>;
+  getOffsetParent: (args: {element: any}) => Promise<any>;
   isElement: (value: unknown) => Promise<boolean>;
-  getDocumentElement: (args: {element: Element}) => Promise<Element>;
+  getDocumentElement: (args: {element: any}) => Promise<any>;
   getClippingClientRect: (args: {
-    element: Element;
+    element: any;
     boundary: Boundary;
     rootBoundary: RootBoundary;
   }) => Promise<ClientRectObject>;
-  getDimensions: (args: {element: HTMLElement}) => Promise<Dimensions>;
+  getDimensions: (args: {element: any}) => Promise<Dimensions>;
 };
 
 export type Coords = {
@@ -77,7 +77,9 @@ export type MiddlewareData = {
     referenceHiddenOffsets: SideObject;
     escapedOffsets: SideObject;
   };
-  size?: Dimensions;
+  size?: Dimensions & {
+    skip?: boolean;
+  };
   [key: string]: any;
 };
 
@@ -102,17 +104,23 @@ export type ComputePosition = (
   config: ComputePositionConfig
 ) => Promise<ComputePositionReturn>;
 
-export type MiddlewareReturn = Coords & {
-  data: {
-    [key: string]: any;
-  };
-};
+export type MiddlewareReturn = Partial<
+  Coords & {
+    data: {
+      [key: string]: any;
+    };
+    reset: {
+      placement?: Placement;
+      rects?: Partial<ElementRects>;
+    };
+  }
+>;
 
 export type Middleware = {
   name: string;
   fn: (
-    modifierArguments: MiddlewareArguments
-  ) => Partial<MiddlewareReturn> | Promise<Partial<MiddlewareReturn>>;
+    middlewareArguments: MiddlewareArguments
+  ) => MiddlewareReturn | Promise<MiddlewareReturn>;
 };
 
 export type Dimensions = {
@@ -140,7 +148,6 @@ export type MiddlewareArguments = Coords & {
   placement: Placement;
   strategy: Strategy;
   middlewareData: MiddlewareData;
-  scheduleReset: (args: {placement: Placement}) => void;
   elements: Elements;
   rects: ElementRects;
   platform: Platform;

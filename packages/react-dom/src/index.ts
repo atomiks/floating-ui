@@ -96,6 +96,7 @@ export function useFloating(
       update,
       reference: setReference,
       floating: setFloating,
+      refs: {reference, floating},
     }),
     [data, update, setReference, setFloating]
   );

@@ -145,6 +145,20 @@ These are documented in the navigation bar on the left.
 Importantly, you can also craft your own custom middleware to
 extend the behavior of the library.
 
+## Return value
+
+```ts
+type ComputePositionReturn = {
+  x: number;
+  y: number;
+  // The stateful placement, which can be different
+  // from the initial `placement` passed as options
+  placement: Placement;
+  strategy: Strategy;
+  middlewareData: MiddlewareData;
+};
+```
+
 ## Updating
 
 Since `computePosition` is only a single function call, it only
@@ -176,7 +190,7 @@ addEventListener('resize', update);
 ```
 
 A `ResizeObserver`, `requestAnimationFrame` loop, etc. can handle
-these cases.
+additional cases.
 
 ### scrollParents
 

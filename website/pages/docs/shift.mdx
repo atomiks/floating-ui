@@ -8,41 +8,20 @@ keep it in view (prevents overflow).
 
 <div className="flex flex-col gap-4">
   <Chrome>
-  <Tippy
-    visible
-    render={() => (
-      <div className="bg-gray-900 px-2 py-1 rounded text-gray-50">
-        Tooltip wider than its reference
-      </div>
-    )}
-    placement="bottom"
-    offset={[0, 0]}
-    appendTo="parent"
-    popperOptions={{
-      modifiers: [{name: 'preventOverflow', enabled: false}],
-    }}
-  >
-    <div className="grid place-items-center text-gray-50 w-32 h-32 bg-blue-600">Default</div>
-  </Tippy>
-</Chrome>
+    <Floating
+      content="Element wider than its reference"
+    >
+      <div className="grid place-items-center text-gray-50 w-32 h-32 bg-blue-600">Default</div>
+    </Floating>
+  </Chrome>
 
   <Chrome>
-    <Tippy
-      visible
-      render={() => (
-        <div className="bg-gray-900 px-2 py-1 rounded text-gray-50">
-          Tooltip wider than its reference
-        </div>
-      )}
-      placement="bottom"
-      offset={[0, 0]}
-      appendTo="parent"
-      popperOptions={{
-        modifiers: [{name: 'preventOverflow', options: {padding: 0}}],
-      }}
+    <Floating
+      content="Element wider than its reference"
+      middleware={[{name: 'shift'}]}
     >
-      <div className="grid place-items-center text-gray-50 w-32 h-32 bg-blue-600">shift()</div>
-  </Tippy>
+      <div className="grid place-items-center text-gray-50 w-32 h-32 bg-blue-600">Default</div>
+    </Floating>
   </Chrome>
 </div>
 
@@ -57,8 +36,6 @@ computePosition(referenceEl, floatingEl, {
 ```
 
 ## Options
-
-`shift` accepts an object of options.
 
 ```ts
 type Options = DetectOverflowOptions & {

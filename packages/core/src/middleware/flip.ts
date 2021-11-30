@@ -19,7 +19,7 @@ export type Options = DetectOverflowOptions & {
 export const flip = (options: Partial<Options> = {}): Middleware => ({
   name: 'flip',
   async fn(middlewareArguments: MiddlewareArguments) {
-    const {placement, middlewareData, rects, scheduleReset, initialPlacement} =
+    const {placement, middlewareData, rects, initialPlacement} =
       middlewareArguments;
 
     if (middlewareData.flip?.skip) {
@@ -72,41 +72,46 @@ export const flip = (options: Partial<Options> = {}): Middleware => ({
 
       if (nextPlacement) {
         // Try next placement and re-run the lifecycle
-        scheduleReset({placement: nextPlacement});
-
         return {
           data: {
             index: nextIndex,
             overflows: overflowsData,
           },
+          reset: {
+            placement: nextPlacement,
+          },
         };
       }
 
+      let resetPlacement: Placement = 'bottom';
       switch (fallbackStrategy) {
         case 'bestFit': {
-          scheduleReset({
-            placement: overflowsData
-              .slice()
-              .sort(
-                (a, b) =>
-                  a.overflows
-                    .filter((overflow) => overflow > 0)
-                    .reduce((acc, overflow) => acc + overflow, 0) -
-                  b.overflows
-                    .filter((overflow) => overflow > 0)
-                    .reduce((acc, overflow) => acc + overflow, 0)
-              )[0].placement,
-          });
+          resetPlacement = overflowsData
+            .slice()
+            .sort(
+              (a, b) =>
+                a.overflows
+                  .filter((overflow) => overflow > 0)
+                  .reduce((acc, overflow) => acc + overflow, 0) -
+                b.overflows
+                  .filter((overflow) => overflow > 0)
+                  .reduce((acc, overflow) => acc + overflow, 0)
+            )[0].placement;
           break;
         }
         case 'initialPlacement':
-          scheduleReset({placement: initialPlacement});
+          resetPlacement = initialPlacement;
           break;
         default:
       }
 
       return {
-        data: {skip: true},
+        data: {
+          skip: true,
+        },
+        reset: {
+          placement: resetPlacement,
+        },
       };
     }
 

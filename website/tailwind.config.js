@@ -2,14 +2,34 @@
 const colors = require('tailwindcss/colors');
 
 module.exports = {
+  plugins: [require('@tailwindcss/typography')],
   purge: [
     './pages/**/*.{js,ts,jsx,tsx}',
     './components/**/*.{js,ts,jsx,tsx}',
   ],
-  darkMode: false, // or 'media' or 'class'
+  darkMode: false,
   theme: {
     extend: {
       typography: {
+        lg: {
+          css: {
+            pre: {
+              '@media (max-width: 500px)': {
+                paddingLeft: '5%',
+                paddingRight: '5%',
+              },
+            },
+            h1: {
+              lineHeight: '1.1',
+              whiteSpace: 'nowrap',
+              overflow: 'hidden',
+              textOverflow: 'ellipsis',
+              '@media (max-width: 500px)': {
+                fontSize: '2.25rem',
+              },
+            },
+          },
+        },
         DEFAULT: {
           css: {
             maxWidth: '70ch',
@@ -27,7 +47,6 @@ module.exports = {
               backgroundClip: 'text',
               color: 'transparent',
               backgroundImage: `linear-gradient(to right, ${colors.yellow['300']}, ${colors.pink['400']})`,
-              lineHeight: '1.5 !important',
             },
             h2: {
               color: '#fff',
@@ -107,7 +126,8 @@ module.exports = {
   variants: {
     extend: {
       filter: ['hover'],
+      saturate: ['hover'],
+      brightness: ['hover'],
     },
   },
-  plugins: [require('@tailwindcss/typography')],
 };

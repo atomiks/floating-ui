@@ -4,6 +4,7 @@ import 'tippy.js/animations/scale-subtle.css';
 import 'tippy.js/animations/perspective-subtle.css';
 
 import Tippy from '@tippyjs/react';
+import {inlinePositioning} from 'tippy.js';
 import {useLayoutEffect, useState} from 'react';
 import {Check, ArrowRight, GitHub, Heart} from 'react-feather';
 import Link from 'next/link';
@@ -361,6 +362,13 @@ Object.assign(tooltip.style, {
                       rootBoundary: 'document',
                     },
                   },
+                  {
+                    name: 'flip',
+                    options: {
+                      rootBoundary: 'document',
+                      padding: 0,
+                    },
+                  },
                 ],
               }}
             >
@@ -397,7 +405,13 @@ function Popovers() {
           <div className="text-center">
             <Tippy
               content={
-                <div className="text-left">
+                <div
+                  className="text-left"
+                  style={{
+                    // Fixes shaky text in Chrome...
+                    transform: 'rotate(0.001deg)',
+                  }}
+                >
                   <h3 className="text-xl font-bold p-2">
                     My popover title
                   </h3>
@@ -509,13 +523,13 @@ function HomePage() {
           <div className="flex flex-row justify-center gap-x-4">
             <Link href="/docs/getting-started">
               <a
-                className="flex items-center gap-2 filter hover:contrast-200 bg-gradient-to-b from-blue-500 to-blue-600 shadow-lg rounded text-gray-50 px-4 py-3 text-xl font-bold"
+                className="flex items-center gap-2 filter transition hover:saturate-200 hover:brightness-110 bg-gradient-to-b from-blue-500 to-blue-600 shadow-lg hover:shadow-xl rounded text-gray-50 px-4 py-3 text-xl font-bold"
                 href="/docs/getting-started"
               >
                 Get Started <ArrowRight />
               </a>
             </Link>
-            <button className="flex transition items-center gap-2 bg-gray-50 rounded text-gray-900 px-4 py-3 text-xl shadow-lg font-bold">
+            <button className="flex transition hover:shadow-xl items-center gap-2 bg-gray-50 rounded text-gray-900 px-4 py-3 text-xl shadow-lg font-bold">
               <GitHub /> GitHub
             </button>
           </div>
@@ -530,14 +544,15 @@ function HomePage() {
             Position all types of{' '}
             <Tippy
               content={
-                <>
+                <div className="text-lg">
                   A <strong>floating element</strong> is one that
-                  sits on top of the UI without disrupting the
-                  flow of content (i.e. not inline)
-                </>
+                  floats on top of the UI without disrupting the
+                  flow of content, like this one!
+                </div>
               }
               theme="light-border"
               aria={{content: 'labelledby'}}
+              plugins={[inlinePositioning]}
             >
               <span
                 tabIndex={0}
@@ -570,48 +585,32 @@ function HomePage() {
           </h2>
           <p className="text-2xl lg:text-3xl text-left mb-8">
             The core is only 600 bytes when minified and
-            compressed with brotli. Plus, the architecture is
+            compressed with Brotli. Plus, the architecture is
             super modular, so tree-shaking works like a charm.
           </p>
           <div className="grid items-center py-4">
-            <div className="flex flex-col text-center text-xl md:text-2xl mx-auto md:pr-40">
+            <div className="flex flex-col text-center text-lg sm:text-xl md:text-2xl mx-auto pr-4 sm:pr-20 md:pr-40">
               <div className="mb-2 flex gap-2 items-center justify-center">
                 <code className="flex-1 text-blue-400 text-right">
                   computePosition
-                  <span className="text-blue-200">();</span>
+                  <span className="text-blue-200">()</span>
                 </code>
                 <span className="text-lg text-gray-100 text-left">
+                  &nbsp; 0.6 kB
+                </span>
+              </div>
+              <div className="mb-2 flex gap-2 items-center justify-center">
+                <code className="flex-1 text-blue-400 text-right">
+                  shift<span className="text-blue-200">()</span>
+                </code>
+                <span className="text-lg text-green-500 text-left">
                   +0.6 kB
                 </span>
               </div>
               <div className="mb-2 flex gap-2 items-center justify-center">
                 <code className="flex-1 text-blue-400 text-right">
-                  shift<span className="text-blue-200">();</span>
-                </code>
-                <span className="text-lg text-yellow-500 text-left">
-                  +1.0 kB
-                </span>
-              </div>
-              <div className="mb-2 flex gap-2 items-center justify-center">
-                <code className="flex-1 text-blue-400 text-right">
                   limitShift
-                  <span className="text-blue-200">();</span>
-                </code>
-                <span className="text-lg text-green-500 text-left">
-                  +0.3 kB
-                </span>
-              </div>
-              <div className="mb-2 flex gap-2 items-center justify-center">
-                <code className="flex-1 text-blue-400 text-right">
-                  flip<span className="text-blue-200">();</span>
-                </code>
-                <span className="text-lg text-green-500 text-left">
-                  +0.3 kB
-                </span>
-              </div>
-              <div className="mb-2 flex gap-2 items-center justify-center">
-                <code className="flex-1 text-blue-400 text-right">
-                  hide<span className="text-blue-200">();</span>
+                  <span className="text-blue-200">()</span>
                 </code>
                 <span className="text-lg text-green-500 text-left">
                   +0.1 kB
@@ -619,7 +618,23 @@ function HomePage() {
               </div>
               <div className="mb-2 flex gap-2 items-center justify-center">
                 <code className="flex-1 text-blue-400 text-right">
-                  arrow<span className="text-blue-200">();</span>
+                  flip<span className="text-blue-200">()</span>
+                </code>
+                <span className="text-lg text-green-500 text-left">
+                  +0.5 kB
+                </span>
+              </div>
+              <div className="mb-2 flex gap-2 items-center justify-center">
+                <code className="flex-1 text-blue-400 text-right">
+                  hide<span className="text-blue-200">()</span>
+                </code>
+                <span className="text-lg text-green-500 text-left">
+                  +0.2 kB
+                </span>
+              </div>
+              <div className="mb-2 flex gap-2 items-center justify-center">
+                <code className="flex-1 text-blue-400 text-right">
+                  arrow<span className="text-blue-200">()</span>
                 </code>
                 <span className="text-lg text-green-500 text-left">
                   +0.2 kB
@@ -628,15 +643,7 @@ function HomePage() {
               <div className="mb-2 flex gap-2 items-center justify-center">
                 <code className="flex-1 text-blue-400 text-right">
                   offset
-                  <span className="text-blue-200">();</span>
-                </code>
-                <span className="text-lg text-green-500 text-left">
-                  +0.2 kB
-                </span>
-              </div>
-              <div className="mb-2 flex gap-2 items-center justify-center">
-                <code className="flex-1 text-blue-400 text-right">
-                  size<span className="text-blue-200">();</span>
+                  <span className="text-blue-200">()</span>
                 </code>
                 <span className="text-lg text-green-500 text-left">
                   +0.1 kB
@@ -644,11 +651,27 @@ function HomePage() {
               </div>
               <div className="mb-2 flex gap-2 items-center justify-center">
                 <code className="flex-1 text-blue-400 text-right">
-                  autoPlacement
-                  <span className="text-blue-200">();</span>
+                  size<span className="text-blue-200">()</span>
                 </code>
                 <span className="text-lg text-green-500 text-left">
-                  +0.3 kB
+                  +0.2 kB
+                </span>
+              </div>
+              <div className="mb-2 flex gap-2 items-center justify-center">
+                <code className="flex-1 text-blue-400 text-right">
+                  autoPlacement
+                  <span className="text-blue-200">()</span>
+                </code>
+                <span className="text-lg text-green-500 text-left">
+                  +0.4 kB
+                </span>
+              </div>
+              <div className="mb-2 flex gap-3 items-center justify-center">
+                <code className="flex-1 text-gray-400 text-right">
+                  DOM platform
+                </code>
+                <span className="text-lg text-yellow-500 text-left">
+                  +1.9 kB
                 </span>
               </div>
             </div>
@@ -666,7 +689,7 @@ function HomePage() {
           </p>
 
           <div className="grid lg:grid-cols-2 gap-4">
-            <div className="bg-gradient-to-br from-red-600 to-pink-700 rounded-lg py-8 px-12">
+            <div className="bg-gradient-to-br from-red-600 to-pink-700 rounded-lg py-6 px-10">
               <h3 className="text-3xl text-gray-50 font-bold mb-4 text-yellow-100">
                 Core middleware
               </h3>
@@ -694,7 +717,7 @@ function HomePage() {
                 </li>
               </ul>
             </div>
-            <div className="bg-gradient-to-br from-red-600 to-pink-700 rounded-lg py-8 px-12">
+            <div className="bg-gradient-to-br from-red-600 to-pink-700 rounded-lg py-6 px-10">
               <h3 className="text-3xl text-gray-50 font-bold mb-4 text-yellow-100">
                 Custom middleware
               </h3>

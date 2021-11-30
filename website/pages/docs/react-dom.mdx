@@ -63,9 +63,20 @@ e.g. in event listeners.
 const {update} = useFloating();
 ```
 
+In addition, the `refs` containing the actual elements are passed
+back:
+
+```js
+const {refs} = useFloating();
+
+// .current will be filled with the element inside an effect
+// refs.reference.current
+// refs.floating.current
+```
+
 For instance:
 
-```jsx
+```jsx {5,9,15-33}
 import {useMemo, useEffect} from 'react';
 import {
   useFloating,
@@ -74,7 +85,7 @@ import {
 } from '@floating-ui/react-dom';
 
 function App() {
-  const {x, y, reference, floating, strategy, update} =
+  const {x, y, reference, floating, strategy, update, refs} =
     useFloating({
       placement: 'right',
       middleware: useMemo(() => [shift()], []),
@@ -83,8 +94,8 @@ function App() {
   // Update on scroll and resize
   useEffect(() => {
     const parents = [
-      ...getScrollParents(reference.current),
-      ...getScrollParents(floating.current),
+      ...getScrollParents(refs.reference.current),
+      ...getScrollParents(refs.floating.current),
     ];
 
     parents.forEach((parent) => {
@@ -98,7 +109,7 @@ function App() {
         parent.removeEventListener('resize', update);
       });
     };
-  }, []);
+  }, [refs, update]);
 
   return (
     <>

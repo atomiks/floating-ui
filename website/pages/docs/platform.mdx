@@ -1,0 +1,154 @@
+import Layout from '../../components/Layout';
+export default Layout;
+
+# Platform
+
+Floating UI works on any platform that can run JavaScript, as
+long as it has adequate measurement APIs for elements.
+
+Floating UI works largely with a `Rect`, which is an object of
+numbers in the form `{width, height, x, y}`. This data can come
+from anywhere, and floating UI will perform the right
+computations.
+
+```js
+import {computePosition} from '@floating-ui/core';
+
+computePosition(referenceElement, floatingElement, {
+  platform: {
+    // ...
+  },
+});
+```
+
+## Methods
+
+A `platform` is a plain object consisting of 7 methods. These
+methods allow the platform to interface with Floating UI's logic.
+
+### getElementRects
+
+Takes in the elements and the positioning `strategy` and returns
+the element `Rect` objects.
+
+```js
+function getElementRects({reference, floating, strategy}) {
+  return {
+    reference: {width: 0, height: 0, x: 0, y: 0},
+    floating: {width: 0, height: 0, x: 0, y: 0},
+  };
+}
+```
+
+#### reference
+
+The `x` and `y` values of a reference `Rect` should be
+**relative** to the floating element's `offsetParent` element,
+**not** the viewport or window.
+
+### convertOffsetParentRelativeRectToViewportRelativeRect
+
+This function will take a `Rect` that is relative to a given
+`offsetParent` element and convert its `x` and `y` values such
+that it is instead relative to the viewport.
+
+```js
+function convertOffsetParentRelativeRectToViewportRelativeRect({
+  rect,
+  offsetParent,
+  strategy,
+}) {
+  return rect;
+}
+```
+
+### getOffsetParent
+
+Returns the `offsetParent` of a given element. The following four
+properties are what is accessed on an `offsetParent`.
+
+```js
+function getOffsetParent({element}) {
+  return {
+    clientWidth: 0,
+    clientHeight: 0,
+    clientLeft: 0,
+    clientTop: 0,
+  };
+}
+```
+
+### isElement
+
+Determines if the current value is an element.
+
+```js
+function isElement(value) {
+  return true;
+}
+```
+
+### getDocumentElement
+
+Returns the document element.
+
+```js
+function getDocumentElement({element}) {
+  return {};
+}
+```
+
+### getDimensions
+
+Return the dimensions of an element.
+
+```js
+function getDimensions({element}) {
+  return {width: 0, height: 0};
+}
+```
+
+### getClippingClientRect
+
+Return the `clientRect` (**relative to the viewport**) whose
+outside bounds will clip the given element. For instance, the
+viewport.
+
+```js
+function getClippingClientRect({
+  element,
+  boundary,
+  rootBoundary,
+}) {
+  return {
+    width: 0,
+    height: 0,
+    top: 0,
+    right: 0,
+    bottom: 0,
+    left: 0,
+    x: 0,
+    y: 0,
+  };
+}
+```
+
+## Usage
+
+All these methods are passed to `platform`:
+
+```js
+import {computePosition} from '@floating-ui/core';
+
+computePosition(referenceEl, floatingEl, {
+  platform: {
+    getElementRects,
+    convertOffsetParentRelativeRectToViewportRelativeRect,
+    getOffsetParent,
+    isElement,
+    getDocumentElement,
+    getDimensions,
+    getClippingClientRect,
+  },
+});
+```

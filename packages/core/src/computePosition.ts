@@ -1,11 +1,12 @@
-import type {ComputePosition, Placement} from './types';
+import type {ComputePosition} from './types';
 import {computeCoordsFromPlacement} from './computeCoordsFromPlacement';
+import {ComputePositionReturn} from '..';
 
 export const computePosition: ComputePosition = async (
   reference,
   floating,
   config
-) => {
+): Promise<ComputePositionReturn> => {
   const {
     placement = 'bottom',
     strategy = 'absolute',
@@ -34,19 +35,12 @@ export const computePosition: ComputePosition = async (
     }
   }
 
-  const rects = await platform.getElementRects({reference, floating, strategy});
+  let rects = await platform.getElementRects({reference, floating, strategy});
 
   let {x, y} = computeCoordsFromPlacement({...rects, placement});
 
-  let isMiddlewareLifecycleReset = false;
-
   let statefulPlacement = placement;
   let middlewareData = {};
-
-  const scheduleReset = ({placement}: {placement: Placement}) => {
-    statefulPlacement = placement;
-    isMiddlewareLifecycleReset = true;
-  };
 
   let _debug_loop_count_ = 0;
   for (let i = 0; i < middleware.length; i++) {
@@ -56,9 +50,8 @@ export const computePosition: ComputePosition = async (
         throw new Error(
           [
             'Floating UI: The middleware lifecycle appears to be',
-            'running in an infinite loop. This is caused by a',
-            '`scheduleReset()` continually being called without a break',
-            'condition.',
+            'running in an infinite loop. This is usually caused by a `reset`',
+            'continually being returned without a break condition.',
           ].join(' ')
         );
       }
@@ -76,6 +69,7 @@ export const computePosition: ComputePosition = async (
       x: nextX,
       y: nextY,
       data,
+      reset,
     } = await fn({
       x,
       y,
@@ -83,7 +77,6 @@ export const computePosition: ComputePosition = async (
       placement: statefulPlacement,
       strategy,
       middlewareData,
-      scheduleReset,
       rects,
       platform,
       elements: {reference, floating},
@@ -94,9 +87,16 @@ export const computePosition: ComputePosition = async (
 
     middlewareData = {...middlewareData, [name]: data ?? {}};
 
-    if (isMiddlewareLifecycleReset) {
+    if (reset) {
+      if (reset.placement) {
+        statefulPlacement = reset.placement;
+      }
+
+      if (reset.rects) {
+        rects = {...rects, ...reset.rects};
+      }
+
       i = -1;
-      isMiddlewareLifecycleReset = false;
       continue;
     }
   }

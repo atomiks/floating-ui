@@ -3,16 +3,26 @@ export default Layout;
 
 # Getting Started
 
-Floating UI is a lean low-level library that positions all types
-of elements which float on the page (overlaid on top of the UI)
-next to a given reference element: tooltips, popovers, dropdowns,
-menus, and more.
+Floating UI is a low-level library for positioning "floating"
+elements like tooltips, popovers, dropdowns, menus and more.
+Since these types of elements float on top of the UI without
+disrupting the flow of content, challenges arise when positioning
+them.
 
-It's platform-agnostic, so it works anywhere that JavaScript
-runs, including the web and [React Native](/docs/react-native)!
+Floating UI exposes primitives which enable a floating element to
+be positioned next to a given reference element while appearing
+in view for the user as best as possible. Features include
+overflow prevention (or collision awareness), placement flipping,
+and more.
 
-To use on the web, install `@floating-ui/dom` via npm or Yarn in
-your terminal:
+- **Tiny**: 600-byte core with highly modular architecture for
+  tree-shaking
+- **Low-level**: Hyper-granular control over positioning behavior
+- **Pure**: Predictable, side-effect free behavior
+- **Extensible**: Powerful middleware system
+- **Platform-agnostic**: Runs on any JavaScript environment which
+  provides measurement APIs, including the web and
+  [React Native](/docs/react-native)
 
 ```shell
 npm install @floating-ui/dom

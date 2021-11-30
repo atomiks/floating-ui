@@ -4,9 +4,8 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "build:packages": "cd ../ && npm run build",
-    "dev": "npm run build:packages && next dev",
-    "build": "npm run build:packages && next build",
+    "dev": "next dev",
+    "build": "next build",
     "start": "next start",
     "lint": "next lint"
   },

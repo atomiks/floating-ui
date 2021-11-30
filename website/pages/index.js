@@ -532,9 +532,14 @@ function HomePage() {
                 Get Started <ArrowRight />
               </a>
             </Link>
-            <button className="flex transition hover:shadow-xl items-center gap-2 bg-gray-50 rounded text-gray-900 px-4 py-3 sm:text-xl shadow-lg font-bold">
+            <a
+              href="https://github.com/atomiks/floating-ui"
+              className="flex transition hover:shadow-xl items-center gap-2 bg-gray-50 rounded text-gray-900 px-4 py-3 sm:text-xl shadow-lg font-bold"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
               <GitHub /> GitHub
-            </button>
+            </a>
           </div>
         </div>
       </header>

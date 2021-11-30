@@ -49,7 +49,7 @@ computePosition(referenceElement, floatingElement, {
 });
 ```
 
-Visit the docs for detailed information.
+[Visit the docs for detailed information](https://floating-ui.com/docs/computePosition).
 
 ## Components
 

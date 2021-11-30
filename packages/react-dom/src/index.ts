@@ -22,6 +22,7 @@ export {
   limitShift,
   size,
   getScrollParents,
+  detectOverflow,
 } from '@floating-ui/dom';
 
 const useIsomorphicLayoutEffect =

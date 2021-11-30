@@ -1,7 +1,7 @@
 {
   "name": "@floating-ui/react-dom",
   "version": "0.0.1",
-  "description": "Floating UI React",
+  "description": "Floating UI React DOM",
   "main": "dist/floating-ui.react-dom.js",
   "module": "dist/floating-ui.react-dom.mjs",
   "sideEffects": false,

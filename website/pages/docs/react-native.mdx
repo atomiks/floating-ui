@@ -138,3 +138,23 @@ function App() {
   );
 }
 ```
+
+## Updating
+
+The hook returns an `update()` function to update the position:
+
+```js
+const {update} = useFloating();
+```
+
+In addition, the `refs` containing the actual elements are passed
+back:
+
+```js
+const {refs} = useFloating();
+
+// .current will be filled with the element inside an effect
+// refs.reference.current
+// refs.floating.current
+// refs.offsetParent.current
+```

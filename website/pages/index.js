@@ -47,52 +47,49 @@ Object.assign(tooltip.style, {
           <Code className="language-javascript">{code}</Code>
         </div>
       </div>
-      <div
-        className="grid lg:col-span-5 relative items-center bg-gray-300 rounded-lg"
-        style={{minHeight: 500}}
-      >
+      <div className="grid lg:col-span-5 relative items-center bg-gray-800 rounded-lg h-128 lg:h-auto">
         <div className="text-center">
           {[
             {
               placement: 'top',
               styles: {
                 left: 'calc(50% - 10px - 1rem)',
-                top: 75,
+                top: 25,
               },
             },
             {
               placement: 'top-start',
               styles: {
                 left: 'calc(50% - 70px - 1rem)',
-                top: 75,
+                top: 25,
               },
             },
             {
               placement: 'top-end',
               styles: {
                 left: 'calc(50% + 50px - 1rem)',
-                top: 75,
+                top: 25,
               },
             },
             {
               placement: 'bottom',
               styles: {
                 left: 'calc(50% - 10px - 1rem)',
-                bottom: 75,
+                bottom: 25,
               },
             },
             {
               placement: 'bottom-start',
               styles: {
                 left: 'calc(50% - 70px - 1rem)',
-                bottom: 75,
+                bottom: 25,
               },
             },
             {
               placement: 'bottom-end',
               styles: {
                 left: 'calc(50% + 50px - 1rem)',
-                bottom: 75,
+                bottom: 25,
               },
             },
             {
@@ -147,9 +144,9 @@ Object.assign(tooltip.style, {
             >
               <div
                 className={cn(
-                  ' rounded-full border-2 border-solid border-blue-600',
+                  ' rounded-full border-2 border-solid border-blue-400',
                   {
-                    'bg-blue-600': placement === p,
+                    'bg-blue-400': placement === p,
                   }
                 )}
                 style={{
@@ -165,6 +162,7 @@ Object.assign(tooltip.style, {
             content="Tooltip"
             offset={[0, 8]}
             arrow={false}
+            theme="light-border"
             popperOptions={{
               modifiers: [
                 {
@@ -178,10 +176,7 @@ Object.assign(tooltip.style, {
               ],
             }}
           >
-            <button
-              className="bg-blue-600 rounded text-md text-gray-50 p-2"
-              style={{height: 150, width: 150}}
-            >
+            <button className="bg-blue-600 rounded text-md text-gray-50 p-2 w-48 h-48">
               Click the dots
             </button>
           </Tippy>
@@ -218,12 +213,12 @@ Object.assign(tooltip.style, {
   }, [boundary]);
 
   return (
-    <div className="mb-4 grid lg:grid-cols-12 gap-8 bg-gradient-to-r from-green-700 to-blue-700 rounded-lg px-4 py-8 sm:p-8">
+    <div className="mb-4 grid lg:grid-cols-12 gap-8 bg-gradient-to-r from-green-600 to-blue-800 rounded-lg px-4 py-8 sm:p-8">
       <div className="lg:col-span-7 overflow-hidden">
         <h3 className="text-3xl text-gray-50 font-bold mb-4">
           Shift
         </h3>
-        <p className="text-2xl text-green-200 mb-4">
+        <p className="text-2xl text-green-100 mb-4">
           Shift the floating element in view to prevent overflow.
         </p>
         <div className="rounded-lg bg-gray-800 p-4 overflow-auto">
@@ -232,12 +227,10 @@ Object.assign(tooltip.style, {
       </div>
       <div
         ref={setBoundary}
-        className="grid lg:col-span-5 relative overflow-hidden p-2 bg-gray-300 rounded-lg"
+        className="grid lg:col-span-5 relative overflow-hidden p-2 bg-gray-800 rounded-lg"
+        style={{height: 470}}
       >
-        <div
-          className="grid relative items-center bg-gray-300 rounded-lg overflow-auto w-full border-4 border-solid border-red-600"
-          style={{height: 450}}
-        >
+        <div className="grid relative items-center bg-gray-800 rounded overflow-auto w-full border-4 border-solid border-red-400">
           <div
             style={{
               height: 400,
@@ -258,6 +251,7 @@ Object.assign(tooltip.style, {
               }
               offset={[0, 8]}
               appendTo={() => boundary ?? document.body}
+              theme="light-border"
               popperOptions={{
                 modifiers: [
                   {
@@ -315,7 +309,7 @@ Object.assign(tooltip.style, {
   }, [boundary]);
 
   return (
-    <div className="mb-4 grid lg:grid-cols-12 gap-8 bg-gradient-to-r from-pink-600 to-red-700 rounded-lg px-4 py-8 sm:p-8">
+    <div className="mb-4 grid lg:grid-cols-12 gap-8 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg px-4 py-8 sm:p-8">
       <div className="grid lg:col-span-7 overflow-hidden">
         <h3 className="text-3xl text-gray-50 font-bold mb-4">
           Flip
@@ -329,11 +323,11 @@ Object.assign(tooltip.style, {
         </div>
       </div>
       <div
-        className="grid lg:col-span-5 relative overflow-hidden p-2 bg-gray-300 rounded-lg"
+        className="grid lg:col-span-5 relative overflow-hidden p-2 bg-gray-800 rounded-lg"
         ref={setBoundary}
       >
         <div
-          className="grid relative items-center bg-gray-300 rounded-lg overflow-auto w-full border-4 border-styled border-red-600"
+          className="grid relative items-center bg-gray-800 rounded overflow-auto w-full border-4 border-styled border-red-400"
           style={{height: 485}}
         >
           <div
@@ -354,6 +348,7 @@ Object.assign(tooltip.style, {
               }
               offset={[0, 8]}
               appendTo="parent"
+              theme="light-border"
               popperOptions={{
                 modifiers: [
                   {
@@ -513,14 +508,14 @@ function HomePage() {
           <div
             className="absolute -z-1 w-full"
             style={{
-              top: '-5rem',
-              left: 'calc(-40rem + 50vw)',
+              top: '0',
+              left: 'calc(-35rem + 50vw)',
               width: 1200,
             }}
           >
             <img
               className="select-none"
-              src="/orbs.jpg"
+              src="/floating-ui.jpg"
               width={1167}
               height={648}
             />
@@ -548,7 +543,7 @@ function HomePage() {
           </div>
         </div>
       </header>
-      <main className="relative -mt-48">
+      <main className="relative -mt-60 sm:-mt-48">
         <div className="container mx-auto px-4 max-w-screen-xl">
           <h2 className="inline-block text-4xl leading-gradient-heading lg:text-5xl font-bold mb-4 text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-blue-500">
             Powerful positioning primitives.
@@ -557,7 +552,7 @@ function HomePage() {
             Position all types of{' '}
             <Tippy
               content={
-                <div className="text-lg">
+                <div className="text-lg p-2">
                   A <strong>floating element</strong> is one that
                   floats on top of the UI without disrupting the
                   flow of content, like this one!
@@ -565,6 +560,9 @@ function HomePage() {
               }
               theme="light-border"
               aria={{content: 'labelledby'}}
+              animation="scale-subtle"
+              duration={[450, 125]}
+              inertia
               inlinePositioning={true}
               plugins={[inlinePositioning]}
             >
@@ -609,7 +607,7 @@ function HomePage() {
                   computePosition
                   <span className="text-blue-200">()</span>
                 </code>
-                <span className="text-lg text-gray-100 text-left">
+                <span className="text-lg text-gray-400 text-left">
                   &nbsp; 0.6 kB
                 </span>
               </div>
@@ -617,7 +615,7 @@ function HomePage() {
                 <code className="flex-1 text-blue-400 text-right">
                   shift<span className="text-blue-200">()</span>
                 </code>
-                <span className="text-lg text-green-500 text-left">
+                <span className="text-lg text-green-400 text-left">
                   +0.6 kB
                 </span>
               </div>
@@ -626,7 +624,7 @@ function HomePage() {
                   limitShift
                   <span className="text-blue-200">()</span>
                 </code>
-                <span className="text-lg text-green-500 text-left">
+                <span className="text-lg text-green-400 text-left">
                   +0.1 kB
                 </span>
               </div>
@@ -634,7 +632,7 @@ function HomePage() {
                 <code className="flex-1 text-blue-400 text-right">
                   flip<span className="text-blue-200">()</span>
                 </code>
-                <span className="text-lg text-green-500 text-left">
+                <span className="text-lg text-green-400 text-left">
                   +0.5 kB
                 </span>
               </div>
@@ -642,7 +640,7 @@ function HomePage() {
                 <code className="flex-1 text-blue-400 text-right">
                   hide<span className="text-blue-200">()</span>
                 </code>
-                <span className="text-lg text-green-500 text-left">
+                <span className="text-lg text-green-400 text-left">
                   +0.2 kB
                 </span>
               </div>
@@ -650,7 +648,7 @@ function HomePage() {
                 <code className="flex-1 text-blue-400 text-right">
                   arrow<span className="text-blue-200">()</span>
                 </code>
-                <span className="text-lg text-green-500 text-left">
+                <span className="text-lg text-green-400 text-left">
                   +0.2 kB
                 </span>
               </div>
@@ -659,7 +657,7 @@ function HomePage() {
                   offset
                   <span className="text-blue-200">()</span>
                 </code>
-                <span className="text-lg text-green-500 text-left">
+                <span className="text-lg text-green-400 text-left">
                   +0.1 kB
                 </span>
               </div>
@@ -667,7 +665,7 @@ function HomePage() {
                 <code className="flex-1 text-blue-400 text-right">
                   size<span className="text-blue-200">()</span>
                 </code>
-                <span className="text-lg text-green-500 text-left">
+                <span className="text-lg text-green-400 text-left">
                   +0.2 kB
                 </span>
               </div>
@@ -676,7 +674,7 @@ function HomePage() {
                   autoPlacement
                   <span className="text-blue-200">()</span>
                 </code>
-                <span className="text-lg text-green-500 text-left">
+                <span className="text-lg text-green-400 text-left">
                   +0.4 kB
                 </span>
               </div>
@@ -684,7 +682,7 @@ function HomePage() {
                 <code className="flex-1 text-gray-400 text-right">
                   DOM platform
                 </code>
-                <span className="text-lg text-yellow-500 text-left">
+                <span className="text-lg text-yellow-400 text-left">
                   +1.9 kB
                 </span>
               </div>
@@ -808,7 +806,7 @@ function HomePage() {
           </p>
 
           <div className="grid lg:grid-cols-2 gap-4">
-            <div className="text-gray-900 bg-gradient-to-tr from-blue-400 via-green-400 to-yellow-100 rounded-lg py-8 px-12">
+            <div className="border-gray-200 border-2 text-gray-100 rounded-lg py-8 px-12">
               <h3 className="text-3xl font-bold mb-4">
                 Package Manager
               </h3>
@@ -824,7 +822,7 @@ function HomePage() {
                 </a>
               </Link>
             </div>
-            <div className="text-gray-900 bg-gradient-to-tr from-blue-400 via-green-400 to-yellow-100 rounded-lg py-8 px-12">
+            <div className="border-gray-200 border-2 text-gray-100 rounded-lg py-8 px-12">
               <h3 className="text-3xl font-bold mb-4">CDN</h3>
               <p className="text-xl">
                 Install with the unpkg CDN.
@@ -843,11 +841,29 @@ function HomePage() {
 
         <footer className="text-center text-gray-500 bg-gray-1000 mt-16 py-8">
           <div className="flex flex-col gap-3 container mx-auto px-4 max-w-screen-xl">
-            <p>MIT License • {new Date().getFullYear()}</p>
+            <p>© {new Date().getFullYear()} • MIT License</p>
             <p className="text-gray-400">
               Floating UI is a project by the creator Tippy.js
               and co-author of Popper 2, designed to be a
               next-generation evolution of those libraries.
+            </p>
+            <p className="text-gray-400">
+              Floating shapes in the header are licensed under CC
+              BY from{' '}
+              <a
+                className="text-blue-400"
+                href="https://www.figma.com/@killnicole"
+              >
+                Vic
+              </a>{' '}
+              and{' '}
+              <a
+                className="text-blue-400"
+                href="https://www.figma.com/@Artstar3d"
+              >
+                Lisa Star
+              </a>
+              . Partial modifications were made.
             </p>
           </div>
         </footer>

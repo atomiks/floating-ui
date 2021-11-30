@@ -75,8 +75,11 @@ export function Floating({
       style={{
         ...tooltipStyle,
         position: 'absolute',
-        left: `${x}px`,
-        top: `${y}px`,
+        left: 0,
+        top: 0,
+        transform: `translate3d(${Math.round(x)}px,${Math.round(
+          y
+        )}px,0)`,
         maxHeight: height ? `${height}px` : '',
         backgroundColor: middlewareData.hide?.escaped
           ? 'red'

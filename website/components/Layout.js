@@ -144,7 +144,7 @@ export default function Layout({children}) {
         </title>
       </Head>
       <SkipNavLink />
-      <div className="md:pl-64">
+      <div className="md:pl-56 lg:pl-72">
         <div className="container pl-4">
           <button
             aria-label="Open menu"
@@ -157,7 +157,7 @@ export default function Layout({children}) {
         </div>
         <nav
           className={cn(
-            'fixed bg-gray-1000 h-full w-64 top-0 left-0 overflow-y-auto md:block bg-opacity-90 backdrop-filter backdrop-blur-lg z-50',
+            'fixed bg-gray-1000 h-full w-72 md:w-56 lg:w-72 top-0 left-0 overflow-y-auto md:block bg-opacity-90 backdrop-filter backdrop-blur-lg z-50',
             {
               hidden: !navOpen,
             }
@@ -177,7 +177,7 @@ export default function Layout({children}) {
                 Close
               </button>
             )}
-            <ul className="text-lg px-6">
+            <ul className="text-lg px-6 lg:px-8">
               {nav.map(({url, title}) => (
                 <li key={url}>
                   <Link href={url}>
@@ -219,8 +219,8 @@ export default function Layout({children}) {
           </div>
         </nav>
         <div
-          className="container px-4 my-16 mx-auto"
-          style={{maxWidth: '70ch'}}
+          className="container px-8 my-16 mx-auto"
+          style={{maxWidth: '75ch'}}
         >
           <SkipNavContent />
           <article className="prose prose-lg">

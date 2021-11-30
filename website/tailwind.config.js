@@ -63,15 +63,9 @@ module.exports = {
               color: 'inherit',
             },
             code: {
-              color: colors.pink[300],
+              color: '#85a9ff',
               borderRadius: '4px',
               padding: '2px 4px',
-              '&::before': {
-                display: 'none',
-              },
-              '&::after': {
-                display: 'none',
-              },
             },
             a: {
               color: '#87e1fc',
@@ -119,6 +113,9 @@ module.exports = {
       },
       width: {
         '1200px': '1200px',
+      },
+      height: {
+        128: '32rem',
       },
       lineHeight: {
         'gradient-heading': '1.1 !important',

@@ -313,7 +313,7 @@ export default function DropdownExample() {
       }}
       middleware={[navigation]}
     >
-      <button className="flex items-center text-lg bg-blue-600 text-gray-50 hover:bg-blue-700 p-3 transition-colors rounded">
+      <button className="flex items-center mx-auto text-lg bg-blue-600 text-gray-50 hover:bg-blue-700 p-3 transition-colors rounded">
         {selectedOption ?? 'Blend Mode'} <ChevronDown />
       </button>
     </Tippy>

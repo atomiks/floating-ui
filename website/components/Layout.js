@@ -6,6 +6,7 @@ import Navigation from './Navigation';
 import Logo from '../assets/logo.svg';
 import Link from 'next/link';
 import {useRouter} from 'next/router';
+import Head from 'next/head';
 import cn from 'classnames';
 import {
   useEffect,
@@ -135,6 +136,12 @@ export default function Layout({children}) {
 
   return (
     <MDXProvider components={components}>
+      <Head>
+        <title>
+          {nav.find(({url}) => url === pathname).title} |
+          Floating UI
+        </title>
+      </Head>
       <SkipNavLink />
       <div className="md:pl-64">
         <div className="container pl-4">

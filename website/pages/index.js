@@ -8,6 +8,7 @@ import {inlinePositioning} from 'tippy.js';
 import {useLayoutEffect, useState} from 'react';
 import {Check, ArrowRight, GitHub, Heart} from 'react-feather';
 import Link from 'next/link';
+import Head from 'next/head';
 import DropdownExample from '../components/DropdownExample.js';
 import cn from 'classnames';
 import Code from '../components/Code';
@@ -400,7 +401,7 @@ function Popovers() {
         </p>
       </div>
       <div className="flex flex-col gap-2">
-        <div className="flex justify-center align-center bg-gray-300 py-12 text-gray-900 rounded-lg p-4">
+        <div className="grid items-center h-full bg-gray-300 py-12 text-gray-900 rounded-lg p-4">
           <div className="text-center">
             <Tippy
               content={
@@ -454,7 +455,7 @@ function Dropdowns() {
         </p>
       </div>
       <div className="flex flex-col gap-2">
-        <div className="flex justify-center align-center bg-gray-300 py-12 text-gray-900 rounded-lg p-4">
+        <div className="grid items-center h-full bg-gray-300 py-12 text-gray-900 rounded-lg p-4">
           <div className="text-center">
             <DropdownExample />
             <div className="text-gray-500 mt-2">
@@ -479,7 +480,7 @@ function Tooltips() {
         </p>
       </div>
       <div className="flex flex-col gap-2 overflow-hidden">
-        <div className="flex justify-center align-center bg-gray-300 py-12 text-gray-900 rounded-lg">
+        <div className="grid items-center h-full bg-gray-300 py-12 text-gray-900 rounded-lg">
           <div className="text-center">
             <Tippy content="Add emoji" offset={[0, 8]}>
               <button className="text-3xl">🙂</button>
@@ -497,6 +498,12 @@ function Tooltips() {
 function HomePage() {
   return (
     <>
+      <Head>
+        <title>
+          Floating UI - Positioning for tooltips, popovers,
+          dropdowns, and more
+        </title>
+      </Head>
       <header className="from-gray-700 to-gray-800 mb-24 overflow-hidden relative pb-48">
         <div className="container py-8 mx-auto px-4 text-center max-w-screen-xl">
           <Logo
@@ -782,9 +789,12 @@ function HomePage() {
                 package is in development. Consider supporting
                 the future of this project through sponsorship:
               </p>
-              <button className="flex items-center gap-2 text-xl border-2 border-solid border-pink-300 text-pink-300 rounded px-4 py-2 hover:bg-pink-300 hover:text-gray-900 transition">
-                Support <Heart />
-              </button>
+              <a
+                href="https://github.com/sponsors/atomiks"
+                className="flex justify-center items-center gap-2 text-xl border-2 border-solid border-pink-300 text-pink-300 rounded px-4 py-2 hover:bg-pink-300 hover:text-gray-900 transition"
+              >
+                Sponsor <Heart />
+              </a>
             </div>
           </div>
         </div>

@@ -8,7 +8,6 @@ import {inlinePositioning} from 'tippy.js';
 import {useLayoutEffect, useState} from 'react';
 import {Check, ArrowRight, GitHub, Heart} from 'react-feather';
 import Link from 'next/link';
-import Image from 'next/image';
 import DropdownExample from '../components/DropdownExample.js';
 import cn from 'classnames';
 import Code from '../components/Code';

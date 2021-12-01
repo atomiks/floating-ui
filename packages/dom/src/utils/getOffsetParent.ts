@@ -15,6 +15,7 @@ function getTrueOffsetParent(element: Element): Element | null {
 }
 
 function getContainingBlock(element: Element) {
+  // TODO: Try and use feature detection here instead
   const isFirefox = navigator.userAgent.toLowerCase().includes('firefox');
 
   let currentNode: Node | null = getParentNode(element);

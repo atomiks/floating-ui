@@ -20,12 +20,10 @@ export function getViewportRect(element: Element): Rect {
     // In Chrome, it returns a value very close to 0 (+/-) but contains rounding
     // errors due to floating point numbers, so we need to check precision.
     // Safari returns a number <= 0, usually < -1 when pinch-zoomed
-
-    // Feature detection fails in mobile emulation mode in Chrome.
-    // Math.abs(win.innerWidth / visualViewport.scale - visualViewport.width) <
-    // 0.001
-    // Fallback here: "Not Safari" userAgent
-    if (!/^((?!chrome|android).)*safari/i.test(navigator.userAgent)) {
+    if (
+      Math.abs(win.innerWidth / visualViewport.scale - visualViewport.width) <
+      0.001
+    ) {
       x = visualViewport.offsetLeft;
       y = visualViewport.offsetTop;
     }

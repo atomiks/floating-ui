@@ -26,8 +26,8 @@ type Data = Omit<ComputePositionReturn, 'x' | 'y'> & {
 
 type UseFloatingReturn = Data & {
   update: () => void;
-  reference: (node: Element) => void;
-  floating: (node: HTMLElement) => void;
+  reference: (node: Element | null) => void;
+  floating: (node: HTMLElement | null) => void;
   refs: {
     reference: MutableRefObject<Element | null>;
     floating: MutableRefObject<HTMLElement | null>;

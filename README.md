@@ -1,5 +1,5 @@
 <p align="center">
-  <img height="300" src="website/assets/logo.png" alt="Floating UI">
+  <img height="300" src="https://github.com/atomiks/floating-ui/blob/main/website/assets/logo.png" alt="Floating UI">
 <p>
 
 ### Powerful positioning primitives

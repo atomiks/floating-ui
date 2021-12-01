@@ -86,7 +86,7 @@ export const flip = (options: Partial<Options> = {}): Middleware => ({
       let resetPlacement: Placement = 'bottom';
       switch (fallbackStrategy) {
         case 'bestFit': {
-          resetPlacement = overflowsData
+          const placement = overflowsData
             .slice()
             .sort(
               (a, b) =>
@@ -96,7 +96,10 @@ export const flip = (options: Partial<Options> = {}): Middleware => ({
                 b.overflows
                   .filter((overflow) => overflow > 0)
                   .reduce((acc, overflow) => acc + overflow, 0)
-            )[0].placement;
+            )[0]?.placement;
+          if (placement) {
+            resetPlacement = placement;
+          }
           break;
         }
         case 'initialPlacement':

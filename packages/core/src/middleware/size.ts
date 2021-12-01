@@ -49,7 +49,7 @@ export const size = (options: Partial<Options> = {}): Middleware => ({
       data: {
         skip: true,
       },
-      reset: {},
+      reset: true,
     };
   },
 });

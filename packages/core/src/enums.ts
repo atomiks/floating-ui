@@ -1,3 +1,4 @@
+import {Placement} from '..';
 import {BasePlacement} from './types';
 
 export const basePlacements: BasePlacement[] = [
@@ -7,7 +8,7 @@ export const basePlacements: BasePlacement[] = [
   'left',
 ];
 export const allPlacements = basePlacements.reduce(
-  (acc, basePlacement) =>
+  (acc: Placement[], basePlacement) =>
     acc.concat(basePlacement, `${basePlacement}-start`, `${basePlacement}-end`),
-  [] as any
+  []
 );

@@ -4,6 +4,7 @@
   "description": "Floating UI for the web",
   "main": "dist/floating-ui.dom.js",
   "module": "dist/floating-ui.dom.mjs",
+  "unpkg": "dist/floating-ui.dom.min.js",
   "sideEffects": false,
   "files": [
     "dist/",

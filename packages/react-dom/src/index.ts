@@ -3,15 +3,8 @@ import type {
   ComputePositionReturn,
 } from '@floating-ui/core';
 import {computePosition} from '@floating-ui/dom';
-import {
-  useCallback,
-  useEffect,
-  useLayoutEffect,
-  useMemo,
-  useState,
-  useRef,
-  MutableRefObject,
-} from 'react';
+import {useCallback, useMemo, useState, useRef, MutableRefObject} from 'react';
+import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
 
 export {
   arrow,
@@ -25,11 +18,6 @@ export {
   getScrollParents,
   detectOverflow,
 } from '@floating-ui/dom';
-
-const useIsomorphicLayoutEffect =
-  typeof window !== 'undefined' && typeof document !== 'undefined'
-    ? useLayoutEffect
-    : useEffect;
 
 type Data = Omit<ComputePositionReturn, 'x' | 'y'> & {
   x: number | null;

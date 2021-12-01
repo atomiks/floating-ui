@@ -1,10 +1,11 @@
-import React, {
+import {
   useMemo,
   useState,
   useLayoutEffect,
   useRef,
   useCallback,
   useEffect,
+  RefObject,
 } from 'react';
 import {computePosition} from '@floating-ui/core';
 import type {
@@ -38,9 +39,9 @@ type UseFloatingReturn = ComputePositionReturn & {
   floating: (node: any) => void;
   reference: (node: any) => void;
   refs: {
-    reference: React.RefObject<any>;
-    floating: React.RefObject<any>;
-    offsetParent: React.RefObject<any>;
+    reference: RefObject<any>;
+    floating: RefObject<any>;
+    offsetParent: RefObject<any>;
   };
   scrollProps: {
     onScroll: (event: {

@@ -26,7 +26,8 @@ const calculateLinesToHighlight = (meta) => {
     });
     Prism.languages.insertBefore(lang, 'operator', {
       constant: {
-        pattern: /(?<=const\s)[_$a-zA-Z\xA0-\uFFFF]+/,
+        pattern: /(const\s)[_$a-zA-Z\xA0-\uFFFF]+/,
+        lookbehind: true,
       },
     });
     Prism.languages.insertBefore(lang, 'operator', {

@@ -5,8 +5,9 @@ import 'tippy.js/animations/perspective-subtle.css';
 
 import Tippy from '@tippyjs/react';
 import {inlinePositioning} from 'tippy.js';
-import {useLayoutEffect, useState} from 'react';
+import {useState} from 'react';
 import {Check, ArrowRight, GitHub, Heart} from 'react-feather';
+import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
 import Link from 'next/link';
 import Head from 'next/head';
 import DropdownExample from '../components/DropdownExample.js';
@@ -206,7 +207,7 @@ Object.assign(tooltip.style, {
 });
 `.trim();
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (boundary) {
       boundary.firstElementChild.scrollTop = 200;
     }
@@ -302,7 +303,7 @@ Object.assign(tooltip.style, {
 });
 `.trim();
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (boundary) {
       boundary.firstElementChild.scrollTop = 275;
     }
@@ -562,7 +563,6 @@ function HomePage() {
               aria={{content: 'labelledby'}}
               animation="scale-subtle"
               duration={[450, 125]}
-              inertia
               inlinePositioning={true}
               plugins={[inlinePositioning]}
             >
@@ -572,7 +572,7 @@ function HomePage() {
                 style={{
                   textDecorationLine: 'underline',
                   textDecorationStyle: 'wavy',
-                  textUnderlineOffset: '20%',
+                  textUnderlineOffset: 8,
                   textDecorationThickness: 2,
                   textDecorationColor:
                     'rgba(200, 200, 255, 0.25)',

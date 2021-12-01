@@ -1,5 +1,6 @@
-import {useLayoutEffect, useRef} from 'react';
+import {useRef} from 'react';
 import cn from 'classnames';
+import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
 
 export const Chrome = ({
   children,
@@ -10,7 +11,7 @@ export const Chrome = ({
 }) => {
   const scrollableRef = useRef();
 
-  useLayoutEffect(() => {
+  useIsomorphicLayoutEffect(() => {
     if (scrollable) {
       scrollableRef.current.scrollTop = 250;
     }

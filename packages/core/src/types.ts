@@ -8,7 +8,6 @@ export type AlignedPlacement =
   | 'bottom-end'
   | 'left-start'
   | 'left-end';
-export type AutoPlacement = 'auto' | 'auto-start' | 'auto-end';
 export type Placement = BasePlacement | AlignedPlacement;
 export type Strategy = 'absolute' | 'fixed';
 export type Alignment = 'start' | 'end';
@@ -133,6 +132,10 @@ export type ElementRects = {
   floating: Rect;
 };
 
+export type VirtualElement = {
+  getBoundingClientRect(): ClientRectObject;
+  contextElement: any;
+};
 export type ReferenceElement = any;
 export type FloatingElement = any;
 

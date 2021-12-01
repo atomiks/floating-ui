@@ -1,6 +1,8 @@
-import type {ClientRectObject} from '@floating-ui/core';
+import type {ClientRectObject, VirtualElement} from '@floating-ui/core';
 
-export function getBoundingClientRect(element: Element): ClientRectObject {
+export function getBoundingClientRect(
+  element: Element | VirtualElement
+): ClientRectObject {
   const clientRect = element.getBoundingClientRect();
   return {
     width: clientRect.width,

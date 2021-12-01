@@ -1,4 +1,4 @@
-import type {Rect, Strategy} from '@floating-ui/core';
+import type {Rect, Strategy, VirtualElement} from '@floating-ui/core';
 import {getBoundingClientRect} from './getBoundingClientRect';
 import {getDocumentElement} from './getDocumentElement';
 import {getNodeName} from './getNodeName';
@@ -7,7 +7,7 @@ import getWindowScrollBarX from './getWindowScrollBarX';
 import {isHTMLElement, isScrollParent} from './is';
 
 export function getRectRelativeToOffsetParent(
-  element: Element,
+  element: Element | VirtualElement,
   offsetParent: Element | Window,
   strategy: Strategy
 ): Rect {

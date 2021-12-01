@@ -1,11 +1,12 @@
 import {
   computePosition as computePositionCore,
   ComputePositionConfig,
+  VirtualElement,
 } from '@floating-ui/core';
 import {platform} from './platform';
 
 export const computePosition = (
-  reference: Element,
+  reference: Element | VirtualElement,
   floating: HTMLElement,
   options: Partial<ComputePositionConfig>
 ) => computePositionCore(reference, floating, {platform, ...options});

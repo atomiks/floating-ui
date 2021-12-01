@@ -1,5 +1,7 @@
 # Floating UI
 
+<img height="200" src="website/assets/logo-with-text.png" alt="Logo">
+
 ### Powerful positioning primitives
 
 Floating UI is a low-level library for positioning "floating" elements like

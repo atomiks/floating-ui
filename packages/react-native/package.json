@@ -10,7 +10,7 @@
     "index.d.ts",
     "src/**/*.d.ts"
   ],
-  "browserslist": "> 1%, not dead",
+  "browserslist": "> 0.5%, not dead",
   "scripts": {
     "test": "jest test",
     "build": "NODE_ENV=build rollup -c"

@@ -11,7 +11,7 @@
     "index.d.ts",
     "src/**/*.d.ts"
   ],
-  "browserslist": "> 1%, not dead",
+  "browserslist": "> 0.5%, not dead, not IE 11",
   "scripts": {
     "dev": "concurrently 'rollup -c -w' 'serve -l 1234 test/visual'",
     "build": "NODE_ENV=build rollup -c",

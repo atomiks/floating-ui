@@ -1,6 +1,6 @@
 {
   "name": "@floating-ui/react-native",
-  "version": "0.1.0",
+  "version": "0.1.1",
   "description": "Floating UI for React Native",
   "main": "dist/floating-ui.react-native.js",
   "module": "dist/floating-ui.react-native.mjs",
@@ -34,7 +34,7 @@
     "react-native": ">=0.64.0"
   },
   "dependencies": {
-    "@floating-ui/core": "^0.1.0"
+    "@floating-ui/core": "^0.1.1"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.4",

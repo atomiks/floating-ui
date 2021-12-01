@@ -55,6 +55,11 @@ computePosition(referenceElement, floatingElement, {
 
 [Visit the docs for detailed information](https://floating-ui.com/docs/computePosition).
 
+## React
+
+- [React DOM](https://floating-ui.com/docs/react-dom)
+- [React Native](https://floating-ui.com/docs/react-native) (\*experimental)
+
 ## Components
 
 Right now, Floating UI focuses on positioning floating elements, but a package
@@ -66,6 +71,18 @@ in development.
 Floating UI is an evolution of libraries in this space like Popper and Tether,
 developed by the co-author of the former and creator of Tippy.js. Much of the
 code is forked from Popper 2's codebase and adapted to the new API.
+
+## Contributing
+
+This project a monorepo written in TypeScript using npm workspaces. The website
+is using Next.js SSG and Tailwind CSS for styling.
+
+- Clone the repo
+- Install dependencies in root directory with `npm install`
+- `npm run dev` in the root will launch the `@floating-ui/dom` development
+  visual tests at `http://localhost:1234/spec`. You can fiddle around with each
+  test file in `packages/dom/test/visual/spec/`. Reload the page to see your
+  changes.
 
 ## License
 

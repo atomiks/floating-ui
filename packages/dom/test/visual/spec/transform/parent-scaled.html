@@ -3,13 +3,15 @@
 <link rel="stylesheet" href="../../styles.css" />
 
 <style>
-  #floating {
-    transform: scale(1.5);
+  #parent-scaled {
+    transform: scale(1.3) translate(300px, 100px);
   }
 </style>
 
-<div id="reference">Ref</div>
-<div id="floating">Float</div>
+<div id="parent-scaled">
+  <div id="reference">Ref</div>
+  <div id="floating">Float</div>
+</div>
 
 <script type="module">
   import {computePosition} from '../../dist/index.mjs';

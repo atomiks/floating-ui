@@ -25,7 +25,7 @@ const bundles = [
   {
     input,
     output: {
-      name: 'FloatingUIPosition',
+      name: 'FloatingUICore',
       file: path.join(__dirname, 'dist/floating-ui.core.js'),
       format: 'umd',
     },
@@ -33,7 +33,7 @@ const bundles = [
   {
     input,
     output: {
-      name: 'FloatingUIPosition',
+      name: 'FloatingUICore',
       file: path.join(__dirname, 'dist/floating-ui.core.min.js'),
       format: 'umd',
     },

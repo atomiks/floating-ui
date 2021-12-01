@@ -34,7 +34,7 @@ const useIsomorphicLayoutEffect =
     ? useLayoutEffect
     : useEffect;
 
-type UseFloatingReturn = ComputePositionReturn & {
+type UseFloatingReturn = Data & {
   offsetParent: (node: any) => void;
   floating: (node: any) => void;
   reference: (node: any) => void;
@@ -53,6 +53,11 @@ type UseFloatingReturn = ComputePositionReturn & {
   };
 };
 
+type Data = Omit<ComputePositionReturn, 'x' | 'y'> & {
+  x: number | null;
+  y: number | null;
+};
+
 export const useFloating = ({
   placement = 'bottom',
   middleware,
@@ -66,8 +71,9 @@ export const useFloating = ({
   const floating = useRef<any>();
   const offsetParent = useRef<any>();
 
-  const [data, setData] = useState<ComputePositionReturn>({
-    ...ORIGIN,
+  const [data, setData] = useState<Data>({
+    x: null,
+    y: null,
     placement,
     strategy: 'absolute',
     middlewareData: {},

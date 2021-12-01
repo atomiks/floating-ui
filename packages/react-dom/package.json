@@ -1,7 +1,7 @@
 {
   "name": "@floating-ui/react-dom",
-  "version": "0.0.1",
-  "description": "Floating UI React DOM",
+  "version": "0.1.0",
+  "description": "Floating UI for React DOM",
   "main": "dist/floating-ui.react-dom.js",
   "module": "dist/floating-ui.react-dom.mjs",
   "unpkg": "dist/floating-ui.react-dom.min.js",
@@ -36,7 +36,7 @@
     "react-dom": ">=16.8.0"
   },
   "dependencies": {
-    "@floating-ui/dom": "file:../dom"
+    "@floating-ui/dom": "^0.1.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.4",

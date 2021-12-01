@@ -1,7 +1,7 @@
 {
   "name": "@floating-ui/react-native",
-  "version": "0.0.1",
-  "description": "Floating UI React Native",
+  "version": "0.1.0",
+  "description": "Floating UI for React Native",
   "main": "dist/floating-ui.react-native.js",
   "module": "dist/floating-ui.react-native.mjs",
   "sideEffects": false,
@@ -30,11 +30,11 @@
     "react-native"
   ],
   "peerDependencies": {
-    "react": ">16.8.0",
+    "react": ">=16.8.0",
     "react-native": ">=0.64.0"
   },
   "dependencies": {
-    "@floating-ui/core": "file:../core"
+    "@floating-ui/core": "^0.1.0"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.4",

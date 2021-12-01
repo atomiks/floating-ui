@@ -88,7 +88,7 @@ export const computePosition: ComputePosition = async (
     middlewareData = {...middlewareData, [name]: data ?? {}};
 
     if (reset) {
-      if (reset.placement) {
+      if (typeof reset === 'object' && reset.placement) {
         statefulPlacement = reset.placement;
       }
 

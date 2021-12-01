@@ -80,6 +80,7 @@ export type MiddlewareData = {
   size?: {
     skip?: boolean;
   };
+  offset?: Coords;
   [key: string]: any;
 };
 
@@ -109,10 +110,7 @@ export type MiddlewareReturn = Partial<
     data: {
       [key: string]: any;
     };
-    reset: {
-      placement?: Placement;
-      rects?: Partial<ElementRects>;
-    };
+    reset: true | {placement?: Placement};
   }
 >;
 
@@ -157,7 +155,7 @@ export type ClientRectObject = Rect & SideObject;
 export type Padding = number | SideObject;
 export type Boundary = any;
 export type RootBoundary = 'viewport' | 'document';
-export type Context = 'reference' | 'floating';
+export type ElementContext = 'reference' | 'floating';
 
 export {computePosition} from './computePosition';
 export {rectToClientRect} from './utils/rectToClientRect';

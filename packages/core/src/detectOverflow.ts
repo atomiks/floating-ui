@@ -3,7 +3,7 @@ import type {
   Padding,
   Boundary,
   RootBoundary,
-  Context,
+  ElementContext,
   MiddlewareArguments,
 } from './types';
 import {getSideObjectFromPadding} from './utils/getPaddingObject';
@@ -12,7 +12,7 @@ import {rectToClientRect} from './utils/rectToClientRect';
 export type Options = {
   boundary: Boundary;
   rootBoundary: RootBoundary;
-  elementContext: Context;
+  elementContext: ElementContext;
   altBoundary: boolean;
   padding: Padding;
 };

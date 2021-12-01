@@ -23,7 +23,7 @@ export function getRectRelativeToOffsetParent(
     (!isOffsetParentAnElement && strategy !== 'fixed')
   ) {
     if (
-      getNodeName(offsetParent as Element) !== 'body' ||
+      getNodeName(offsetParent) !== 'body' ||
       isScrollParent(documentElement)
     ) {
       scroll = getNodeScroll(offsetParent);

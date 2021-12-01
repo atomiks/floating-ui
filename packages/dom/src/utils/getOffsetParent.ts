@@ -17,7 +17,7 @@ function getTrueOffsetParent(element: Element): Element | null {
 function getContainingBlock(element: Element) {
   const isFirefox = navigator.userAgent.toLowerCase().includes('firefox');
 
-  let currentNode = getParentNode(element);
+  let currentNode: Node | null = getParentNode(element);
 
   while (
     isHTMLElement(currentNode) &&
@@ -38,7 +38,7 @@ function getContainingBlock(element: Element) {
     ) {
       return currentNode;
     } else {
-      currentNode = currentNode.parentNode as Node;
+      currentNode = currentNode.parentNode;
     }
   }
 

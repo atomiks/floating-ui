@@ -1,5 +1,4 @@
 import type {
-  AutoPlacement,
   Middleware,
   MiddlewareArguments,
   Placement,
@@ -13,23 +12,25 @@ import {getBasePlacement} from '../utils/getBasePlacement';
 import {getAlignment} from '../utils/getAlignment';
 import {getAlignmentSides} from '../utils/getAlignmentSides';
 import {getOppositeAlignmentPlacement} from '../utils/getOppositeAlignmentPlacement';
-import {allPlacements, basePlacements} from '../enums';
+import {allPlacements} from '../enums';
 
-function convertAutoPlacementToComputedPlacements(
-  placement: AutoPlacement,
+export function getPlacementList(
+  alignment: Alignment | null,
+  autoAlignment: boolean,
   allowedPlacements: Array<Placement>
 ) {
-  const alignment = getAlignment(placement);
+  return allowedPlacements.filter((placement) => {
+    if (alignment) {
+      return (
+        getAlignment(placement) === alignment ||
+        (autoAlignment
+          ? getOppositeAlignmentPlacement(placement) !== placement
+          : false)
+      );
+    }
 
-  if (!alignment) {
-    return basePlacements.filter((placement) =>
-      allowedPlacements.includes(placement)
-    );
-  }
-
-  return allowedPlacements.filter(
-    (placement) => getAlignment(placement) === alignment
-  );
+    return getBasePlacement(placement) === placement;
+  });
 }
 
 export type Options = DetectOverflowOptions & {
@@ -56,23 +57,11 @@ export const autoPlacement = (options: Partial<Options> = {}): Middleware => ({
       return {};
     }
 
-    const autoPlacement = ('auto' +
-      (alignment != null ? `-${alignment}` : '')) as AutoPlacement;
-
-    let placements = convertAutoPlacementToComputedPlacements(
-      autoPlacement,
+    const placements = getPlacementList(
+      alignment,
+      autoAlignment,
       allowedPlacements
     );
-
-    if (autoAlignment) {
-      placements = placements.reduce((acc, placement) => {
-        return acc.concat(
-          getAlignment(placement)
-            ? [placement, getOppositeAlignmentPlacement(placement)]
-            : placement
-        );
-      }, [] as any);
-    }
 
     const overflow = await detectOverflow(
       middlewareArguments,

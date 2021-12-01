@@ -10,6 +10,7 @@ import {
   useMemo,
   useState,
   useRef,
+  MutableRefObject,
 } from 'react';
 
 export {
@@ -35,11 +36,21 @@ type Data = Omit<ComputePositionReturn, 'x' | 'y'> & {
   y: number | null;
 };
 
+type UseFloatingReturn = Data & {
+  update: () => void;
+  reference: (node: Element) => void;
+  floating: (node: HTMLElement) => void;
+  refs: {
+    reference: MutableRefObject<Element | null>;
+    floating: MutableRefObject<HTMLElement | null>;
+  };
+};
+
 export function useFloating(
   options: Omit<Partial<ComputePositionConfig>, 'platform'> = {}
-) {
-  const reference = useRef<Element>();
-  const floating = useRef<HTMLElement>();
+): UseFloatingReturn {
+  const reference = useRef<Element | null>(null);
+  const floating = useRef<HTMLElement | null>(null);
   const [data, setData] = useState<Data>({
     // Setting these to `null` will allow the consumer to determine if
     // `computePosition()` has run yet

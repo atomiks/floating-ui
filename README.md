@@ -1,8 +1,10 @@
-# Floating UI
-
-<img height="200" src="website/assets/logo-with-text.png" alt="Logo">
+<p align="center">
+  <img height="300" src="website/assets/logo.png" alt="Floating UI">
+<p>
 
 ### Powerful positioning primitives
+
+[Website](https://floating-ui.com)
 
 Floating UI is a low-level library for positioning "floating" elements like
 tooltips, popovers, dropdowns, menus and more. Since these types of elements

@@ -15,8 +15,20 @@
     "test": "jest test",
     "build": "NODE_ENV=build rollup -c"
   },
-  "author": "",
+  "author": "atomiks",
   "license": "MIT",
+  "bugs": "https://github.com/atomiks/floating-ui",
+  "homepage": "https://floating-ui.com/docs/react-native",
+  "keywords": [
+    "tooltip",
+    "popover",
+    "dropdown",
+    "menu",
+    "popup",
+    "positioning",
+    "react",
+    "react-native"
+  ],
   "peerDependencies": {
     "react": ">16.8.0",
     "react-native": ">=0.64.0"

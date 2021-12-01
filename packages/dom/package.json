@@ -19,8 +19,18 @@
     "test:functional": "rollup -c && npx playwright test",
     "test:functional:update": "rollup -c && npx playwright test -u"
   },
-  "author": "",
+  "author": "atomiks",
   "license": "MIT",
+  "bugs": "https://github.com/atomiks/floating-ui",
+  "homepage": "https://floating-ui.com",
+  "keywords": [
+    "tooltip",
+    "popover",
+    "dropdown",
+    "menu",
+    "popup",
+    "positioning"
+  ],
   "dependencies": {
     "@floating-ui/core": "file:../core"
   },

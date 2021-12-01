@@ -17,8 +17,18 @@
     "build": "NODE_ENV=build rollup -c",
     "dev": "rollup -c -w"
   },
-  "author": "",
+  "author": "atomiks",
   "license": "MIT",
+  "bugs": "https://github.com/atomiks/floating-ui",
+  "homepage": "https://floating-ui.com",
+  "keywords": [
+    "tooltip",
+    "popover",
+    "dropdown",
+    "menu",
+    "popup",
+    "positioning"
+  ],
   "devDependencies": {
     "@atomico/rollup-plugin-sizes": "^1.1.4",
     "@babel/preset-env": "^7.16.4",

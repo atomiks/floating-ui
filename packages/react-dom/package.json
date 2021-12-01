@@ -17,8 +17,20 @@
     "build": "NODE_ENV=build rollup -c",
     "dev": "parcel test/visual/index.html --dist-dir test/visual/dist"
   },
-  "author": "",
+  "author": "atomiks",
   "license": "MIT",
+  "bugs": "https://github.com/atomiks/floating-ui",
+  "homepage": "https://floating-ui.com/docs/react-dom",
+  "keywords": [
+    "tooltip",
+    "popover",
+    "dropdown",
+    "menu",
+    "popup",
+    "positioning",
+    "react",
+    "react-dom"
+  ],
   "peerDependencies": {
     "react": ">=16.8.0",
     "react-dom": ">=16.8.0"

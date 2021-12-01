@@ -4,7 +4,6 @@ import {
   useLayoutEffect,
   useRef,
   useCallback,
-  useEffect,
   RefObject,
 } from 'react';
 import {computePosition} from '@floating-ui/core';
@@ -28,11 +27,6 @@ export {
 } from '@floating-ui/core';
 
 const ORIGIN = {x: 0, y: 0};
-
-const useIsomorphicLayoutEffect =
-  typeof window !== 'undefined' && typeof document !== 'undefined'
-    ? useLayoutEffect
-    : useEffect;
 
 type UseFloatingReturn = Data & {
   offsetParent: (node: any) => void;
@@ -111,9 +105,13 @@ export const useFloating = ({
     dependencies
   );
 
-  useIsomorphicLayoutEffect(() => {
-    requestAnimationFrame(update);
-  }, dependencies);
+  useLayoutEffect(
+    () => {
+      requestAnimationFrame(update);
+    },
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+    dependencies
+  );
 
   const setReference = useCallback(
     (node) => {

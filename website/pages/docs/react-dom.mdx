@@ -74,7 +74,8 @@ const {refs} = useFloating();
 // refs.floating.current
 ```
 
-For instance:
+For instance, to update on all relevant nodes, you can import the
+`getScrollParents` util from the package:
 
 ```jsx {5,9,15-33}
 import {useMemo, useEffect} from 'react';
@@ -91,8 +92,12 @@ function App() {
       middleware: useMemo(() => [shift()], []),
     });
 
-  // Update on scroll and resize
+  // Update on scroll and resize for all relevant nodes
   useEffect(() => {
+    if (!refs.reference.current || !refs.floating.current) {
+      return;
+    }
+
     const parents = [
       ...getScrollParents(refs.reference.current),
       ...getScrollParents(refs.floating.current),
@@ -109,7 +114,7 @@ function App() {
         parent.removeEventListener('resize', update);
       });
     };
-  }, [refs, update]);
+  }, [refs.reference, refs.floating, update]);
 
   return (
     <>

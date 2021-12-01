@@ -177,7 +177,7 @@ Object.assign(tooltip.style, {
               ],
             }}
           >
-            <button className="bg-blue-600 rounded text-md text-gray-50 p-2 w-48 h-48">
+            <button className="bg-blue-600 rounded text-md text-gray-50 p-2 sm:w-48 h-48">
               Click the dots
             </button>
           </Tippy>
@@ -243,7 +243,7 @@ Object.assign(tooltip.style, {
               visible={!!boundary}
               placement="right"
               content={
-                <div className="px-4 text-center">
+                <div className="px-2 text-center">
                   <div style={{height: 125}}></div>
                   <div>Floating</div>
                   <div>Element</div>
@@ -572,7 +572,7 @@ function HomePage() {
                 style={{
                   textDecorationLine: 'underline',
                   textDecorationStyle: 'wavy',
-                  textUnderlineOffset: 8,
+                  textUnderlineOffset: 6,
                   textDecorationThickness: 2,
                   textDecorationColor:
                     'rgba(200, 200, 255, 0.25)',
@@ -838,36 +838,36 @@ function HomePage() {
             </div>
           </div>
         </div>
-
-        <footer className="text-center text-gray-500 bg-gray-1000 mt-16 py-8">
-          <div className="flex flex-col gap-3 container mx-auto px-4 max-w-screen-xl">
-            <p>© {new Date().getFullYear()} • MIT License</p>
-            <p className="text-gray-400">
-              Floating UI is a project by the creator Tippy.js
-              and co-author of Popper 2, designed to be a
-              next-generation evolution of those libraries.
-            </p>
-            <p className="text-gray-400">
-              Floating shapes in the header are licensed under CC
-              BY from{' '}
-              <a
-                className="text-blue-400"
-                href="https://www.figma.com/@killnicole"
-              >
-                Vic
-              </a>{' '}
-              and{' '}
-              <a
-                className="text-blue-400"
-                href="https://www.figma.com/@Artstar3d"
-              >
-                Lisa Star
-              </a>
-              . Partial modifications were made.
-            </p>
-          </div>
-        </footer>
       </main>
+
+      <footer className="text-center text-gray-500 bg-gray-1000 mt-16 py-8">
+        <div className="flex flex-col gap-3 container mx-auto px-4 max-w-screen-xl">
+          <p>© {new Date().getFullYear()} • MIT License</p>
+          <p className="text-gray-400">
+            Floating UI is a project by the creator Tippy.js and
+            co-author of Popper 2, designed to be a
+            next-generation evolution of those libraries.
+          </p>
+          <p className="text-gray-400">
+            Floating shapes in the header are licensed under CC
+            BY from{' '}
+            <a
+              className="text-blue-400"
+              href="https://www.figma.com/@killnicole"
+            >
+              Vic
+            </a>{' '}
+            and{' '}
+            <a
+              className="text-blue-400"
+              href="https://www.figma.com/@Artstar3d"
+            >
+              Lisa Star
+            </a>
+            . Partial modifications were made.
+          </p>
+        </div>
+      </footer>
     </>
   );
 }

@@ -219,7 +219,7 @@ export default function Layout({children}) {
           </div>
         </nav>
         <div
-          className="container px-8 my-16 mx-auto"
+          className="container px-4 sm:px-8 my-16 mx-auto"
           style={{maxWidth: '75ch'}}
         >
           <SkipNavContent />

@@ -32,6 +32,7 @@
     "@rollup/plugin-commonjs": "^21.0.1",
     "@rollup/plugin-node-resolve": "^13.0.6",
     "@rollup/plugin-replace": "^3.0.0",
+    "@testing-library/react-hooks": "^7.0.2",
     "@types/jest": "^27.0.3",
     "@types/react": "^17.0.37",
     "jest": "^27.3.1",

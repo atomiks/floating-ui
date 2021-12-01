@@ -9,7 +9,8 @@
     "noUnusedLocals": true,
     "types": ["node", "jest"],
     "allowJs": true,
-    "esModuleInterop": true
+    "esModuleInterop": true,
+    "jsx": "react-jsx"
   },
   "include": ["packages/**/*"],
   "exclude": ["node_modules"]

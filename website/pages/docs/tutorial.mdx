@@ -22,10 +22,12 @@ Floating UI:
 <!DOCTYPE html>
 <html>
   <head>
-    <title>Floating UI tutorial</title>
+    <title>Floating UI Tutorial</title>
   </head>
   <body>
-    <button id="reference" aria-describedby="tooltip">My button</div>
+    <button id="button" aria-describedby="tooltip">
+      My button
+    </button>
     <div id="tooltip" role="tooltip">My tooltip</div>
 
     <script src="https://unpkg.com/@floating-ui/core"></script>
@@ -230,6 +232,12 @@ times if it can, and only fallback to `bottom` if it has to.
 
 Now, what if we wanted to have more content inside the tooltip?
 
+```html
+<div id="tooltip" role="tooltip">
+  My tooltip with more content
+</div>
+```
+
 <T.Result8 />
 
 Oh no, we now have the same problem as before, but on the
@@ -320,7 +328,7 @@ we first need to add a new element inside of our tooltip:
 
 ```html
 <div id="tooltip" role="tooltip">
-  My tooltip
+  My tooltip with more content
   <div id="arrow"></div>
 </div>
 ```

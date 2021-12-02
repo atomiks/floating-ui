@@ -134,11 +134,21 @@ function App() {
 }
 ```
 
-## Virtual reference
+## middlewareData
+
+This object also gets returned from the hook. This enables you to
+apply positioning styles to an `arrow` element in your JSX, among
+other useful styles.
+
+```js
+const {middlewareData} = useFloating();
+```
+
+## Virtual Element
 
 See [Virtual Elements](/docs/virtual-elements) for details.
 
-```js
+```jsx
 import {useMemo, useLayoutEffect} from 'react';
 import {useFloating, shift} from '@floating-ui/react-dom';
 
@@ -149,7 +159,7 @@ function App() {
   });
 
   useLayoutEffect(() => {
-    // Call reference with the Virtual Element inside an effect
+    // Call reference with the virtual element inside an effect
     reference({
       getBoundingClientRect() {
         return {

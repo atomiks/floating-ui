@@ -1,7 +1,5 @@
 name: Tests
 on: [push, pull_request]
-env:
-  CI: true
 
 jobs:
   checks:
@@ -12,7 +10,7 @@ jobs:
       - uses: actions/setup-node@v2
         with:
           node-version: '17'
-      - run: npm install
+      - uses: bahmutov/npm-install@v1
       - run: npm run lint
       - run: npm run test:types
       - run: npm run build
@@ -28,7 +26,7 @@ jobs:
         with:
           node-version: '17'
       - run: npx playwright install-deps
-      - run: npm install
+      - uses: bahmutov/npm-install@v1
       - run: npx playwright install
       - run: npm run build
       - run: npm -w packages/dom run test:functional

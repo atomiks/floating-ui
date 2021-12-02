@@ -1,6 +1,6 @@
 {
   "name": "@floating-ui/dom",
-  "version": "0.1.1",
+  "version": "0.1.2",
   "description": "Floating UI for the web",
   "main": "dist/floating-ui.dom.js",
   "module": "dist/floating-ui.dom.esm.js",
@@ -32,7 +32,7 @@
     "positioning"
   ],
   "dependencies": {
-    "@floating-ui/core": "^0.1.1"
+    "@floating-ui/core": "^0.1.2"
   },
   "devDependencies": {
     "@babel/preset-env": "^7.16.4",

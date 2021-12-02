@@ -844,7 +844,7 @@ function HomePage() {
         <div className="flex flex-col gap-3 container mx-auto px-4 max-w-screen-xl">
           <p>© {new Date().getFullYear()} • MIT License</p>
           <p className="text-gray-400">
-            Floating UI is a project by the creator Tippy.js and
+            Floating UI is a project by the creator of Tippy.js and
             co-author of Popper 2, designed to be a
             next-generation evolution of those libraries.
           </p>

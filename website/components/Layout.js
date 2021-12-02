@@ -39,6 +39,7 @@ const nav = [
   {url: '/docs/platform', title: 'Platform'},
   {url: '/docs/react-dom', title: 'React DOM'},
   {url: '/docs/react-native', title: 'React Native'},
+  {url: '/docs/motivation', title: 'Motivation'},
 ];
 
 const slugify = (str) =>

@@ -123,8 +123,8 @@ function App() {
         ref={floating}
         style={{
           position: strategy,
-          top: `${y}px`,
-          left: `${x}px`,
+          top: y != null ? `${y}px` : '',
+          left: x != null `${x}px` : '',
         }}
       >
         Tooltip

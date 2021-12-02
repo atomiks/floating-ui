@@ -18,6 +18,11 @@
   "author": "atomiks",
   "license": "MIT",
   "bugs": "https://github.com/atomiks/floating-ui",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/atomiks/floating-ui.git",
+    "directory": "packages/react-native"
+  },
   "homepage": "https://floating-ui.com/docs/react-native",
   "keywords": [
     "tooltip",

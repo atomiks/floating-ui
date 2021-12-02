@@ -20,6 +20,11 @@
   "author": "atomiks",
   "license": "MIT",
   "bugs": "https://github.com/atomiks/floating-ui",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/atomiks/floating-ui.git",
+    "directory": "packages/core"
+  },
   "homepage": "https://floating-ui.com",
   "keywords": [
     "tooltip",

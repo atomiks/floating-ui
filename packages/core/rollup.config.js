@@ -11,14 +11,14 @@ const bundles = [
   {
     input,
     output: {
-      file: path.join(__dirname, 'dist/floating-ui.core.mjs'),
+      file: path.join(__dirname, 'dist/floating-ui.core.esm.js'),
       format: 'esm',
     },
   },
   {
     input,
     output: {
-      file: path.join(__dirname, 'dist/floating-ui.core.min.mjs'),
+      file: path.join(__dirname, 'dist/floating-ui.core.esm.min.js'),
       format: 'esm',
     },
   },
@@ -60,7 +60,7 @@ const buildExport = bundles.map(({input, output}) => ({
 const devExport = {
   input: path.join(__dirname, 'src/index.ts'),
   output: {
-    file: path.join(__dirname, `dist/floating-ui.core.mjs`),
+    file: path.join(__dirname, `dist/floating-ui.core.esm.js`),
     format: 'esm',
   },
   plugins: [

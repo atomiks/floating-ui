@@ -98,6 +98,10 @@ When an alignment specified, e.g. `top-start` instead of just
 flip({flipAlignment: false}); // true by default
 ```
 
+When using this with the `shift` middleware, ensure `flip` is
+placed **before** `shift` in your middleware array. This ensures
+the `flipAlignment` logic can act before shift's does.
+
 ### ...detectOverflowOptions
 
 All of [detectOverflow](/docs/detectOverflow#options)'s options

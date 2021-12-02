@@ -60,7 +60,7 @@ const buildExport = bundles.map(({input, output}) => ({
 const devExport = {
   input: path.join(__dirname, 'src/index.ts'),
   output: {
-    file: path.join(__dirname, `dist/floating-ui.core.esm.js`),
+    file: path.join(__dirname, `dist/floating-ui.core.mjs`),
     format: 'esm',
   },
   plugins: [

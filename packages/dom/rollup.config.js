@@ -65,7 +65,7 @@ const buildExport = bundles.map(({input, output}) => ({
 const devExport = {
   input: path.join(__dirname, 'src/index.ts'),
   output: {
-    file: path.join(__dirname, `test/visual/dist/index.js`),
+    file: path.join(__dirname, `test/visual/dist/index.mjs`),
     format: 'esm',
   },
   plugins: [

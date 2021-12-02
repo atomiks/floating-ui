@@ -133,3 +133,43 @@ function App() {
   );
 }
 ```
+
+## Virtual reference
+
+See [Virtual Elements](/docs/virtual-elements) for details.
+
+```js
+import {useMemo, useLayoutEffect} from 'react';
+import {useFloating, shift} from '@floating-ui/react-dom';
+
+function App() {
+  const {x, y, reference, floating, strategy} = useFloating({
+    placement: 'right',
+    middleware: useMemo(() => [shift()], []),
+  });
+
+  useLayoutEffect(() => {
+    // Call reference with the Virtual Element inside an effect
+    reference({
+      getBoundingClientRect() {
+        return {
+          // ...
+        };
+      },
+    });
+  }, [reference]);
+
+  return (
+    <div
+      ref={floating}
+      style={{
+        position: strategy,
+        top: y != null ? `${y}px` : '',
+        left: x != null ? `${x}px` : '',
+      }}
+    >
+      Tooltip
+    </div>
+  );
+}
+```

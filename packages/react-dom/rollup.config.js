@@ -11,14 +11,14 @@ const bundles = [
   {
     input,
     output: {
-      file: path.join(__dirname, 'dist/floating-ui.react-dom.js'),
+      file: path.join(__dirname, 'dist/floating-ui.react-dom.esm.js'),
       format: 'esm',
     },
   },
   {
     input,
     output: {
-      file: path.join(__dirname, 'dist/floating-ui.react-dom.min.js'),
+      file: path.join(__dirname, 'dist/floating-ui.react-dom.esm.min.js'),
       format: 'esm',
     },
   },

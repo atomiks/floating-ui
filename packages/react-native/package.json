@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "description": "Floating UI for React Native",
   "main": "dist/floating-ui.react-native.js",
-  "module": "dist/floating-ui.react-native.mjs",
+  "module": "dist/floating-ui.react-native.js",
   "sideEffects": false,
   "files": [
     "dist/",

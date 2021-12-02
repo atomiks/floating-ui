@@ -3,7 +3,7 @@
   "version": "0.1.2",
   "description": "Floating UI for React DOM",
   "main": "dist/floating-ui.react-dom.js",
-  "module": "dist/floating-ui.react-dom.mjs",
+  "module": "dist/floating-ui.react-dom.js",
   "unpkg": "dist/floating-ui.react-dom.min.js",
   "sideEffects": false,
   "files": [

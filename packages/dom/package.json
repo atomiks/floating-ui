@@ -3,7 +3,7 @@
   "version": "0.1.1",
   "description": "Floating UI for the web",
   "main": "dist/floating-ui.dom.js",
-  "module": "dist/floating-ui.dom.mjs",
+  "module": "dist/floating-ui.dom.js",
   "unpkg": "dist/floating-ui.dom.min.js",
   "sideEffects": false,
   "files": [

@@ -15,7 +15,7 @@ jobs:
         with:
           node-version: '17'
       - run: npx playwright install-deps
-      - run: npm install
+      - uses: bahmutov/npm-install@v1
       - run: npx playwright install
       - run: npm run build
       - run: npm -w packages/dom run test:functional:update

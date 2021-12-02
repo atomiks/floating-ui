@@ -96,8 +96,8 @@ function App() {
         ref={floating}
         style={{
           position: 'absolute',
-          top: `${y}px`,
-          left: `${x}px`,
+          top: y != null ? `${y}px` : '',
+          left: x != null ? `${x}px` : '',
         }}
       >
         <Text>Floating</Text>
@@ -134,8 +134,8 @@ function App() {
           ref={floating}
           style={{
             position: 'absolute',
-            top: `${y}px`,
-            left: `${x}px`,
+            top: y != null ? `${y}px` : '',
+            left: x != null ? `${x}px` : '',
           }}
         >
           <Text>Floating</Text>

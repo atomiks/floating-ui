@@ -1,5 +1,4 @@
-import {useRef} from 'react';
-import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
+import {useLayoutEffect, useRef} from 'react';
 
 /**
  * @see https://epicreact.dev/the-latest-ref-pattern-in-react/
@@ -7,7 +6,7 @@ import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
 export function useLatestRef<Value>(value: Value) {
   const ref = useRef(value);
 
-  useIsomorphicLayoutEffect(() => {
+  useLayoutEffect(() => {
     ref.current = value;
   });
 

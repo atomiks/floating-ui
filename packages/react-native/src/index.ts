@@ -13,6 +13,7 @@ import type {
   ComputePositionReturn,
 } from '@floating-ui/core';
 import {createPlatform} from './createPlatform';
+import {useLatestRef} from './utils/useLatestRef';
 
 export {
   arrow,
@@ -80,38 +81,24 @@ export const useFloating = ({
     [offsetParent, scrollOffsets, sameScrollView]
   );
 
-  const dependencies = [
-    platform,
-    placement,
-    // This requires the consumer to `useMemo()` the value to prevent infinite
-    // loops. We can't deep-check the array well since the API encourages
-    // users to call middleware fns inline, always generating a new object.
-    middleware,
-  ];
+  // Memoize middleware internally, to remove the requirement of memoization by consumer
+  const latestMiddleware = useLatestRef(middleware);
 
-  const update = useCallback(
-    () => {
-      if (!reference.current || !floating.current) {
-        return;
-      }
+  const update = useCallback(() => {
+    if (!reference.current || !floating.current) {
+      return;
+    }
 
-      computePosition(reference.current, floating.current, {
-        platform,
-        placement,
-        middleware,
-      }).then(setData);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    dependencies
-  );
+    computePosition(reference.current, floating.current, {
+      middleware: latestMiddleware.current,
+      platform,
+      placement,
+    }).then(setData);
+  }, [latestMiddleware, platform, placement]);
 
-  useLayoutEffect(
-    () => {
-      requestAnimationFrame(update);
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    dependencies
-  );
+  useLayoutEffect(() => {
+    requestAnimationFrame(update);
+  }, [update]);
 
   const setReference = useCallback(
     (node) => {

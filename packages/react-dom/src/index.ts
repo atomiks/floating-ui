@@ -67,7 +67,7 @@ export function useFloating({
     }).then(setData);
   }, [latestMiddleware, placement, strategy]);
 
-  useIsomorphicLayoutEffect(update, [latestMiddleware, placement, strategy]);
+  useIsomorphicLayoutEffect(update, [update]);
 
   const setReference = useCallback(
     (node) => {

@@ -1,6 +1,7 @@
 import type {
   ComputePositionConfig,
   ComputePositionReturn,
+  VirtualElement,
 } from '@floating-ui/core';
 import {computePosition} from '@floating-ui/dom';
 import {useCallback, useMemo, useState, useRef, MutableRefObject} from 'react';
@@ -27,7 +28,7 @@ type Data = Omit<ComputePositionReturn, 'x' | 'y'> & {
 
 type UseFloatingReturn = Data & {
   update: () => void;
-  reference: (node: Element | null) => void;
+  reference: (node: Element | VirtualElement | null) => void;
   floating: (node: HTMLElement | null) => void;
   refs: {
     reference: MutableRefObject<Element | null>;

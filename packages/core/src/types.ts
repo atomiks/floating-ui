@@ -134,7 +134,7 @@ export type ElementRects = {
 
 export type VirtualElement = {
   getBoundingClientRect(): ClientRectObject;
-  contextElement: any;
+  contextElement?: any;
 };
 export type ReferenceElement = any;
 export type FloatingElement = any;

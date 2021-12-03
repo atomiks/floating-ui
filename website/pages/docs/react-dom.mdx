@@ -16,17 +16,13 @@ yarn add @floating-ui/react-dom
 The `useFloating()` hook accepts all of
 [computePosition's options](/docs/computePosition#options).
 
-Middleware must be either memo'd or declared outside of the
-function body to prevent an infinite render loop.
-
 ```jsx
-import {useMemo} from 'react';
 import {useFloating, shift} from '@floating-ui/react-dom';
 
 function App() {
   const {x, y, reference, floating, strategy} = useFloating({
     placement: 'right',
-    middleware: useMemo(() => [shift()], []),
+    middleware: [shift()],
   });
 
   return (
@@ -78,7 +74,7 @@ For instance, to update on all relevant nodes, you can import the
 `getScrollParents` util from the package:
 
 ```jsx {5,9,15-37}
-import {useMemo, useEffect} from 'react';
+import {useEffect} from 'react';
 import {
   useFloating,
   shift,
@@ -89,7 +85,7 @@ function App() {
   const {x, y, reference, floating, strategy, update, refs} =
     useFloating({
       placement: 'right',
-      middleware: useMemo(() => [shift()], []),
+      middleware: [shift()],
     });
 
   // Update on scroll and resize for all relevant nodes
@@ -149,13 +145,13 @@ const {middlewareData} = useFloating();
 See [Virtual Elements](/docs/virtual-elements) for details.
 
 ```jsx
-import {useMemo, useLayoutEffect} from 'react';
+import {useLayoutEffect} from 'react';
 import {useFloating, shift} from '@floating-ui/react-dom';
 
 function App() {
   const {x, y, reference, floating, strategy} = useFloating({
     placement: 'right',
-    middleware: useMemo(() => [shift()], []),
+    middleware: [shift()],
   });
 
   useLayoutEffect(() => {

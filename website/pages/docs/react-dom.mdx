@@ -32,8 +32,8 @@ function App() {
         ref={floating}
         style={{
           position: strategy,
-          top: y != null ? `${y}px` : '',
-          left: x != null ? `${x}px` : '',
+          top: y ?? '',
+          left: x ?? '',
         }}
       >
         Tooltip
@@ -45,10 +45,6 @@ function App() {
 
 `x` and `y` will be `null` initially, before the layout effect
 has fired.
-
-> You may be tempted to simplify the ternary to `y ? ... : ...`
-> without a `!= null` check, but `y` and `x` can be `0` so there
-> will be bugs if you do!
 
 ## Updating
 
@@ -71,7 +67,7 @@ const {refs} = useFloating();
 ```
 
 For instance, to update on all relevant nodes, you can import the
-`getScrollParents` util from the package:
+`getScrollParents()` util from the package:
 
 ```jsx {5,9,15-37}
 import {useEffect} from 'react';
@@ -119,8 +115,8 @@ function App() {
         ref={floating}
         style={{
           position: strategy,
-          top: y != null ? `${y}px` : '',
-          left: x != null ? `${x}px` : '',
+          top: y ?? '',
+          left: x ?? '',
         }}
       >
         Tooltip
@@ -170,8 +166,8 @@ function App() {
       ref={floating}
       style={{
         position: strategy,
-        top: y != null ? `${y}px` : '',
-        left: x != null ? `${x}px` : '',
+        top: y ?? '',
+        left: x ?? '',
       }}
     >
       Tooltip

@@ -20,6 +20,7 @@ import {Chrome} from './Chrome';
 import {Floating} from './Floating';
 import {SkipNavLink, SkipNavContent} from '@reach/skip-nav';
 import '@reach/skip-nav/styles.css';
+import {InlineCode} from './InlineCode';
 
 const nav = [
   {url: '/docs/getting-started', title: 'Getting Started'},
@@ -65,6 +66,7 @@ const linkify =
 const components = {
   pre: (props) => <div {...props} />,
   code: (props) => <Code {...props} />,
+  inlineCode: InlineCode,
   Warning,
   Collapsible,
   Tippy,
@@ -75,6 +77,19 @@ const components = {
   h4: linkify('h4'),
   h5: linkify('h5'),
   h6: linkify('h6'),
+  a(props) {
+    if (props.href.startsWith('/')) {
+      return (
+        <Link {...props}>
+          <a {...props} />
+        </Link>
+      );
+    }
+
+    return (
+      <a {...props} target="_blank" rel="noreferrer noopener" />
+    );
+  },
 };
 
 const useIsomorphicLayoutEffect =
@@ -94,7 +109,7 @@ export default function Layout({children}) {
       }
 
       .token.method.function {
-        color: #33c2e3 !important;
+        color: #49c3ff !important;
       }
 
       .token.spread.operator {
@@ -103,7 +118,13 @@ export default function Layout({children}) {
 
       [data-reach-skip-nav-link] {
         color: black;
-        margin-left: 17rem;
+        margin-left: 18rem;
+      }
+
+      @media (max-width: 600px) {
+        [data-reach-skip-nav-link] {
+          margin-left: calc(25vw);
+        }
       }
     `;
 

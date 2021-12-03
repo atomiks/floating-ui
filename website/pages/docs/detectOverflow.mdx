@@ -18,8 +18,8 @@ await detectOverflow(middlewareArguments, options);
 
 ## Usage
 
-Inside your custom middleware, make your `fn` async and await it,
-passing in the `middlewareArguments`:
+Inside your custom middleware, make your `fn` `async` and `await`
+it, passing in the `middlewareArguments`:
 
 ```js
 import {detectOverflow} from '@floating-ui/dom';
@@ -59,10 +59,9 @@ type Boundary = 'clippingParents' | Element | Array<Element>;
 ```
 
 This describes the clipping element(s) that overflow will be
-checked relative to. The default is `"clippingParents"`, which
-are the scrolling containers (including `overflow: hidden`
-elements) which will cause the reference or floating element to
-be clipped.
+checked relative to. The default is `clippingParents`, which are
+the scrolling containers (including `overflow: hidden` elements)
+which will cause the reference or floating element to be clipped.
 
 ```js
 await detectOverflow(middlewareArguments, {
@@ -77,10 +76,9 @@ type RootBoundary = 'viewport' | 'document';
 ```
 
 This describes the root boundary that the element will be checked
-for overflow relative to. The default is `"viewport"`, which is
-the area of the page the user can see on the screen. The other
-option is `"document"`, which is the entire page outside the
-viewport.
+for overflow relative to. The default is `viewport`, which is the
+area of the page the user can see on the screen. The other option
+is `document`, which is the entire page outside the viewport.
 
 ```js
 await detectOverflow(middlewareArguments, {
@@ -125,7 +123,7 @@ type ElementContext = 'reference' | 'floating';
 By default, the floating element is the one being checked for
 overflow.
 
-But you can also change the context to `"reference"` to instead
+But you can also change the context to `reference` to instead
 check its overflow relative to its clipping boundary.
 
 ```js
@@ -139,10 +137,10 @@ await detectOverflow(middlewareArguments, {
 This is a boolean value which determines whether to check the
 alternate `elementContext`'s boundary.
 
-For instance, if the `elementContext` is `"floating"`, and you
+For instance, if the `elementContext` is `floating`, and you
 enable this option, then the boundary in which overflow is
-checked for is the `"reference"`'s boundary. This only applies if
-you are using the default `"clippingParents"` enum as the
+checked for is the `reference`'s boundary. This only applies if
+you are using the default `clippingParents` enum as the
 `boundary`.
 
 ```js

@@ -63,9 +63,17 @@ module.exports = {
               color: 'inherit',
             },
             code: {
-              color: '#85a9ff',
+              color: '#93a4b5',
               borderRadius: '4px',
               padding: '2px 4px',
+              fontWeight: '500',
+              background: '#272935',
+              '&::before': {
+                display: 'none',
+              },
+              '&::after': {
+                display: 'none',
+              },
             },
             a: {
               color: '#87e1fc',

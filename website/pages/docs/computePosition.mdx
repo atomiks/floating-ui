@@ -124,6 +124,9 @@ computePosition(referenceEl, floatingEl, {
 });
 ```
 
+Instead of applying `position: absolute` in your CSS before the
+`computePosition` call, you'll now apply `position: fixed`.
+
 You will want to use `fixed` if your reference element is inside
 a fixed container, but your floating element not.
 
@@ -196,7 +199,6 @@ additional cases.
 
 To update on all relevant nodes, the library exports this util:
 
-<!-- prettier-ignore -->
 ```js
 import {getScrollParents} from '@floating-ui/dom';
 
@@ -205,12 +207,10 @@ async function update() {
 }
 
 [
-  ...getScrollParents(referenceEl), 
-  ...getScrollParents(floatingEl)
-].forEach(
-  (el) => {
-    el.addEventListener('scroll', update);
-    el.addEventListener('resize', update);
-  }
-);
+  ...getScrollParents(referenceEl),
+  ...getScrollParents(floatingEl),
+].forEach((el) => {
+  el.addEventListener('scroll', update);
+  el.addEventListener('resize', update);
+});
 ```

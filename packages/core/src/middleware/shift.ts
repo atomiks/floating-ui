@@ -81,8 +81,8 @@ export type LimitShiftOptions = {
 export const limitShift =
   (
     options: Partial<LimitShiftOptions> = {}
-  ): ((middlewareArguments: MiddlewareArguments) => void) =>
-  async (middlewareArguments: MiddlewareArguments) => {
+  ): ((middlewareArguments: MiddlewareArguments) => Coords) =>
+  (middlewareArguments: MiddlewareArguments) => {
     const {x, y, placement, rects, middlewareData} = middlewareArguments;
     const {
       offset = 0,
@@ -148,5 +148,5 @@ export const limitShift =
     return {
       [mainAxis]: mainAxisCoord,
       [crossAxis]: crossAxisCoord,
-    };
+    } as Coords;
   };

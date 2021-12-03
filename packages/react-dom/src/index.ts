@@ -5,6 +5,7 @@ import type {
 import {computePosition} from '@floating-ui/dom';
 import {useCallback, useMemo, useState, useRef, MutableRefObject} from 'react';
 import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
+import {useLatestRef} from './utils/useLatestRef';
 
 export {
   arrow,
@@ -51,10 +52,8 @@ export function useFloating({
     middlewareData: {},
   });
 
-  const latestMiddleware = useRef(middleware);
-  useIsomorphicLayoutEffect(() => {
-    latestMiddleware.current = middleware;
-  });
+  // Memoize middleware internally, to remove the requirement of memoization by consumer
+  const latestMiddleware = useLatestRef(middleware);
 
   const update = useCallback(() => {
     if (!reference.current || !floating.current) {
@@ -66,9 +65,9 @@ export function useFloating({
       placement,
       strategy,
     }).then(setData);
-  }, [placement, strategy]);
+  }, [latestMiddleware, placement, strategy]);
 
-  useIsomorphicLayoutEffect(update, [placement, strategy]);
+  useIsomorphicLayoutEffect(update, [latestMiddleware, placement, strategy]);
 
   const setReference = useCallback(
     (node) => {

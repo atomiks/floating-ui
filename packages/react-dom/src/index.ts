@@ -5,6 +5,7 @@ import type {
 import {computePosition} from '@floating-ui/dom';
 import {useCallback, useMemo, useState, useRef, MutableRefObject} from 'react';
 import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
+import {useLatestRef} from './utils/useLatestRef';
 
 export {
   arrow,
@@ -34,9 +35,11 @@ type UseFloatingReturn = Data & {
   };
 };
 
-export function useFloating(
-  options: Omit<Partial<ComputePositionConfig>, 'platform'> = {}
-): UseFloatingReturn {
+export function useFloating({
+  middleware,
+  placement,
+  strategy,
+}: Omit<Partial<ComputePositionConfig>, 'platform'> = {}): UseFloatingReturn {
   const reference = useRef<Element | null>(null);
   const floating = useRef<HTMLElement | null>(null);
   const [data, setData] = useState<Data>({
@@ -44,35 +47,27 @@ export function useFloating(
     // `computePosition()` has run yet
     x: null,
     y: null,
-    strategy: options.strategy ?? 'absolute',
+    strategy: strategy ?? 'absolute',
     placement: 'bottom',
     middlewareData: {},
   });
 
-  const dependencies = [
-    options.placement,
-    options.strategy,
-    // This requires the consumer to `useMemo()` the value to prevent infinite
-    // loops. We can't deep-check the array well since the API encourages
-    // users to call middleware fns inline, always generating a new object.
-    options.middleware,
-  ];
+  // Memoize middleware internally, to remove the requirement of memoization by consumer
+  const latestMiddleware = useLatestRef(middleware);
 
-  const update = useCallback(
-    () => {
-      if (!reference.current || !floating.current) {
-        return;
-      }
+  const update = useCallback(() => {
+    if (!reference.current || !floating.current) {
+      return;
+    }
 
-      computePosition(reference.current, floating.current, options).then(
-        setData
-      );
-    },
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-    dependencies
-  );
+    computePosition(reference.current, floating.current, {
+      middleware: latestMiddleware.current,
+      placement,
+      strategy,
+    }).then(setData);
+  }, [latestMiddleware, placement, strategy]);
 
-  useIsomorphicLayoutEffect(update, dependencies);
+  useIsomorphicLayoutEffect(update, [update]);
 
   const setReference = useCallback(
     (node) => {

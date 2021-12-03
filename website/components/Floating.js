@@ -1,4 +1,4 @@
-import {cloneElement, useEffect, useMemo, useState} from 'react';
+import {cloneElement, useEffect, useState} from 'react';
 import {createPortal} from 'react-dom';
 import * as FloatingUI from '../../packages/react-dom';
 import {getScrollParents} from '../../packages/dom';
@@ -25,27 +25,24 @@ export function Floating({
     middlewareData,
     refs,
   } = FloatingUI.useFloating({
-    middleware: useMemo(
-      () =>
-        middleware
-          ?.map(({name, options}) =>
-            name !== 'size'
-              ? FloatingUI[name]?.(options)
-              : FloatingUI.size?.({
-                  ...options,
-                  apply: ({width, height}) => {
-                    setDimensions({
-                      width,
-                      height: minHeight
-                        ? Math.max(height, minHeight)
-                        : height,
-                    });
-                  },
-                })
-          )
-          .filter((v) => v) ?? [],
-      [middleware, minHeight]
-    ),
+    middleware:
+      middleware
+        ?.map(({name, options}) =>
+          name !== 'size'
+            ? FloatingUI[name]?.(options)
+            : FloatingUI.size?.({
+                ...options,
+                apply: ({width, height}) => {
+                  setDimensions({
+                    width,
+                    height: minHeight
+                      ? Math.max(height, minHeight)
+                      : height,
+                  });
+                },
+              })
+        )
+        .filter((v) => v) ?? [],
     ...options,
   });
 

@@ -26,18 +26,14 @@ yarn add @floating-ui/react-native
 The `useFloating()` hook accepts all of
 [computePosition's options](/docs/computePosition#options).
 
-Middleware must be either memo'd or declared outside of the
-function body to prevent an infinite render loop.
-
 ```jsx
-import {useMemo} from 'react';
 import {View, Text} from 'react-native';
 import {useFloating, shift} from '@floating-ui/react-native';
 
 function App() {
   const {x, y, reference, floating} = useFloating({
     placement: 'right',
-    middleware: useMemo(() => [shift()], []),
+    middleware: [shift()],
   });
 
   return (

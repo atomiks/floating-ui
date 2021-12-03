@@ -1,11 +1,11 @@
-import {useEffect, useMemo} from 'react';
+import {useEffect} from 'react';
 import {render} from 'react-dom';
 import {useFloating, shift, flip, getScrollParents} from '../../src';
 
 function App() {
   const {x, y, reference, floating, update} = useFloating({
     placement: 'top-end',
-    middleware: useMemo(() => [flip(), shift()], []),
+    middleware: [flip(), shift()],
   });
 
   useEffect(() => {

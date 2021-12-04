@@ -121,7 +121,7 @@ export const Result6 = () => {
 export const Result7 = () => {
   const {x, y, reference, floating, strategy} = useFloating({
     placement: 'top',
-    middleware: [flip()],
+    middleware: [flip({rootBoundary: 'document'})],
   });
 
   return (

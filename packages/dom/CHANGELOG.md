@@ -1,5 +1,13 @@
 # @floating-ui/dom
 
+## 0.1.4
+
+### Patch Changes
+
+- fix(core): limitShift type
+- Updated dependencies
+  - @floating-ui/core@0.1.4
+
 ## 0.1.3
 
 ### Patch Changes

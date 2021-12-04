@@ -1,5 +1,13 @@
 # @floating-ui/react-native
 
+## 0.2.1
+
+### Patch Changes
+
+- fix(core): limitShift type
+- Updated dependencies
+  - @floating-ui/core@0.1.4
+
 ## 0.2.0
 
 ### Minor Changes

@@ -1,6 +1,14 @@
 import React, {forwardRef} from 'react';
-import Tippy from '@tippyjs/react/headless';
 import {Chrome} from './Chrome';
+import {
+  useFloating,
+  flip,
+  shift,
+  offset,
+  arrow,
+} from '../../packages/react-dom';
+import {useState} from 'react';
+import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
 
 const Button = forwardRef(({children, ...props}, ref) => (
   <button
@@ -44,267 +52,331 @@ export const Result3 = () => {
 };
 
 export const Result4 = () => {
+  const {x, y, reference, floating, strategy} = useFloating();
+
   return (
     <Chrome>
-      <Tippy
-        visible
-        placement="bottom"
-        offset={[0, 0]}
-        render={() => (
-          <div className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1">
-            My tooltip
-          </div>
-        )}
-        popperOptions={{
-          modifiers: [{name: 'flip', enabled: false}],
+      <Button ref={reference}>My button</Button>
+      <div
+        ref={floating}
+        className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1"
+        style={{
+          position: strategy,
+          top: y ?? '',
+          left: x ?? '',
         }}
       >
-        <Button>My button</Button>
-      </Tippy>
+        My tooltip
+      </div>
     </Chrome>
   );
 };
 
 export const Result5 = () => {
+  const {x, y, reference, floating, strategy} = useFloating({
+    placement: 'right',
+  });
+
   return (
     <Chrome>
-      <Tippy
-        visible
-        placement="right"
-        offset={[0, 0]}
-        render={() => (
-          <div className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1">
-            My tooltip
-          </div>
-        )}
-        popperOptions={{
-          modifiers: [{name: 'preventOverflow', enabled: false}],
+      <Button ref={reference}>My button</Button>
+      <div
+        ref={floating}
+        className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1"
+        style={{
+          position: strategy,
+          top: y ?? '',
+          left: x ?? '',
         }}
       >
-        <Button>My button</Button>
-      </Tippy>
+        My tooltip
+      </div>
     </Chrome>
   );
 };
 
 export const Result6 = () => {
+  const {x, y, reference, floating, strategy} = useFloating({
+    placement: 'top',
+  });
+
   return (
     <Chrome>
-      <Tippy
-        visible
-        placement="top"
-        offset={[0, 0]}
-        render={() => (
-          <div className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1">
-            My tooltip
-          </div>
-        )}
-        zIndex={0}
+      <Button ref={reference}>My button</Button>
+      <div
+        ref={floating}
+        className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1"
+        style={{
+          position: strategy,
+          top: y ?? '',
+          left: x ?? '',
+        }}
       >
-        <Button>My button</Button>
-      </Tippy>
+        My tooltip
+      </div>
     </Chrome>
   );
 };
 
 export const Result7 = () => {
+  const {x, y, reference, floating, strategy} = useFloating({
+    placement: 'top',
+    middleware: [flip()],
+  });
+
   return (
     <Chrome>
-      <Tippy
-        visible
-        placement="bottom"
-        offset={[0, 0]}
-        render={() => (
-          <div className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1">
-            My tooltip
-          </div>
-        )}
-        popperOptions={{
-          modifiers: [
-            {name: 'flip', enabled: false},
-            {name: 'preventOverflow', enabled: false},
-          ],
+      <Button ref={reference}>My button</Button>
+      <div
+        ref={floating}
+        className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1"
+        style={{
+          position: strategy,
+          top: y ?? '',
+          left: x ?? '',
         }}
       >
-        <Button>My button</Button>
-      </Tippy>
+        My tooltip
+      </div>
     </Chrome>
   );
 };
 
 export const Result8 = () => {
+  const {x, y, reference, floating, strategy} = useFloating({
+    placement: 'top',
+    middleware: [flip({rootBoundary: 'document'})],
+  });
+
   return (
     <Chrome>
-      <Tippy
-        visible
-        placement="bottom"
-        offset={[0, 0]}
-        appendTo="parent"
-        render={() => (
-          <div className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1">
-            My tooltip with more content
-          </div>
-        )}
-        popperOptions={{
-          modifiers: [
-            {name: 'flip', enabled: false},
-            {name: 'preventOverflow', enabled: false},
-          ],
+      <Button ref={reference}>My button</Button>
+      <div
+        ref={floating}
+        className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1"
+        style={{
+          position: strategy,
+          top: y ?? '',
+          left: x ?? '',
         }}
       >
-        <Button>My button</Button>
-      </Tippy>
+        My tooltip with more content
+      </div>
     </Chrome>
   );
 };
 
 export const Result9 = () => {
+  const {x, y, reference, floating, strategy} = useFloating({
+    placement: 'top',
+    middleware: [flip({rootBoundary: 'document'}), shift()],
+  });
+
   return (
     <Chrome>
-      <Tippy
-        visible
-        placement="bottom"
-        offset={[0, 0]}
-        appendTo="parent"
-        render={() => (
-          <div className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1">
-            My tooltip with more content
-          </div>
-        )}
-        popperOptions={{
-          modifiers: [
-            {
-              name: 'preventOverflow',
-              options: {padding: 0},
-            },
-            {name: 'flip', enabled: false},
-          ],
+      <Button ref={reference}>My button</Button>
+      <div
+        ref={floating}
+        className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1"
+        style={{
+          position: strategy,
+          top: y ?? '',
+          left: x ?? '',
         }}
       >
-        <Button>My button</Button>
-      </Tippy>
+        My tooltip with more content
+      </div>
     </Chrome>
   );
 };
 
 export const Result10 = () => {
+  const {x, y, reference, floating, strategy} = useFloating({
+    placement: 'top',
+    middleware: [
+      flip({rootBoundary: 'document'}),
+      shift({padding: 5}),
+    ],
+  });
+
   return (
     <Chrome>
-      <Tippy
-        visible
-        placement="bottom"
-        offset={[0, 0]}
-        appendTo="parent"
-        render={() => (
-          <div className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1">
-            My tooltip with more content
-          </div>
-        )}
-        popperOptions={{
-          modifiers: [
-            {
-              name: 'preventOverflow',
-              options: {
-                padding: 5,
-              },
-            },
-          ],
+      <Button ref={reference}>My button</Button>
+      <div
+        ref={floating}
+        className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1"
+        style={{
+          position: strategy,
+          top: y ?? '',
+          left: x ?? '',
         }}
       >
-        <Button>My button</Button>
-      </Tippy>
+        My tooltip with more content
+      </div>
     </Chrome>
   );
 };
 
 export const Result11 = () => {
+  const {x, y, reference, floating, strategy} = useFloating({
+    placement: 'top',
+    middleware: [
+      offset(6),
+      flip({rootBoundary: 'document'}),
+      shift({padding: 5}),
+    ],
+  });
+
   return (
     <Chrome>
-      <Tippy
-        visible
-        placement="bottom"
-        offset={[0, 5]}
-        appendTo="parent"
-        render={() => (
-          <div className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1">
-            My tooltip with more content
-          </div>
-        )}
+      <Button ref={reference}>My button</Button>
+      <div
+        ref={floating}
+        className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1"
+        style={{
+          position: strategy,
+          top: y ?? '',
+          left: x ?? '',
+        }}
       >
-        <Button>My button</Button>
-      </Tippy>
+        My tooltip with more content
+      </div>
     </Chrome>
   );
 };
 
 export const Result12 = () => {
+  const [arrowEl, setArrowEl] = useState(null);
+
+  const {
+    x,
+    y,
+    reference,
+    floating,
+    strategy,
+    placement,
+    update,
+    middlewareData: {arrow: {x: arrowX, y: arrowY} = {}},
+  } = useFloating({
+    placement: 'top',
+    middleware: [
+      offset(6),
+      flip({rootBoundary: 'document'}),
+      shift({padding: 5}),
+      ...(arrowEl ? [arrow({element: arrowEl})] : []),
+    ],
+  });
+
+  useIsomorphicLayoutEffect(() => {
+    arrowEl && update();
+  }, [arrowEl]);
+
   return (
     <Chrome>
-      <Tippy
-        visible
-        placement="bottom"
-        offset={[0, 6]}
-        appendTo="parent"
-        render={() => (
-          <div className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1">
-            My tooltip with more content
-            <div style={{}} data-popper-arrow className="-z-1">
-              <div className="relative transform rotate-45 w-2 h-2 bg-gray-900" />
-            </div>
-          </div>
-        )}
-        popperOptions={{
-          modifiers: [
-            {
-              name: 'customArrowStyle',
-              enabled: true,
-              phase: 'beforeWrite',
-              requires: ['computeStyles'],
-              fn({state}) {
-                state.styles.arrow.top = '-0.25rem';
-              },
-            },
-          ],
+      <Button ref={reference}>My button</Button>
+      <div
+        ref={floating}
+        className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1"
+        style={{
+          position: strategy,
+          top: y ?? '',
+          left: x ?? '',
         }}
       >
-        <Button>My button</Button>
-      </Tippy>
+        My tooltip with more content
+        <div
+          ref={setArrowEl}
+          className="w-2 h-2 bg-gray-1000 transform rotate-45"
+          style={{
+            position: strategy,
+            top: arrowY ?? '',
+            left: arrowX ?? '',
+            right: '',
+            bottom: '',
+            [{
+              top: 'bottom',
+              left: 'right',
+              right: 'left',
+              bottom: 'top',
+            }[placement]]: '-0.25rem',
+          }}
+        />
+      </div>
     </Chrome>
   );
 };
 
 export const Result13 = () => {
+  const [show, setShow] = useState(false);
+  const [arrowEl, setArrowEl] = useState(null);
+
+  const {
+    x,
+    y,
+    reference,
+    floating,
+    strategy,
+    placement,
+    update,
+    middlewareData: {arrow: {x: arrowX, y: arrowY} = {}},
+  } = useFloating({
+    placement: 'top',
+    middleware: [
+      offset(6),
+      flip({rootBoundary: 'document'}),
+      shift({padding: 5}),
+      ...(arrowEl ? [arrow({element: arrowEl})] : []),
+    ],
+  });
+
+  useIsomorphicLayoutEffect(() => {
+    arrowEl && update();
+  }, [arrowEl]);
+
   return (
     <Chrome>
-      <Tippy
-        placement="bottom"
-        offset={[0, 6]}
-        hideOnClick={false}
-        appendTo="parent"
-        render={() => (
-          <div className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1">
-            My tooltip with more content
-            <div style={{}} data-popper-arrow className="-z-1">
-              <div className="relative transform rotate-45 w-2 h-2 bg-gray-900" />
-            </div>
-          </div>
-        )}
-        popperOptions={{
-          modifiers: [
-            {
-              name: 'customArrowStyle',
-              enabled: true,
-              phase: 'beforeWrite',
-              requires: ['computeStyles'],
-              fn({state}) {
-                state.styles.arrow.top = '-0.25rem';
-              },
-            },
-          ],
-        }}
+      <Button
+        onMouseEnter={() => setShow(true)}
+        onMouseLeave={() => setShow(false)}
+        onFocus={() => setShow(true)}
+        onBlur={() => setShow(false)}
+        ref={reference}
+        aria-describedby="tooltip"
       >
-        <Button>My button</Button>
-      </Tippy>
+        My button
+      </Button>
+      {show && (
+        <div
+          id="tooltip"
+          role="tooltip"
+          ref={floating}
+          className="bg-gray-900 text-gray-50 rounded font-bold text-sm p-1"
+          style={{
+            position: strategy,
+            top: y ?? '',
+            left: x ?? '',
+          }}
+        >
+          My tooltip with more content
+          <div
+            ref={setArrowEl}
+            className="w-2 h-2 bg-gray-1000 transform rotate-45"
+            style={{
+              position: strategy,
+              top: arrowY ?? '',
+              left: arrowX ?? '',
+              right: '',
+              bottom: '',
+              [{
+                top: 'bottom',
+                left: 'right',
+                right: 'left',
+                bottom: 'top',
+              }[placement]]: '-0.25rem',
+            }}
+          />
+        </div>
+      )}
     </Chrome>
   );
 };

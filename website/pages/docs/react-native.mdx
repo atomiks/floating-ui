@@ -45,8 +45,8 @@ function App() {
         ref={floating}
         style={{
           position: 'absolute',
-          top: y != null ? `${y}px` : '',
-          left: x != null ? `${x}px` : '',
+          top: y ?? '',
+          left: x ?? '',
         }}
       >
         <Text>Floating</Text>
@@ -58,10 +58,6 @@ function App() {
 
 `x` and `y` will be `null` initially, before the layout effect
 has fired.
-
-> You may be tempted to simplify the ternary to `y ? ... : ...`
-> without a `!= null` check, but `y` and `x` can be `0` so there
-> will be bugs if you do!
 
 ## ScrollView
 
@@ -92,8 +88,8 @@ function App() {
         ref={floating}
         style={{
           position: 'absolute',
-          top: y != null ? `${y}px` : '',
-          left: x != null ? `${x}px` : '',
+          top: y ?? '',
+          left: x ?? '',
         }}
       >
         <Text>Floating</Text>
@@ -130,8 +126,8 @@ function App() {
           ref={floating}
           style={{
             position: 'absolute',
-            top: y != null ? `${y}px` : '',
-            left: x != null ? `${x}px` : '',
+            top: y ?? '',
+            left: x ?? '',
           }}
         >
           <Text>Floating</Text>

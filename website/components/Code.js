@@ -14,29 +14,31 @@ const calculateLinesToHighlight = (meta) => {
   }
 };
 
-['javascript', 'jsx'].forEach((lang) => {
+['javascript', 'jsx', 'ts'].forEach((lang) => {
   // TODO: fix JSX syntax highlighting
-  if (lang !== 'jsx') {
-    Prism.languages.insertBefore(lang, 'operator', {
-      'literal-property': {
-        pattern:
-          /((?:^|[,{])[ \t]*)(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*:)/m,
-        lookbehind: true,
-      },
-    });
-    Prism.languages.insertBefore(lang, 'operator', {
-      constant: {
-        pattern: /(const\s)[_$a-zA-Z\xA0-\uFFFF]+/,
-        lookbehind: true,
-      },
-    });
-    Prism.languages.insertBefore(lang, 'operator', {
-      object: {
-        pattern:
-          /[_$a-zA-Z\xA0-\uFFFF]+(?=\.[_$a-zA-Z\xA0-\uFFFF]+)/,
-      },
-    });
+  if (lang === 'jsx') {
+    return;
   }
+
+  Prism.languages.insertBefore(lang, 'operator', {
+    'literal-property': {
+      pattern:
+        /((?:^|[,{])[ \t]*)(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*:)/m,
+      lookbehind: true,
+    },
+  });
+  Prism.languages.insertBefore(lang, 'operator', {
+    constant: {
+      pattern: /(const\s?{?)[\s_$a-zA-Z\xA0-\uFFFF,]*(?!:)/,
+      lookbehind: true,
+    },
+  });
+  Prism.languages.insertBefore(lang, 'operator', {
+    object: {
+      pattern:
+        /[_$a-zA-Z\xA0-\uFFFF]+(?=\.[_$a-zA-Z\xA0-\uFFFF]+)/,
+    },
+  });
 });
 
 export default function Code({children, className, metastring}) {

@@ -11,7 +11,7 @@ keep it in view (prevents overflow).
     <Floating
       content="Element wider than its reference"
     >
-      <div className="grid place-items-center text-gray-50 w-32 h-32 bg-blue-600">Default</div>
+      <div className="grid place-items-center text-gray-50 w-32 h-32 bg-blue-600 font-mono">[]</div>
     </Floating>
   </Chrome>
 
@@ -20,7 +20,7 @@ keep it in view (prevents overflow).
       content="Element wider than its reference"
       middleware={[{name: 'shift'}]}
     >
-      <div className="grid place-items-center text-gray-50 w-32 h-32 bg-blue-600">Default</div>
+      <div className="grid place-items-center text-gray-50 w-32 h-32 bg-blue-600 font-mono">[shift()]</div>
     </Floating>
   </Chrome>
 </div>

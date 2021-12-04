@@ -1,3 +1,19 @@
+export const colors = {
+  indigo: '#818abf',
+  cyan: '#87e1fc',
+  red: '#ff6569',
+  lightRed: '#ff9fb1',
+  teal: '#4fd6be',
+  gray: '#7a808a',
+  skyBlue: '#49c3ff',
+  blue: '#85a9ff',
+  yellow: '#ffc07c',
+  orange: '#ff895b',
+  purple: '#c096ff',
+  green: '#cff894',
+  pink: '#fca7ea',
+};
+
 export const theme = {
   styles: [
     {
@@ -9,39 +25,32 @@ export const theme = {
         'cdata',
       ],
       style: {
-        color: '#818abf',
+        color: colors.indigo,
         fontStyle: 'italic',
       },
     },
     {
       types: ['punctuation', 'operator', 'combinator', 'module'],
       style: {
-        color: '#87e1fc',
+        color: colors.cyan,
       },
     },
     {
-      types: [
-        'tag',
-        'namespace',
-        'number',
-        'unit',
-        'hexcode',
-        'deleted',
-      ],
+      types: ['tag', 'namespace', 'unit', 'hexcode', 'deleted'],
       style: {
-        color: '#ff6569',
+        color: colors.red,
       },
     },
     {
       types: ['literal-property'],
       style: {
-        color: '#4fd6be',
+        color: colors.teal,
       },
     },
     {
       types: ['nil'],
       style: {
-        color: '#7a808a',
+        color: colors.gray,
       },
     },
     {
@@ -55,19 +64,19 @@ export const theme = {
     {
       types: ['method'],
       style: {
-        color: '#3cc1d7',
+        color: colors.skyBlue,
       },
     },
     {
       types: ['function-name'],
       style: {
-        color: '#6196cc',
+        color: colors.blue,
       },
     },
     {
       types: ['dom', 'variable', 'class'],
       style: {
-        color: 'rgb(255, 192, 124)',
+        color: colors.yellow,
       },
     },
     {
@@ -77,9 +86,9 @@ export const theme = {
       },
     },
     {
-      types: ['boolean'],
+      types: ['boolean', 'number'],
       style: {
-        color: '#ff895b',
+        color: colors.orange,
       },
     },
     {
@@ -94,13 +103,13 @@ export const theme = {
         // textShadow:
         //   'rgb(0, 0, 0) 0px 0px 5px, rgb(223, 146, 0) 0px 0px 15px, rgba(252, 93, 31, 0.46) 0px 0px 5px, rgb(0, 0, 0) 0px 0px 25px',
         fontWeight: 'bold',
-        color: 'rgb(255, 192, 124)',
+        color: colors.yellow,
       },
     },
     {
       types: ['constant', 'symbol'],
       style: {
-        color: '#ff9fb1',
+        color: colors.lightRed,
         textShadow:
           '0 0 2px #9f0000, 0 0 5px #dc078e33, 0 0 10px #fff3',
       },
@@ -115,19 +124,19 @@ export const theme = {
         'selector-class',
       ],
       style: {
-        color: '#c096ff',
+        color: colors.purple,
       },
     },
     {
       types: ['string', 'char', 'attr-value', 'regex'],
       style: {
-        color: '#cff894',
+        color: colors.green,
       },
     },
     {
       types: ['parameter'],
       style: {
-        color: '#fca7ea',
+        color: colors.pink,
       },
     },
     {

@@ -8,8 +8,9 @@ long as it has adequate measurement APIs for elements.
 
 Floating UI works largely with a `Rect`, which is an object of
 numbers in the form `{width, height, x, y}`. This data can come
-from anywhere, and floating UI will perform the right
-computations.
+from anywhere, and the library will perform the right
+computations. `x` and `y` represent the coordinates of the
+element relative to another one.
 
 ```js
 import {computePosition} from '@floating-ui/core';
@@ -25,6 +26,10 @@ computePosition(referenceElement, floatingElement, {
 
 A `platform` is a plain object consisting of 7 methods. These
 methods allow the platform to interface with Floating UI's logic.
+
+Each of these methods can be either async or sync. This enables
+support of platforms whose measurement APIs are async, like React
+Native.
 
 ### getElementRects
 
@@ -42,9 +47,14 @@ function getElementRects({reference, floating, strategy}) {
 
 #### reference
 
-The `x` and `y` values of a reference `Rect` should be
-**relative** to the floating element's `offsetParent` element,
-**not** the viewport or window.
+The `x` and `y` values of a reference `Rect` should be its
+coordinates relative to the floating element's `offsetParent`
+element, not the viewport.
+
+#### floating
+
+Both `x` and `y` are not relevant initially, so you can set these
+both of these to `0`.
 
 ### convertOffsetParentRelativeRectToViewportRelativeRect
 

@@ -1,7 +1,6 @@
 import {cloneElement, useEffect, useState} from 'react';
 import {createPortal} from 'react-dom';
-import * as FloatingUI from '@floating-ui/dom';
-import {getScrollParents} from '../../packages/dom';
+import * as FloatingUI from '@floating-ui/react-dom';
 
 export function Floating({
   children,
@@ -48,8 +47,8 @@ export function Floating({
 
   useEffect(() => {
     const nodes = [
-      ...getScrollParents(refs.reference.current),
-      ...getScrollParents(refs.floating.current),
+      ...FloatingUI.getScrollParents(refs.reference.current),
+      ...FloatingUI.getScrollParents(refs.floating.current),
     ];
 
     nodes.forEach((node) => {

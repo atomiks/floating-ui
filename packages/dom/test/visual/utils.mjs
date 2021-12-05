@@ -2,7 +2,7 @@ import {getScrollParents} from './dist/index.mjs';
 
 const reference = document.querySelector('#reference');
 const floating = document.querySelector('#floating');
-const arrowElement = document.querySelector('#arrow');
+const arrowElement = document.querySelector('#arrowElement');
 
 export function position(data) {
   Object.assign(floating.style, {
@@ -15,7 +15,7 @@ export function position(data) {
       : 'visible',
   });
 
-  if (window.arrowElement) {
+  if (arrowElement) {
     Object.assign(arrowElement.style, {
       position: 'absolute',
       left:

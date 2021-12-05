@@ -1,4 +1,3 @@
-// eslint-disable-next-line
 const colors = require('tailwindcss/colors');
 
 module.exports = {
@@ -17,6 +16,12 @@ module.exports = {
               '@media (max-width: 500px)': {
                 paddingLeft: '5%',
                 paddingRight: '5%',
+              },
+              lineHeight: '2.1',
+              marginBottom: '0',
+              ' > code': {
+                display: 'flex',
+                flexDirection: 'column',
               },
             },
             h1: {

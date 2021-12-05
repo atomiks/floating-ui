@@ -1,4 +1,19 @@
-import {colors} from '../assets/moonlight';
+const colors = {
+  indigo: '#818abf',
+  cyan: '#87e1fc',
+  red: '#ff757f',
+  lightRed: '#ff9fb1',
+  teal: '#4fd6be',
+  gray: '#7a808a',
+  skyBlue: '#49c3ff',
+  blue: '#85a9ff',
+  yellow: '#ffc07c',
+  orange: '#ff895b',
+  purple: '#c096ff',
+  green: '#cff894',
+  pink: '#fca7ea',
+  lightGray: '#b4c2f0',
+};
 
 export const InlineCode = ({children, ...props}) => {
   // literals
@@ -8,7 +23,7 @@ export const InlineCode = ({children, ...props}) => {
         <span style={{color: colors.yellow}}>Object</span>
         <span style={{color: colors.cyan}}>.</span>
         <span style={{color: colors.skyBlue}}>assign</span>
-        <span style={{color: colors.cyan}}>()</span>
+        <span style={{color: colors.lightGray}}>()</span>
       </code>
     );
   }
@@ -71,10 +86,10 @@ export const InlineCode = ({children, ...props}) => {
   if (children.endsWith('()')) {
     return (
       <code>
-        <span style={{color: colors.blue}}>
+        <span style={{color: colors.skyBlue}}>
           {children.replace('()', '')}
         </span>
-        <span style={{color: colors.cyan}}>{`()`}</span>
+        <span style={{color: colors.lightGray}}>{`()`}</span>
       </code>
     );
   }

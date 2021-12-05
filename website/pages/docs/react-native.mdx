@@ -171,7 +171,7 @@ function App() {
   const {
     x,
     y,
-    middlewareData: {arrow: {x: arrowX, y: arrowY}} = {},
+    middlewareData: {arrow: {x: arrowX, y: arrowY} = {}},
   } = useFloating({
     middleware: [arrow({element: arrowRef})],
   });

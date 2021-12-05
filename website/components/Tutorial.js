@@ -355,6 +355,7 @@ export const Result13 = () => {
             position: strategy,
             top: y ?? '',
             left: x ?? '',
+            pointerEvents: 'none',
           }}
         >
           My tooltip with more content

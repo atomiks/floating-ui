@@ -127,6 +127,25 @@ shift({
 });
 ```
 
+You may also pass an object to configure both axes:
+
+```js
+shift({
+  limiter: limitShift({
+    // object
+    offset: {
+      mainAxis: 10,
+      crossAxis: 5,
+    },
+    // or a function which returns one
+    offset: ({reference, floating, placement}) => ({
+      mainAxis: reference.height,
+      crossAxis: floating.width,
+    }),
+  }),
+});
+```
+
 ### ...detectOverflowOptions
 
 All of [detectOverflow](/docs/detectOverflow#options)'s options

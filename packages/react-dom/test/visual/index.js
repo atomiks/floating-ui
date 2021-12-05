@@ -1,11 +1,19 @@
-import {useEffect} from 'react';
+import {useEffect, useRef} from 'react';
 import {render} from 'react-dom';
-import {useFloating, shift, flip, getScrollParents} from '../../src';
+import {useFloating, shift, flip, arrow, getScrollParents} from '../../src';
 
 function App() {
-  const {x, y, reference, floating, update} = useFloating({
+  const arrowRef = useRef();
+  const {
+    x,
+    y,
+    reference,
+    floating,
+    update,
+    middlewareData: {arrow: {x: arrowX, y: arrowY} = {}},
+  } = useFloating({
     placement: 'top-end',
-    middleware: [flip(), shift()],
+    middleware: [flip(), shift(), arrow({element: arrowRef})],
   });
 
   useEffect(() => {
@@ -41,11 +49,20 @@ function App() {
         ref={floating}
         style={{
           position: 'absolute',
-          left: `${x}px`,
-          top: `${y}px`,
+          left: x ?? '',
+          top: y ?? '',
         }}
       >
         Floating
+        <div
+          id="arrow"
+          ref={arrowRef}
+          style={{
+            position: 'absolute',
+            left: arrowX ?? '',
+            top: arrowY ?? '',
+          }}
+        ></div>
       </div>
     </>
   );

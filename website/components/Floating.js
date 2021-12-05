@@ -1,6 +1,6 @@
 import {cloneElement, useEffect, useState} from 'react';
 import {createPortal} from 'react-dom';
-import * as FloatingUI from '../../packages/react-dom';
+import * as FloatingUI from '@floating-ui/dom';
 import {getScrollParents} from '../../packages/dom';
 
 export function Floating({

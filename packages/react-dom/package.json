@@ -5,6 +5,11 @@
   "main": "dist/floating-ui.react-dom.js",
   "module": "dist/floating-ui.react-dom.esm.js",
   "unpkg": "dist/floating-ui.react-dom.min.js",
+  "type": "module",
+  "exports": {
+    "import": "./dist/floating-ui.react-dom.esm.js",
+    "require": "./dist/floating-ui.react-dom.js"
+  },
   "sideEffects": false,
   "files": [
     "dist/",

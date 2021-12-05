@@ -6,7 +6,7 @@ import {
   shift,
   offset,
   arrow,
-} from '../../packages/react-dom';
+} from '@floating-ui/react-dom';
 import {useState} from 'react';
 import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
 

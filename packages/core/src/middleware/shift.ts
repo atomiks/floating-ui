@@ -69,8 +69,13 @@ export const shift = (options: Partial<Options> = {}): Middleware => ({
 });
 
 type LimitShiftOffset =
-  | ((args: {placement: Placement; floating: Rect; reference: Rect}) => number)
-  | number;
+  | ((args: {
+      placement: Placement;
+      floating: Rect;
+      reference: Rect;
+    }) => number | {mainAxis?: number; crossAxis?: number})
+  | number
+  | {mainAxis?: number; crossAxis?: number};
 
 export type LimitShiftOptions = {
   offset: LimitShiftOffset;
@@ -98,14 +103,11 @@ export const limitShift =
     let crossAxisCoord = coords[crossAxis];
 
     const rawOffset =
-      typeof offset === 'function'
-        ? offset({...rects, placement})
-        : {mainAxis: offset, crossAxis: 0};
+      typeof offset === 'function' ? offset({...rects, placement}) : offset;
     const computedOffset =
       typeof rawOffset === 'number'
         ? {mainAxis: rawOffset, crossAxis: 0}
-        : // @ts-ignore - we want this to occur
-          {mainAxis: 0, crossAxis: 0, ...rawOffset};
+        : {mainAxis: 0, crossAxis: 0, ...rawOffset};
 
     if (checkMainAxis) {
       const len = mainAxis === 'y' ? 'height' : 'width';

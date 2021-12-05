@@ -41,7 +41,7 @@ export function convertValueToCoords({
     : {x: mainAxis * multiplier, y: crossAxis};
 }
 
-export const offset = (value: Offset): Middleware => ({
+export const offset = (value: Offset = 0): Middleware => ({
   name: 'offset',
   fn(middlewareArguments: MiddlewareArguments) {
     const {x, y, placement, rects} = middlewareArguments;

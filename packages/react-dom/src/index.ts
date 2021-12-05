@@ -117,7 +117,11 @@ export const arrow = ({
         return arrowCore({element: element.current, padding}).fn(args);
       }
 
-      return arrowCore({element, padding}).fn(args);
+      if (element) {
+        return arrowCore({element, padding}).fn(args);
+      }
+
+      return {};
     },
   };
 };

@@ -146,7 +146,7 @@ export const arrow = ({
   padding,
 }: {
   element: any;
-  padding: number | SideObject;
+  padding?: number | SideObject;
 }): Middleware => {
   function isRef(value: unknown) {
     return Object.prototype.hasOwnProperty.call(value, 'current');

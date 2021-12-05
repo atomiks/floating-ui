@@ -1,5 +1,16 @@
 # @floating-ui/react-native
 
+## 0.3.0
+
+### Minor Changes
+
+- feat: allow a `ref` to be passed to `arrow` middleware element
+
+### Patch Changes
+
+- Updated dependencies
+  - @floating-ui/core@0.1.5
+
 ## 0.2.1
 
 ### Patch Changes

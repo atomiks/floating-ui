@@ -1,6 +1,5 @@
-import type {ComputePosition} from './types';
+import type {ComputePosition, ComputePositionReturn} from './types';
 import {computeCoordsFromPlacement} from './computeCoordsFromPlacement';
-import {ComputePositionReturn} from '..';
 
 export const computePosition: ComputePosition = async (
   reference,

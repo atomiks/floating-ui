@@ -1,15 +1,16 @@
 import type {
   ComputePositionConfig,
   ComputePositionReturn,
+  Middleware,
+  SideObject,
   VirtualElement,
 } from '@floating-ui/core';
-import {computePosition} from '@floating-ui/dom';
+import {computePosition, arrow as arrowCore} from '@floating-ui/dom';
 import {useCallback, useMemo, useState, useRef, MutableRefObject} from 'react';
 import useIsomorphicLayoutEffect from 'use-isomorphic-layout-effect';
 import {useLatestRef} from './utils/useLatestRef';
 
 export {
-  arrow,
   autoPlacement,
   flip,
   hide,
@@ -97,3 +98,30 @@ export function useFloating({
     [data, update, setReference, setFloating]
   );
 }
+
+export const arrow = ({
+  element,
+  padding,
+}: {
+  element: MutableRefObject<HTMLElement | undefined> | HTMLElement;
+  padding?: number | SideObject;
+}): Middleware => {
+  function isRef(value: unknown): value is MutableRefObject<unknown> {
+    return Object.prototype.hasOwnProperty.call(value, 'current');
+  }
+
+  return {
+    name: 'arrow',
+    fn(args) {
+      if (isRef(element) && element.current != null) {
+        return arrowCore({element: element.current, padding}).fn(args);
+      }
+
+      if (element) {
+        return arrowCore({element, padding}).fn(args);
+      }
+
+      return {};
+    },
+  };
+};

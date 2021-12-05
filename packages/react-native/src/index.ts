@@ -6,17 +6,17 @@ import {
   useCallback,
   RefObject,
 } from 'react';
-import {computePosition} from '@floating-ui/core';
+import {computePosition, arrow as arrowCore} from '@floating-ui/core';
 import type {
   Placement,
   Middleware,
   ComputePositionReturn,
+  SideObject,
 } from '@floating-ui/core';
 import {createPlatform} from './createPlatform';
 import {useLatestRef} from './utils/useLatestRef';
 
 export {
-  arrow,
   autoPlacement,
   flip,
   hide,
@@ -139,4 +139,31 @@ export const useFloating = ({
     }),
     [data, setReference, setFloating, setOffsetParent, update]
   );
+};
+
+export const arrow = ({
+  element,
+  padding,
+}: {
+  element: any;
+  padding: number | SideObject;
+}): Middleware => {
+  function isRef(value: unknown) {
+    return Object.prototype.hasOwnProperty.call(value, 'current');
+  }
+
+  return {
+    name: 'arrow',
+    fn(args) {
+      if (isRef(element) && element.current != null) {
+        return arrowCore({element: element.current, padding}).fn(args);
+      }
+
+      if (element) {
+        return arrowCore({element, padding}).fn(args);
+      }
+
+      return {};
+    },
+  };
 };

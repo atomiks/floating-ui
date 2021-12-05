@@ -157,3 +157,25 @@ const {refs} = useFloating();
 // refs.floating.current
 // refs.offsetParent.current
 ```
+
+## Arrow
+
+A `ref` can be passed as the `element`:
+
+```jsx {5,9,11}
+import {useRef} from 'react';
+import {useFloating, arrow} from '@floating-ui/react-native';
+
+function App() {
+  const arrowRef = useRef();
+  const {
+    x,
+    y,
+    middlewareData: {arrow: {x: arrowX, y: arrowY}} = {},
+  } = useFloating({
+    middleware: [arrow({element: arrowRef})],
+  });
+
+  // Pass the `arrowRef` to the element
+}
+```

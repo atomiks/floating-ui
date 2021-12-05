@@ -118,7 +118,7 @@ export const InlineCode = ({children, ...props}) => {
       color = colors.blue;
       break;
     // object literal property
-    case /^(placement|name|data|middleware|reset|skip|flipAlignment|mainAxis|crossAxis|padding|elementContext|altBoundary|boundary|rootBoundary|strategy|platform|alignment|sameScrollView)$/.test(
+    case /^(placement|name|data|middleware|reset|skip|flipAlignment|mainAxis|crossAxis|padding|elementContext|altBoundary|boundary|rootBoundary|strategy|platform|alignment|sameScrollView|element)$/.test(
       children
     ):
       color = colors.teal;

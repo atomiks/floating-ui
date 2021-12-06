@@ -1,4 +1,9 @@
-import {Dimensions, Middleware, MiddlewareArguments} from '../types';
+import {
+  Dimensions,
+  ElementRects,
+  Middleware,
+  MiddlewareArguments,
+} from '../types';
 import {
   detectOverflow,
   Options as DetectOverflowOptions,
@@ -7,7 +12,7 @@ import {getBasePlacement} from '../utils/getBasePlacement';
 import {getAlignment} from '../utils/getAlignment';
 
 export type Options = DetectOverflowOptions & {
-  apply(dimensions: Dimensions): void;
+  apply(args: Dimensions & ElementRects): void;
 };
 
 export const size = (options: Partial<Options> = {}): Middleware => ({
@@ -43,7 +48,7 @@ export const size = (options: Partial<Options> = {}): Middleware => ({
       return {};
     }
 
-    apply?.(dimensions);
+    apply?.({...dimensions, ...rects});
 
     return {
       data: {

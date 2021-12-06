@@ -190,7 +190,7 @@ function Shift() {
           Shift the floating element in view to prevent overflow.
         </p>
         <div className="rounded-lg bg-gray-800 p-4 overflow-auto">
-          <StaticCode middleware="shift" />
+          <StaticCode middleware="shift" placement="right" />
         </div>
       </div>
       <div
@@ -270,7 +270,7 @@ function Flip() {
           prevent overflow.
         </p>
         <div className="rounded-lg bg-gray-800 p-4 overflow-auto">
-          <StaticCode middleware="flip" />
+          <StaticCode middleware="flip" placement="top" />
         </div>
       </div>
       <div

@@ -7,25 +7,20 @@ export default Layout;
 
 Instead of `top` and `left` as shown throughout the docs, you can
 use `transform: translate()` instead to position the floating
-element. This enables the floating element to be positioned more
-accurately on the device's subpixel grid (high PPI displays).
+element for increased performance.
 
 ```js
 Object.assign(floatingEl.style, {
   top: '0',
   left: '0',
-  transform: `translate(${x}px, ${y}px)`,
+  transform: `translate(${Math.round(x)}px,${Math.round(y)}px)`,
 });
 ```
 
-Note that this can cause blurring, so you'll want to **round**
-the `x` and `y` coordinates in some fashion.
-
-```js
-// Checking `window.devicePixelRatio` when rounding improves
-// this further
-transform: `translate(${Math.round(x)}px, ${Math.round(y)}px)`;
-```
+`x` and `y` can contain decimals, so unless the `transform`
+translation is placed evenly on the device's subpixel grid, then
+there will be blurring. You can check `window.devicePixelRatio`
+to round by DPR.
 
 ### 3D transforms
 
@@ -33,14 +28,15 @@ You can also promote the floating element to its own layer:
 
 <!-- prettier-ignore -->
 ```js
-transform: 
-  `translate3d(${Math.round(x)}px, ${Math.round(y)}px, 0)`;
+Object.assign(floatingEl.style, {
+  top: '0',
+  left: '0',
+  transform: `translate3d(${Math.round(x)}px,${Math.round(y)}px,0)`,
+});
 ```
 
-If you're animating the location of the floating element, this
-will offer smoother animations. Most modern browsers have async
-and passive scrolling, so using `top` and `left` to position the
-floating element is generally fine performance-wise.
+If you're animating the location of the floating element, using
+`transform` will offer smoother animations.
 
 ## Transforms on elements
 

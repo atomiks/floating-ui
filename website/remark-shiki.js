@@ -73,7 +73,14 @@ module.exports = () =>
           });
 
           if (numbers.includes(i + 1)) {
-            node.className = 'bg-gray-700 -mx-6 px-6';
+            Object.assign(node.style, {
+              margin: '0 -1.5rem',
+              padding: '0 1.5rem',
+            });
+            // WARNING: if `bg-gray-700` isn't used anywhere in the app then
+            // Tailwind's purging will not work, so in prod this won't color
+            // anything
+            node.className = 'bg-gray-700';
           }
         });
 

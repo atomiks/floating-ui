@@ -1,4 +1,5 @@
 module.exports = {
+  swcMinify: false,
   experimental: {esmExternals: true},
   pageExtensions: ['md', 'mdx', 'tsx', 'ts', 'jsx', 'js'],
   webpack(config, options) {
@@ -20,7 +21,7 @@ module.exports = {
           loader: '@mdx-js/loader',
           /** @type {import('@mdx-js/loader').Options} */
           options: {
-            /* jsxImportSource: …, otherOptions… */
+            remarkPlugins: [require('./remark-shiki')],
           },
         },
       ],

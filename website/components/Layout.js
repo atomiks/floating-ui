@@ -8,12 +8,7 @@ import Link from 'next/link';
 import {useRouter} from 'next/router';
 import Head from 'next/head';
 import cn from 'classnames';
-import {
-  useEffect,
-  useState,
-  Children,
-  useLayoutEffect,
-} from 'react';
+import {useState, Children} from 'react';
 import Tippy from '@tippyjs/react/headless';
 import {Menu} from 'react-feather';
 import {Chrome} from './Chrome';
@@ -92,47 +87,10 @@ const components = {
   },
 };
 
-const useIsomorphicLayoutEffect =
-  typeof window !== 'undefined' ? useLayoutEffect : useEffect;
-
 export default function Layout({children}) {
   const {pathname} = useRouter();
   const index = nav.findIndex(({url}) => url === pathname) ?? 0;
   const [navOpen, setNavOpen] = useState(false);
-
-  // https://github.com/FormidableLabs/prism-react-renderer/issues/40
-  useIsomorphicLayoutEffect(() => {
-    const stylesheet = document.createElement('style');
-    stylesheet.innerHTML = `
-      .token.property-access:not(.function) {
-        color: #a9b8e8 !important;
-      }
-
-      .token.method.function {
-        color: #49c3ff !important;
-      }
-
-      .token.spread.operator {
-        color: #ff9fb1 !important;
-      }
-
-      [data-reach-skip-nav-link] {
-        color: black;
-        margin-left: 18rem;
-      }
-
-      @media (max-width: 600px) {
-        [data-reach-skip-nav-link] {
-          margin-left: calc(25vw);
-        }
-      }
-    `;
-
-    document.head?.append(stylesheet);
-    return () => {
-      stylesheet.remove();
-    };
-  }, []);
 
   const anchors = Children.toArray(children)
     .filter(

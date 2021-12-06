@@ -1,84 +1,178 @@
-import Highlight, {defaultProps} from 'prism-react-renderer';
-import Prism from 'prism-react-renderer/prism';
-import rangeParser from 'parse-numeric-range';
-import {theme} from '../assets/moonlight.js';
-
-const calculateLinesToHighlight = (meta) => {
-  const RE = /{([\d,-]+)}/;
-  if (RE.test(meta)) {
-    const strlineNumbers = RE.exec(meta)[1];
-    const lineNumbers = rangeParser(strlineNumbers);
-    return (index) => lineNumbers.includes(index + 1);
-  } else {
-    return () => false;
-  }
-};
-
-['javascript', 'jsx', 'ts'].forEach((lang) => {
-  // TODO: fix JSX syntax highlighting
-  if (lang === 'jsx') {
-    return;
-  }
-
-  Prism.languages.insertBefore(lang, 'operator', {
-    'literal-property': {
-      pattern:
-        /((?:^|[,{])[ \t]*)(?!\s)[_$a-zA-Z\xA0-\uFFFF](?:(?!\s)[$\w\xA0-\uFFFF])*(?=\s*:)/m,
-      lookbehind: true,
-    },
-  });
-  Prism.languages.insertBefore(lang, 'operator', {
-    constant: {
-      pattern: /(const\s?{?)[\s_$a-zA-Z\xA0-\uFFFF,]*(?!:)/,
-      lookbehind: true,
-    },
-  });
-  Prism.languages.insertBefore(lang, 'operator', {
-    object: {
-      pattern:
-        /[_$a-zA-Z\xA0-\uFFFF]+(?=\.[_$a-zA-Z\xA0-\uFFFF]+)/,
-    },
-  });
-});
-
-export default function Code({children, className, metastring}) {
-  const code = children.trim();
-  const shouldHighlightLine =
-    calculateLinesToHighlight(metastring);
+export default function Code({children}) {
   return (
-    <Highlight
-      {...defaultProps}
-      code={code}
-      language={className?.split('-')[1]}
-      theme={theme}
-      Prism={Prism}
-    >
-      {({
-        className,
-        style,
-        tokens,
-        getLineProps,
-        getTokenProps,
-      }) => (
-        <pre className={className} style={style}>
-          {tokens.map((line, i) => {
-            const lineProps = getLineProps({line, key: i});
-            if (shouldHighlightLine(i)) {
-              lineProps.className = 'bg-gray-700 -mx-6 px-6';
-            }
-            return (
-              <div key={i} {...lineProps}>
-                {line.map((token, key) => (
-                  <span
-                    key={key}
-                    {...getTokenProps({token, key})}
-                  />
-                ))}
-              </div>
-            );
-          })}
-        </pre>
-      )}
-    </Highlight>
+    <pre>
+      <code>{children}</code>
+    </pre>
   );
 }
+
+// We use shiki instead of a runtime highlighter to save code and to match
+// the better-looking MDX files' highlighting
+export const StaticCode = ({placement, middleware}) => (
+  <pre className="relative">
+    <code>
+      <span className="line">
+        <span style={{color: '#86E1FC'}}>import</span>
+        <span style={{color: '#C8D3F5'}}> </span>
+        <span style={{color: '#B4C2F0'}}>{'{'}</span>
+        <span style={{color: '#C8D3F5'}}>computePosition</span>
+        {middleware && (
+          <>
+            <span style={{color: '#86E1FC'}}>,</span>
+            <span style={{color: '#B4C2F0'}}> </span>
+            <span style={{color: '#C8D3F5'}}>{middleware}</span>
+          </>
+        )}
+        <span style={{color: '#B4C2F0'}}>{'}'}</span>
+        <span style={{color: '#C8D3F5'}}> </span>
+        <span style={{color: '#86E1FC'}}>from</span>
+        <span style={{color: '#C8D3F5'}}> </span>
+        <span style={{color: '#86E1FC'}}>'</span>
+        <span style={{color: '#C3E88D'}}>@floating-ui/dom</span>
+        <span style={{color: '#86E1FC'}}>'</span>
+        <span style={{color: '#86E1FC'}}>;</span>
+      </span>
+      <br />
+      <span className="line" />
+      <br />
+      <span className="line">
+        <span style={{color: '#C099FF'}}>const</span>
+        <span style={{color: '#C8D3F5'}}> </span>
+        <span style={{color: '#FF98A4'}}>button</span>
+        <span style={{color: '#C8D3F5'}}> </span>
+        <span style={{color: '#86E1FC'}}>=</span>
+        <span style={{color: '#C8D3F5'}}> </span>
+        <span style={{color: '#FFC777'}}>document</span>
+        <span style={{color: '#86E1FC'}}>.</span>
+        <span style={{color: '#65BCFF'}}>querySelector</span>
+        <span style={{color: '#B4C2F0'}}>(</span>
+        <span style={{color: '#86E1FC'}}>'</span>
+        <span style={{color: '#C3E88D'}}>#button</span>
+        <span style={{color: '#86E1FC'}}>'</span>
+        <span style={{color: '#B4C2F0'}}>)</span>
+        <span style={{color: '#86E1FC'}}>;</span>
+      </span>
+      <br />
+      <span className="line">
+        <span style={{color: '#C099FF'}}>const</span>
+        <span style={{color: '#C8D3F5'}}> </span>
+        <span style={{color: '#FF98A4'}}>tooltip</span>
+        <span style={{color: '#C8D3F5'}}> </span>
+        <span style={{color: '#86E1FC'}}>=</span>
+        <span style={{color: '#C8D3F5'}}> </span>
+        <span style={{color: '#FFC777'}}>document</span>
+        <span style={{color: '#86E1FC'}}>.</span>
+        <span style={{color: '#65BCFF'}}>querySelector</span>
+        <span style={{color: '#B4C2F0'}}>(</span>
+        <span style={{color: '#86E1FC'}}>'</span>
+        <span style={{color: '#C3E88D'}}>#tooltip</span>
+        <span style={{color: '#86E1FC'}}>'</span>
+        <span style={{color: '#B4C2F0'}}>)</span>
+        <span style={{color: '#86E1FC'}}>;</span>
+      </span>
+      <br />
+      <span className="line" />
+      <br />
+      <span className="line">
+        <span style={{color: '#C099FF'}}>const</span>
+        <span style={{color: '#C8D3F5'}}> </span>
+        <span style={{color: '#86E1FC'}}>{'{'}</span>
+        <span style={{color: '#FF98A4'}}>x</span>
+        <span style={{color: '#86E1FC'}}>,</span>
+        <span style={{color: '#C8D3F5'}}> </span>
+        <span style={{color: '#FF98A4'}}>y</span>
+        <span style={{color: '#86E1FC'}}>{'}'}</span>
+        <span style={{color: '#C8D3F5'}}> </span>
+        <span style={{color: '#86E1FC'}}>=</span>
+        <span style={{color: '#C8D3F5'}}> </span>
+        <span style={{color: '#86E1FC'}}>await</span>
+        <span style={{color: '#C8D3F5'}}> </span>
+        <span style={{color: '#65BCFF'}}>computePosition</span>
+        <span style={{color: '#B4C2F0'}}>(</span>
+        <span style={{color: '#C8D3F5'}}>button</span>
+        <span style={{color: '#86E1FC'}}>,</span>
+        <span style={{color: '#C8D3F5'}}> tooltip</span>
+        <span style={{color: '#86E1FC'}}>,</span>
+        <span style={{color: '#C8D3F5'}}> </span>
+        <span style={{color: '#B4C2F0'}}>{'{'}</span>
+      </span>
+      <br />
+      <span className="line">
+        <span style={{color: '#C8D3F5'}}>{'  '}</span>
+        <span style={{color: '#4FD6BE'}}>placement</span>
+        <span style={{color: '#86E1FC'}}>:</span>
+        <span style={{color: '#A9B8E8'}}> </span>
+        <span style={{color: '#86E1FC'}}>'</span>
+        <span style={{color: '#C3E88D'}}>{placement}</span>
+        <span style={{color: '#86E1FC'}}>'</span>
+        <span style={{color: '#86E1FC'}}>,</span>
+      </span>
+      {middleware && (
+        <>
+          <br />
+          <span className="line">
+            <span style={{color: '#C8D3F5'}}>{'  '}</span>
+            <span style={{color: '#4FD6BE'}}>middleware</span>
+            <span style={{color: '#86E1FC'}}>:</span>
+            <span style={{color: '#A9B8E8'}}> </span>
+            <span style={{color: '#86E1FC'}}>[</span>
+            <span style={{color: '#65BCFF'}}>{middleware}</span>
+            <span style={{color: '#B4C2F0'}}>()</span>
+            <span style={{color: '#86E1FC'}}>]</span>
+          </span>
+        </>
+      )}
+      <br />
+      <span className="line">
+        <span style={{color: '#B4C2F0'}}>{'}'})</span>
+        <span style={{color: '#86E1FC'}}>;</span>
+      </span>
+      <br />
+      <span className="line" />
+      <br />
+      <span className="line">
+        <span style={{color: '#FFC777'}}>Object</span>
+        <span style={{color: '#86E1FC'}}>.</span>
+        <span style={{color: '#65BCFF'}}>assign</span>
+        <span style={{color: '#B4C2F0'}}>(</span>
+        <span style={{color: '#FFC777'}}>tooltip</span>
+        <span style={{color: '#86E1FC'}}>.</span>
+        <span style={{color: '#A9B8E8'}}>style</span>
+        <span style={{color: '#86E1FC'}}>,</span>
+        <span style={{color: '#C8D3F5'}}> </span>
+        <span style={{color: '#B4C2F0'}}>{'{'}</span>
+      </span>
+      <br />
+      <span className="line">
+        <span style={{color: '#C8D3F5'}}>{'  '}</span>
+        <span style={{color: '#4FD6BE'}}>left</span>
+        <span style={{color: '#86E1FC'}}>:</span>
+        <span style={{color: '#A9B8E8'}}> </span>
+        <span style={{color: '#86E1FC'}}>{'`${'}</span>
+        <span style={{color: '#C8D3F5'}}>x</span>
+        <span style={{color: '#86E1FC'}}>{'}'}</span>
+        <span style={{color: '#C3E88D'}}>px</span>
+        <span style={{color: '#86E1FC'}}>{'`'}</span>
+        <span style={{color: '#86E1FC'}}>,</span>
+      </span>
+      <br />
+      <span className="line">
+        <span style={{color: '#C8D3F5'}}>{'  '}</span>
+        <span style={{color: '#4FD6BE'}}>top</span>
+        <span style={{color: '#86E1FC'}}>:</span>
+        <span style={{color: '#A9B8E8'}}> </span>
+        <span style={{color: '#86E1FC'}}>{'`${'}</span>
+        <span style={{color: '#C8D3F5'}}>y</span>
+        <span style={{color: '#86E1FC'}}>{'}'}</span>
+        <span style={{color: '#C3E88D'}}>px</span>
+        <span style={{color: '#86E1FC'}}>{'`'}</span>
+        <span style={{color: '#86E1FC'}}>,</span>
+      </span>
+      <br />
+      <span className="line">
+        <span style={{color: '#B4C2F0'}}>{'}'})</span>
+        <span style={{color: '#86E1FC'}}>;</span>
+      </span>
+    </code>
+  </pre>
+);

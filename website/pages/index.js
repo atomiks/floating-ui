@@ -12,28 +12,12 @@ import Link from 'next/link';
 import Head from 'next/head';
 import DropdownExample from '../components/DropdownExample.js';
 import cn from 'classnames';
-import Code from '../components/Code';
+import {StaticCode} from '../components/Code';
 
 import Logo from '../assets/logo.svg';
 
 function Placement() {
   const [placement, setPlacement] = useState('top');
-
-  const code = `
-import {computePosition} from '@floating-ui/dom';
-
-const button = document.querySelector('#button');
-const tooltip = document.querySelector('#tooltip');
-
-const {x, y} = await computePosition(button, tooltip, {
-  placement: '${placement}'
-});
-
-Object.assign(tooltip.style, {
-  left: x + 'px',
-  top: y + 'px'
-});
-`.trim();
 
   return (
     <div className="mb-4 grid lg:grid-cols-12 gap-8 bg-gradient-to-r from-blue-800 to-purple-700 rounded-lg px-4 py-8 sm:p-8">
@@ -45,7 +29,7 @@ Object.assign(tooltip.style, {
           Position your floating element on 12 core placements.
         </p>
         <div className="rounded-lg bg-gray-800 p-4 overflow-auto w-full">
-          <Code className="language-javascript">{code}</Code>
+          <StaticCode placement={placement} />
         </div>
       </div>
       <div className="grid lg:col-span-5 relative items-center bg-gray-800 rounded-lg h-128 lg:h-auto">
@@ -190,23 +174,6 @@ Object.assign(tooltip.style, {
 function Shift() {
   const [boundary, setBoundary] = useState();
 
-  const code = `
-import {computePosition, shift} from '@floating-ui/dom';
-
-const button = document.querySelector('#button');
-const tooltip = document.querySelector('#tooltip');
-
-const {x, y} = await computePosition(button, tooltip, {
-  placement: 'right',
-  middleware: [shift()]
-});
-
-Object.assign(tooltip.style, {
-  left: x + 'px',
-  top: y + 'px'
-});
-`.trim();
-
   useIsomorphicLayoutEffect(() => {
     if (boundary) {
       boundary.firstElementChild.scrollTop = 200;
@@ -223,7 +190,7 @@ Object.assign(tooltip.style, {
           Shift the floating element in view to prevent overflow.
         </p>
         <div className="rounded-lg bg-gray-800 p-4 overflow-auto">
-          <Code className="language-javascript">{code}</Code>
+          <StaticCode middleware="shift" placement="right" />
         </div>
       </div>
       <div
@@ -286,23 +253,6 @@ Object.assign(tooltip.style, {
 function Flip() {
   const [boundary, setBoundary] = useState();
 
-  const code = `
-import {computePosition, flip} from '@floating-ui/dom';
-
-const button = document.querySelector('#button');
-const tooltip = document.querySelector('#tooltip');
-
-const {x, y} = await computePosition(button, tooltip, {
-  placement: 'top',
-  middleware: [flip()]
-});
-
-Object.assign(tooltip.style, {
-  left: x + 'px',
-  top: y + 'px'
-});
-`.trim();
-
   useIsomorphicLayoutEffect(() => {
     if (boundary) {
       boundary.firstElementChild.scrollTop = 275;
@@ -320,7 +270,7 @@ Object.assign(tooltip.style, {
           prevent overflow.
         </p>
         <div className="rounded-lg bg-gray-800 p-4 overflow-auto">
-          <Code className="language-javascript">{code}</Code>
+          <StaticCode middleware="flip" placement="top" />
         </div>
       </div>
       <div
@@ -844,8 +794,8 @@ function HomePage() {
         <div className="flex flex-col gap-3 container mx-auto px-4 max-w-screen-xl">
           <p>© {new Date().getFullYear()} • MIT License</p>
           <p className="text-gray-400">
-            Floating UI is a project by the creator of Tippy.js and
-            co-author of Popper 2, designed to be a
+            Floating UI is a project by the creator of Tippy.js
+            and co-author of Popper 2, designed to be a
             next-generation evolution of those libraries.
           </p>
           <p className="text-gray-400">

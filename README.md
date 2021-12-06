@@ -79,7 +79,7 @@ code is forked from Popper 2's codebase and adapted to the new API.
 
 ## Contributing
 
-This project a monorepo written in TypeScript using npm workspaces. The website
+This project is a monorepo written in TypeScript using npm workspaces. The website
 is using Next.js SSG and Tailwind CSS for styling.
 
 - Clone the repo

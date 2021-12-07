@@ -45,13 +45,6 @@ module.exports = {
             strong: {
               color: '#fff',
             },
-            '[data-modern-highlight-inline-code] pre': {
-              display: 'inline',
-              padding: '0.25em',
-              '> code': {
-                display: 'inline',
-              },
-            },
             pre: {
               color: '#cddbf7',
             },

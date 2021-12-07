@@ -113,11 +113,13 @@ export const arrow = ({
   return {
     name: 'arrow',
     fn(args) {
-      if (isRef(element) && element.current != null) {
-        return arrowCore({element: element.current, padding}).fn(args);
-      }
+      if (isRef(element)) {
+        if (element.current != null) {
+          return arrowCore({element: element.current, padding}).fn(args);
+        }
 
-      if (element) {
+        return {};
+      } else if (element) {
         return arrowCore({element, padding}).fn(args);
       }
 

@@ -159,6 +159,8 @@ export const arrow = ({
         if (element.current != null) {
           return arrowCore({element: element.current, padding}).fn(args);
         }
+
+        return {};
       } else if (element) {
         return arrowCore({element, padding}).fn(args);
       }

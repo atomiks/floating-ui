@@ -3,14 +3,14 @@ export default Layout;
 
 # arrow
 
-The `arrow` middleware provides data to position an inner element
-of the floating element, usually the triangle or caret which
-points toward the reference element, so that it is centered to
-it.
+The `arrow{:.function}` middleware provides data to position an
+inner element of the floating element, usually the triangle or
+caret which points toward the reference element, so that it is
+centered to it.
 
-If you're using an aligned placement, like `top-start` or
-`right-end`, you may not need to use this middleware if you want
-the arrow's position to remain "static".
+If you're using an aligned placement, like `'top-start'{:js}` or
+`'right-end'{:js}`, you may not need to use this middleware if
+you want the arrow's position to remain "static".
 
 ## Usage
 
@@ -23,7 +23,7 @@ Add a new element **inside** your floating element:
 </div>
 ```
 
-And ensure it has `position: absolute` applied in its CSS.
+And ensure it has `position: absolute{:sass}` applied in its CSS.
 
 ```js
 import {computePosition, arrow} from '@floating-ui/dom';
@@ -66,8 +66,9 @@ type Padding = number | SideObject;
 ```
 
 This describes the padding between the arrow and the edges of the
-floating element. If your floating element has `border-radius`,
-this will prevent it from overflowing the corners.
+floating element. If your floating element has
+`border-radius{:.function}`, this will prevent it from
+overflowing the corners.
 
 ```js
 arrow({
@@ -78,7 +79,7 @@ arrow({
 
 ## Data
 
-The following data is available in `middlewareData.arrow`:
+The following data is available in `middlewareData.arrow{:js}`:
 
 ```ts
 type Data = {
@@ -105,6 +106,6 @@ element in order to stay centered to the reference element.
 This enables two useful things:
 
 - You can hide the arrow if it can't stay centered to the
-  reference, i.e. `centerOffset !== 0`.
+  reference, i.e. `centerOffset !== 0{:js}`.
 - You can interpolate the shape of the arrow (e.g. skew it) so it
   stays centered as best as possible.

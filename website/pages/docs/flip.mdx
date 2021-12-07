@@ -3,9 +3,9 @@ export default Layout;
 
 # flip
 
-The `flip` middleware changes the placement of the floating
-element to the opposite one by default in order to prevent
-overflow.
+The `flip{:.function}` middleware changes the placement of the
+floating element to the opposite one by default in order to
+prevent overflow.
 
 <div className="flex flex-col gap-4">
   <Chrome center scrollable className="h-96">
@@ -54,7 +54,7 @@ flip({mainAxis: false}); // true by default
 ### crossAxis
 
 This is the cross axis in which overflow is checked, the opposite
-axis of `mainAxis`.
+axis of `mainAxis{:.objectKey}`.
 
 ```js
 flip({crossAxis: false}); // true by default
@@ -63,7 +63,7 @@ flip({crossAxis: false}); // true by default
 ### fallbackPlacements
 
 This describes the array of placements to try if the preferred
-`placement` doesn't fully fit.
+`placement{:.objectKey}` doesn't fully fit.
 
 ```js
 flip({
@@ -71,17 +71,18 @@ flip({
 });
 ```
 
-If the `placement` in `computePosition()` is set to `top`, but
-that doesn't fit, then `right` will be used instead. If `right`
-also doesn't fit, then `bottom` will be used. If none of these
-fit, then the best-fitting placement will be used.
+If the `placement{:.objectKey}` in `computePosition(){:js}` is
+set to `'top'{:js}`, but that doesn't fit, then `'right'{:js}`
+will be used instead. If `'right'{:js}` also doesn't fit, then
+`'bottom'{:js}` will be used. If none of these fit, then the
+best-fitting placement will be used.
 
 ### fallbackStrategy
 
 When no placements fit, then you'll want to decide what happens.
-`bestFit` will use the placement which fits best on the checked
-axes. `initialPlacement` will use the initial `placement`
-specified.
+`'bestFit'{:js}` will use the placement which fits best on the
+checked axes. `'initialPlacement'{:js}` will use the initial
+`placement{:.objectKey}` specified.
 
 ```js
 flip({
@@ -91,16 +92,18 @@ flip({
 
 ### flipAlignment
 
-When an alignment specified, e.g. `top-start` instead of just
-`top`, this will flip to `top-end` if `start` doesn't fit.
+When an alignment specified, e.g. `'top-start'{:js}` instead of
+just `'top'{:js}`, this will flip to `'top-end'{:js}` if `start`
+doesn't fit.
 
 ```js
 flip({flipAlignment: false}); // true by default
 ```
 
-When using this with the `shift` middleware, ensure `flip` is
-placed **before** `shift` in your middleware array. This ensures
-the `flipAlignment` logic can act before shift's does.
+When using this with the `shift{:.function}` middleware, ensure
+`flip{:.function}` is placed **before** `shift{:.function}` in
+your middleware array. This ensures the
+`flipAlignment{:.objectKey}` logic can act before shift's does.
 
 ### ...detectOverflowOptions
 

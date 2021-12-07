@@ -15,7 +15,6 @@ import {Chrome} from './Chrome';
 import {Floating} from './Floating';
 import {SkipNavLink, SkipNavContent} from '@reach/skip-nav';
 import '@reach/skip-nav/styles.css';
-import {InlineCode} from './InlineCode';
 
 const nav = [
   {url: '/docs/getting-started', title: 'Getting Started'},
@@ -61,7 +60,7 @@ const linkify =
 const components = {
   pre: (props) => <div {...props} />,
   code: (props) => <Code {...props} />,
-  inlineCode: InlineCode,
+  // inlineCode: InlineCode,
   Warning,
   Collapsible,
   Tippy,
@@ -72,6 +71,17 @@ const components = {
   h4: linkify('h4'),
   h5: linkify('h5'),
   h6: linkify('h6'),
+  span(props) {
+    if (props['data-mdx-pretty-code'] != null) {
+      return (
+        <code style={{color: props['data-color']}}>
+          {props.children.props.children}
+        </code>
+      );
+    }
+
+    return <span {...props} />;
+  },
   a(props) {
     if (props.href.startsWith('/')) {
       return (

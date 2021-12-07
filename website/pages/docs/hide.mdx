@@ -3,9 +3,9 @@ export default Layout;
 
 # hide
 
-The `hide` middleware provides data to hide the floating element
-in applicable situations, usually when it's not within the same
-clipping context as the reference element.
+The `hide{:.function}` middleware provides data to hide the
+floating element in applicable situations, usually when it's not
+within the same clipping context as the reference element.
 
 <div className="flex flex-col gap-4">
   <Chrome center scrollable className="h-96">
@@ -21,8 +21,8 @@ clipping context as the reference element.
 </div>
 
 In the above example, the floating element turns red once it has
-`escaped` the reference element's clipping context. Once the
-reference element is hidden, it hides itself.
+`escaped{:.objectKey}` the reference element's clipping context.
+Once the reference element is hidden, it hides itself.
 
 ## Usage
 

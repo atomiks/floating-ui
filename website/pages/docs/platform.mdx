@@ -6,9 +6,9 @@ export default Layout;
 Floating UI works on any platform that can run JavaScript, as
 long as it has adequate measurement APIs for elements.
 
-Floating UI works largely with a `Rect`, which is an object of
-numbers in the form `{width, height, x, y}`. This data can come
-from anywhere, and the library will perform the right
+Floating UI works largely with a `Rect{:.class}`, which is an
+object of numbers in the form `{width, height, x, y}`. This data
+can come from anywhere, and the library will perform the right
 computations. `x` and `y` represent the coordinates of the
 element relative to another one.
 
@@ -24,8 +24,9 @@ computePosition(referenceElement, floatingElement, {
 
 ## Methods
 
-A `platform` is a plain object consisting of 7 methods. These
-methods allow the platform to interface with Floating UI's logic.
+A `platform{:.objectKey}` is a plain object consisting of 7
+methods. These methods allow the platform to interface with
+Floating UI's logic.
 
 Each of these methods can be either async or sync. This enables
 support of platforms whose measurement APIs are async, like React
@@ -33,8 +34,8 @@ Native.
 
 ### getElementRects
 
-Takes in the elements and the positioning `strategy` and returns
-the element `Rect` objects.
+Takes in the elements and the positioning `strategy{:.objectKey}`
+and returns the element `Rect{:.class}` objects.
 
 ```js
 function getElementRects({reference, floating, strategy}) {
@@ -47,20 +48,21 @@ function getElementRects({reference, floating, strategy}) {
 
 #### reference
 
-The `x` and `y` values of a reference `Rect` should be its
-coordinates relative to the floating element's `offsetParent`
-element, not the viewport.
+The `x{:.objectKey}` and `y{:.objectKey}` values of a reference
+`Rect{:.class}` should be its coordinates relative to the
+floating element's `offsetParent` element, not the viewport.
 
 #### floating
 
-Both `x` and `y` are not relevant initially, so you can set these
-both of these to `0`.
+Both `x{:.objectKey}` and `y{:.objectKey}` are not relevant
+initially, so you can set these both of these to `0{:js}`.
 
 ### convertOffsetParentRelativeRectToViewportRelativeRect
 
-This function will take a `Rect` that is relative to a given
-`offsetParent` element and convert its `x` and `y` values such
-that it is instead relative to the viewport.
+This function will take a `Rect{:.class}` that is relative to a
+given `offsetParent{:.param}` element and convert its
+`x{:.objectKey}` and `y{:.objectKey}` values such that it is
+instead relative to the viewport.
 
 ```js
 function convertOffsetParentRelativeRectToViewportRelativeRect({
@@ -145,7 +147,7 @@ function getClippingClientRect({
 
 ## Usage
 
-All these methods are passed to `platform`:
+All these methods are passed to `platform{:.objectKey}`:
 
 ```js
 import {computePosition} from '@floating-ui/core';

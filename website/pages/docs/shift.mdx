@@ -3,8 +3,8 @@ export default Layout;
 
 # shift
 
-The `shift` middleware shifts the floating element in order to
-keep it in view (prevents overflow).
+The `shift{:.function}` middleware shifts the floating element in
+order to keep it in view (prevents overflow).
 
 <div className="flex flex-col gap-4">
   <Chrome>
@@ -57,9 +57,10 @@ shift({mainAxis: false}); // true by default
 ### crossAxis
 
 This is the cross axis in which shifting is applied, the opposite
-axis of `mainAxis`. Enabling this can lead to the floating
-element **overlapping** the reference element, which is generally
-not desired and is replaced by the `flip` middleware.
+axis of `mainAxis{:.objectKey}`. Enabling this can lead to the
+floating element **overlapping** the reference element, which is
+generally not desired and is replaced by the `flip{:.function}`
+middleware.
 
 ```js
 shift({crossAxis: true}); // false by default
@@ -114,8 +115,8 @@ shift({
 });
 ```
 
-This can also take a function, which provides the `Rect`s of each
-element to read their dimensions:
+This can also take a function, which provides the
+`Rect{:.class}`s of each element to read their dimensions:
 
 ```js
 shift({

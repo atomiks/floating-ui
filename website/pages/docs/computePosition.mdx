@@ -3,9 +3,10 @@ export default Layout;
 
 # computePosition
 
-The `computePosition()` function is at the heart of Floating UI.
-It's a pure function which computes the necessary coordinates to
-position the floating element next to a given reference element.
+The `computePosition(){:js}` function is at the heart of Floating
+UI. It's a pure function which computes the necessary coordinates
+to position the floating element next to a given reference
+element.
 
 ## Arguments
 
@@ -24,7 +25,7 @@ With two elements on the document like so:
 <div id="tooltip">My tooltip</div>
 ```
 
-Call `computePosition()` with these elements as arguments:
+Call `computePosition(){:js}` with these elements as arguments:
 
 ```js
 import {computePosition} from '@floating-ui/dom';
@@ -37,17 +38,17 @@ computePosition(button, tooltip).then(({x, y}) => {
 });
 ```
 
-Since a promise is returned, we can chain the `.then()` method
-which will resolve with the data necessary to position the
+Since a promise is returned, we can chain the `.then(){:js}`
+method which will resolve with the data necessary to position the
 tooltip next to the reference element.
 
-`x` and `y` represent the positioning coordinates of the floating
-element relative to its `offsetParent` such that it will be
-positioned on the `bottom` center (by default) of the reference
-element.
+`x{:.param}` and `y{:.param}` represent the positioning
+coordinates of the floating element relative to its
+`offsetParent` such that it will be positioned on the
+`'bottom'{:js}` center (by default) of the reference element.
 
 The recommended way to position the tooltip is to use
-`Object.assign()` on the style object:
+`Object.assign(){:js}` on the style object:
 
 ```js {6-9,12-15}
 import {computePosition} from '@floating-ui/dom';
@@ -68,9 +69,9 @@ computePosition(button, tooltip).then(({x, y}) => {
 });
 ```
 
-Your floating element must have `position: absolute` **already
-applied** before &nbsp; `computePosition()` is called, so that
-its dimensions are read correctly.
+Your floating element must have `position: absolute{:sass}`
+**already applied** before `computePosition(){:js}` is called, so
+that its dimensions are read correctly.
 
 ## Options
 
@@ -124,25 +125,27 @@ computePosition(referenceEl, floatingEl, {
 });
 ```
 
-Instead of applying `position: absolute` in your CSS before the
-`computePosition` call, you'll now apply `position: fixed`.
+Instead of applying `position: absolute{:sass}` in your CSS
+before the `computePosition(){:js}` call, you'll now apply
+`position: fixed{:sass}`.
 
-You will want to use `fixed` if your reference element is inside
-a fixed container, but your floating element not.
+You will want to use `'fixed'{:js}` if your reference element is
+inside a fixed container, but your floating element not.
 
 ### middleware
 
-Middleware alter the base `placement` in some fashion, or provide
-useful data to the consumer. 7 core middleware are included in
-the package, which should cover almost all use cases:
+Middleware alter the base `placement{:.objectKey}` in some
+fashion, or provide useful data to the consumer. 7 core
+middleware are included in the package, which should cover almost
+all use cases:
 
-- `autoPlacement`
-- `arrow`
-- `flip`
-- `hide`
-- `offset`
-- `shift`
-- `size`
+- `autoPlacement{:.function}`
+- `arrow{:.function}`
+- `flip{:.function}`
+- `hide{:.function}`
+- `offset{:.function}`
+- `shift{:.function}`
+- `size{:.function}`
 
 These are documented in the navigation bar on the left.
 Importantly, you can also craft your own custom middleware to
@@ -164,9 +167,9 @@ type ComputePositionReturn = {
 
 ## Updating
 
-Since `computePosition` is only a single function call, it only
-positions your element once. There are cases in which you'll want
-it to be continually updated:
+Since `computePosition{:.function}` is only a single function
+call, it only positions your element once. There are cases in
+which you'll want it to be continually updated:
 
 - The reference element is inside a scrolling container, but the
   floating element is not.
@@ -192,8 +195,8 @@ addEventListener('scroll', update);
 addEventListener('resize', update);
 ```
 
-A `ResizeObserver`, `requestAnimationFrame` loop, etc. can handle
-additional cases.
+A `ResizeObserver{:.class}`, `requestAnimationFrame{:.function}`
+loop, etc. can handle additional cases.
 
 ### scrollParents
 

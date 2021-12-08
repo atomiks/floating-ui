@@ -3,9 +3,9 @@ export default Layout;
 
 # autoPlacement
 
-The `autoPlacement` middleware chooses the `placement`
-automatically (the one with most space available on checked
-axes).
+The `autoPlacement{:.function}` middleware chooses the
+`placement{:.objectKey}` automatically (the one with most space
+available on checked axes).
 
 ## Usage
 
@@ -30,9 +30,9 @@ type Options = DetectOverflowOptions & {
 
 ### alignment
 
-Without options, `autoPlacement` will choose any of the
-`BasePlacement`s which fit best, i.e. `top`, `right`, `bottom`,
-or `left`.
+Without options, `autoPlacement{:.function}` will choose any of
+the `BasePlacement{:.class}`s which fit best, i.e. `'top'{:js}`,
+`'right'{:js}`, `'bottom'{:js}`, or `'left'{:js}`.
 
 By specifying an alignment, it will choose those aligned
 placements.
@@ -46,8 +46,8 @@ autoPlacement({
 
 ### crossAxis
 
-Describes whether to check the `crossAxis` when choosing the
-ideal placement.
+Describes whether to check the `crossAxis{:.objectKey}` when
+choosing the ideal placement.
 
 ```js
 autoPlacement({
@@ -68,9 +68,9 @@ autoPlacement({
 
 ### autoAlignment
 
-When `alignment` is specified, this describes whether to
-automatically choose placements with the opposite alignment if
-they fit better.
+When `alignment{:.objectKey}` is specified, this describes
+whether to automatically choose placements with the opposite
+alignment if they fit better.
 
 ```js
 autoPlacement({

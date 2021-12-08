@@ -13,7 +13,7 @@ yarn add @floating-ui/react-dom
 
 ## Usage
 
-The `useFloating()` hook accepts all of
+The `useFloating(){:js}` hook accepts all of
 [computePosition's options](/docs/computePosition#options).
 
 ```js
@@ -43,20 +43,20 @@ function App() {
 }
 ```
 
-`x` and `y` will be `null` initially, before the layout effect
-has fired.
+`x{:.const}` and `y{:.const}` will be `null` initially, before
+the layout effect has fired.
 
 ## Updating
 
-The hook returns an `update()` function to update the position,
-e.g. in event listeners.
+The hook returns an `update(){:js}` function to update the
+position, e.g. in event listeners.
 
 ```js
 const {update} = useFloating();
 ```
 
-In addition, the `refs` containing the actual elements are passed
-back:
+In addition, the `refs{:.const}` containing the actual elements
+are passed back:
 
 ```js
 const {refs} = useFloating();
@@ -67,7 +67,7 @@ const {refs} = useFloating();
 ```
 
 For instance, to update on all relevant nodes, you can import the
-`getScrollParents()` util from the package:
+`getScrollParents(){:js}` util from the package:
 
 ```js {5,9,15-37}
 import {useEffect} from 'react';
@@ -138,9 +138,9 @@ const {middlewareData} = useFloating();
 
 ## Arrow
 
-A `ref` can be passed as the `element`:
+A `ref{:.const}` can be passed as the `element{:.objectKey}`:
 
-```js {5,11,13,21}
+```js /arrowRef/ {13}
 import {useRef} from 'react';
 import {useFloating, arrow} from '@floating-ui/react-dom';
 
@@ -172,7 +172,7 @@ function App() {
 
 See [Virtual Elements](/docs/virtual-elements) for details.
 
-```js
+```js {12-18}
 import {useLayoutEffect} from 'react';
 import {useFloating, shift} from '@floating-ui/react-dom';
 
@@ -210,6 +210,6 @@ function App() {
 
 ## Updating middleware
 
-If you intend to make `middleware` dynamic, ensure you call
-`update()` whenever the state changes to compute the new
-position.
+If you intend to make `middleware{:.objectKey}` dynamic, ensure
+you call `update(){:js}` whenever the state changes to compute
+the new position.

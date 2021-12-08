@@ -3,8 +3,9 @@ export default Layout;
 
 # size
 
-The `size` middleware provides data to change the size of the
-floating element so it doesn't overflow the available space.
+The `size{:.function}` middleware provides data to change the
+size of the floating element so it doesn't overflow the available
+space.
 
 <div className="flex flex-col gap-4">
   <Chrome center scrollable className="h-96">
@@ -25,7 +26,7 @@ floating element so it doesn't overflow the available space.
 
 If your floating element's content cannot be resized such as in
 the example, you can make the floating element scrollable with
-`overflow: scroll` (or `auto`).
+`overflow: scroll{:sass}` (or `auto{:.param}`).
 
 ## Usage
 
@@ -58,11 +59,11 @@ type Options = DetectOverflowOptions & {
 
 ### apply
 
-Unlike other middleware, `size` is not pure due to its inherently
-mutable nature. When changing the size of the `Rect`s, the
-lifecycle must restart, but this requires the mutation to occur.
-Your size-related style mutations should occur inside this
-function.
+Unlike other middleware, `size{:.function}` is not pure due to
+its inherently mutable nature. When changing the size of the
+`Rect{:.class}`s, the lifecycle must restart, but this requires
+the mutation to occur. Your size-related style mutations should
+occur inside this function.
 
 ```js
 size({
@@ -83,19 +84,20 @@ size({padding: 5}); // 0 by default
 
 ## Using with flip
 
-Using `size` together with `flip` enables some useful behavior.
-The floating element can be resized, thus allowing it to prefer
-its initial placement as much as possible, until it reaches a
-minimum size, at which point it will flip.
+Using `size{:.function}` together with `flip{:.function}` enables
+some useful behavior. The floating element can be resized, thus
+allowing it to prefer its initial placement as much as possible,
+until it reaches a minimum size, at which point it will flip.
 
-If you're using the `padding` option in either middleware, ensure
-they share the **same value**.
+If you're using the `padding{:.objectKey}` option in either
+middleware, ensure they share the **same value**.
 
 ### bestFit
 
-The `bestFit` fallback strategy in the `flip` middleware is the
-default, which ensures the best fitting placement is used. In
-this scenario, place `size` **after** `flip`:
+The `'bestFit'{:js}` fallback strategy in the `flip{:.function}`
+middleware is the default, which ensures the best fitting
+placement is used. In this scenario, place `size{:.function}`
+**after** `flip{:.function}`:
 
 ```js
 const middleware = [
@@ -134,8 +136,8 @@ times at the most optimal size.
 ### initialPlacement
 
 If instead, you want the initial placement to take precedence,
-and are setting a minimum acceptable size, place `size`
-**before** `flip`:
+and are setting a minimum acceptable size, place
+`size{:.function}` **before** `flip{:.function}`:
 
 ```js
 const middleware = [

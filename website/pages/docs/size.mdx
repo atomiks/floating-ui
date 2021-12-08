@@ -4,8 +4,10 @@ export default Layout;
 # size
 
 The `size{:.function}` middleware provides data to change the
-size of the floating element so it doesn't overflow the available
-space.
+size of the floating element.
+
+For instance, you can resize it so it doesn't overflow the
+available space:
 
 <div className="flex flex-col gap-4">
   <Chrome center scrollable className="h-96">
@@ -53,7 +55,7 @@ computePosition(referenceEl, floatingEl, {
 
 ```ts
 type Options = DetectOverflowOptions & {
-  apply(dimensions: Dimensions): void;
+  apply(args: Dimensions & ElementRects): void;
 };
 ```
 
@@ -182,3 +184,20 @@ const middleware = [
     </Floating>
   </Chrome>
 </div>
+
+## Match reference width
+
+A common feature of select dropdowns is that the dropdown matches
+the width of the reference regardless of its contents. You can
+also use `size{:.function}` for this, as the `Rect{:.class}`s get
+passed in:
+
+```js
+size({
+  apply({reference}) {
+    Object.assign(floatingEl.style, {
+      width: `${reference.width}px`,
+    });
+  },
+});
+```

@@ -1,5 +1,14 @@
 # @floating-ui/react-dom
 
+## 0.3.1
+
+### Patch Changes
+
+- fix: stale position after middleware change
+- fix: error if arrow ref is null
+- Updated dependencies
+  - @floating-ui/dom@0.1.6
+
 ## 0.3.0
 
 ### Minor Changes

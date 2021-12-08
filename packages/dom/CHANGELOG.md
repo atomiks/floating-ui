@@ -1,5 +1,13 @@
 # @floating-ui/dom
 
+## 0.1.6
+
+### Patch Changes
+
+- test
+- Updated dependencies
+  - @floating-ui/core@0.2.0
+
 ## 0.1.5
 
 ### Patch Changes

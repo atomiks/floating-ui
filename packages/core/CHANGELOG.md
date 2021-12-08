@@ -1,5 +1,11 @@
 # @floating-ui/core
 
+## 0.2.0
+
+### Minor Changes
+
+feat(size): pass rects to `apply`
+
 ## 0.1.5
 
 ### Patch Changes

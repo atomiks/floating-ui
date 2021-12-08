@@ -1,5 +1,14 @@
 # @floating-ui/react-native
 
+## 0.3.1
+
+### Patch Changes
+
+- fix: stale position after middleware change
+- fix: error if arrow ref is null
+- Updated dependencies
+  - @floating-ui/core@0.2.0
+
 ## 0.3.0
 
 ### Minor Changes

@@ -30,6 +30,7 @@ export {
 const ORIGIN = {x: 0, y: 0};
 
 type UseFloatingReturn = Data & {
+  update: () => void;
   offsetParent: (node: any) => void;
   floating: (node: any) => void;
   reference: (node: any) => void;

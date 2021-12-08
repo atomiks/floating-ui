@@ -4,7 +4,7 @@
 import {useFloating} from '../src';
 import {renderHook} from '@testing-library/react-hooks';
 import {render, waitFor} from '@testing-library/react';
-import {Middleware} from '@floating-ui/core';
+import * as FloatingUIDom from '@floating-ui/dom';
 
 test('`x` and `y` are initially `null`', async () => {
   const {result} = renderHook(() => useFloating());
@@ -13,37 +13,38 @@ test('`x` and `y` are initially `null`', async () => {
   expect(result.current.y).toBe(null);
 });
 
-test('position is updated when middleware changes', async () => {
-  function Component({middleware = []}: {middleware?: Middleware[]}) {
-    const {x, y, reference, floating} = useFloating({
-      middleware,
+test('`middleware` is memoized internally', async () => {
+  function Component() {
+    const {reference, floating} = useFloating({
+      middleware: [
+        {
+          name: 'identity',
+          fn({x, y}) {
+            return {x, y};
+          },
+        },
+      ],
     });
 
     return (
-      <>
-        <div ref={reference}>reference</div>
+      <div>
+        <button ref={reference}>button</button>
         <div ref={floating}>floating</div>
-        <div data-testid="x">{x}</div>
-        <div data-testid="y">{y}</div>
-      </>
+      </div>
     );
   }
 
-  const {rerender, getByTestId} = render(<Component />);
+  const spy = jest.spyOn(FloatingUIDom, 'computePosition');
+
+  const {rerender} = render(<Component />);
 
   await waitFor(() => {
-    expect(getByTestId('x').textContent).toBe('0');
-    expect(getByTestId('y').textContent).toBe('0');
+    expect(spy).toHaveBeenCalledTimes(2);
   });
 
-  rerender(
-    <Component
-      middleware={[{name: 'test', fn: ({x, y}) => ({x: x + 1, y: y + 1})}]}
-    />
-  );
+  rerender(<Component />);
 
   await waitFor(() => {
-    expect(getByTestId('x').textContent).toBe('1');
-    expect(getByTestId('y').textContent).toBe('1');
+    expect(spy).toHaveBeenCalledTimes(2);
   });
 });

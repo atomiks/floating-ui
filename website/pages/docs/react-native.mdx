@@ -164,7 +164,7 @@ const {refs} = useFloating();
 
 A `ref{:.const}` can be passed as the `element{:.objectKey}`:
 
-```jsx /arrow/ {11}
+```jsx /arrowRef/ {11}
 import {useRef} from 'react';
 import {useFloating, arrow} from '@floating-ui/react-native';
 
@@ -184,6 +184,6 @@ function App() {
 
 ## Updating middleware
 
-If you intend to make `middleware` dynamic, ensure you call
-`update()` whenever the state changes to compute the new
-position.
+If you intend to make `middleware{:.objectKey}` dynamic, ensure
+you call `update(){:js}` whenever the state changes to compute
+the new position.

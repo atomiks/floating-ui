@@ -81,8 +81,6 @@ export const useFloating = ({
     [offsetParent, scrollOffsets, sameScrollView]
   );
 
-  const skipRenderRef = useRef<boolean>(false);
-
   // Memoize middleware internally, to remove the requirement of memoization by consumer
   const latestMiddleware = useLatestRef(middleware);
 
@@ -90,13 +88,6 @@ export const useFloating = ({
     if (!reference.current || !floating.current) {
       return;
     }
-
-    if (skipRenderRef.current) {
-      skipRenderRef.current = false;
-      return;
-    }
-
-    skipRenderRef.current = true;
 
     computePosition(reference.current, floating.current, {
       middleware: latestMiddleware.current,
@@ -107,7 +98,7 @@ export const useFloating = ({
 
   useLayoutEffect(() => {
     requestAnimationFrame(update);
-  });
+  }, [update]);
 
   const setReference = useCallback(
     (node) => {

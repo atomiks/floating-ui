@@ -54,8 +54,6 @@ export function useFloating({
     middlewareData: {},
   });
 
-  const skipRenderRef = useRef<boolean>(false);
-
   // Memoize middleware internally, to remove the requirement of memoization by consumer
   const latestMiddleware = useLatestRef(middleware);
 
@@ -64,13 +62,6 @@ export function useFloating({
       return;
     }
 
-    if (skipRenderRef.current) {
-      skipRenderRef.current = false;
-      return;
-    }
-
-    skipRenderRef.current = true;
-
     computePosition(reference.current, floating.current, {
       middleware: latestMiddleware.current,
       placement,
@@ -78,7 +69,7 @@ export function useFloating({
     }).then(setData);
   }, [latestMiddleware, placement, strategy]);
 
-  useIsomorphicLayoutEffect(update);
+  useIsomorphicLayoutEffect(update, [update]);
 
   const setReference = useCallback(
     (node) => {

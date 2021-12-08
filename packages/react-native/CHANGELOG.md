@@ -1,5 +1,12 @@
 # @floating-ui/react-native
 
+## 0.3.2
+
+### Patch Changes
+
+- revert stale middleware position fix
+- fix: missing `update()` function type
+
 ## 0.3.1
 
 ### Patch Changes

@@ -107,7 +107,7 @@ export const useFloating = ({
 
   useLayoutEffect(() => {
     requestAnimationFrame(update);
-  }, [update]);
+  });
 
   const setReference = useCallback(
     (node) => {

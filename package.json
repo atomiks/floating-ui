@@ -14,8 +14,7 @@
     "clean": "rm -rf packages/**/src/[^_]*.d.ts packages/**/src/**/[^_]*.d.ts packages/**/dist",
     "lint": "eslint . --ext .js,.ts",
     "test:types": "tsc",
-    "dev:website": "npm run build && npm -w website run dev",
-    "build:website": "npm run build && npm -w website run build"
+    "dev:website": "npm run build && npm -w website run dev"
   },
   "author": "",
   "license": "MIT",

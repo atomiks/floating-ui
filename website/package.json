@@ -21,10 +21,8 @@
   "devDependencies": {
     "@svgr/webpack": "^5.5.0",
     "autoprefixer": "^10.4.0",
-    "jsdom": "^19.0.0",
     "postcss": "^8.3.11",
-    "tailwindcss": "^2.2.19",
-    "unist-util-visit": "^2.0.3"
+    "tailwindcss": "^2.2.19"
   },
   "dependencies": {
     "@atomiks/mdx-pretty-code": "^0.0.2",
@@ -41,6 +39,7 @@
     "react-dom": "^17.0.2",
     "react-feather": "^2.0.9",
     "shiki": "^0.9.14",
+    "unist-util-visit": "^2.0.3",
     "use-isomorphic-layout-effect": "^1.1.1"
   }
 }
